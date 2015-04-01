@@ -1,0 +1,199 @@
+a {
+   outline: 0 !important;
+}
+
+.memerror {
+	color: #f56332;
+}
+
+.updated > ul {
+	list-style-position: inside;
+	list-style-type: disc;
+}
+
+.button-primary {
+	min-width: 200px;
+}
+
+.ajax-feedback {
+	padding: 0 0 4px 8px;
+	vertical-align: middle;
+}
+
+
+.greybox {
+	margin: 0 0 20px;
+	border: 1px solid #d3d3d3;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow: 0px 1px 2px #ebebeb;
+	-moz-box-shadow: 0px 1px 2px #ebebeb;
+	-webkit-box-shadow: 0px 1px 2px #ebebeb;
+	float: left;
+	padding: 10px;
+	position: relative;
+	color: #464646;
+	font: 14px/20px Arial,Helvetica,Tahoma,sans-serif;
+	background: #FFF;
+}
+
+h2.sgheading, h3.sgheading {
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-weight: 400;
+}
+
+#sg-cachepress-purge, #sg-cachepress-blacklist {
+	background: #e46f48;
+	height: 25px;
+	font-size: 16px;
+	padding: 0 10px;
+	color: #fff;
+	font: 400 15px/25px Arial,Helvetica,Tahoma,sans-serif;
+	border-radius: 4px;
+	text-align: center;
+	border: none;
+	border-color: #e46f48 !important;
+	margin: 0 0 20px 0;
+}
+
+#sg-cachepress-blacklist {
+	margin-top: 13px;
+	float: right;
+}
+
+#sg-cachepress-blacklist-textarea {
+	resize:vertical;
+	font-family:  courier;
+	font-size: 12px;
+}
+
+.dgreybg {
+	background: #f9f9f9;
+}
+
+.binfo {
+	min-height: 125px;
+	margin-top: 15px;
+	display: block;
+}
+
+.binfo {
+	max-width: 582px;
+	margin-right: 20px;
+}
+
+.binfo img {
+	float: left;
+	margin: -12px 0 20px 5px;
+}
+
+.binfo p:last-of-type {
+	margin-bottom: 0;
+}
+
+.blist {
+	width: 743px;
+	background: #f9f9f9;
+}
+
+.bmem {
+	width: 765px;
+	background: url(optionback.jpg) #fafafa top left repeat-x;
+	height: 90px;
+}
+
+div.greybox.bintro{
+	width: 765px !important;
+	padding-bottom: 0px;
+	margin-top: 10px;
+}
+
+#sg-cachepress-memcached-text, .mbut {
+	margin: 8px 0 0;
+}
+
+#sg-cachepress-memcached-error {
+	margin: 8px 0 0;
+	padding: 0;
+}
+
+.bvarnish, .bpurge, .bautoflush {
+	width: 220px;
+	text-align: left;
+	line-height: 13px;
+	background: url(optionback.jpg) top left repeat-x;
+	margin-right: 20px;
+	height: 70px;
+}
+
+.bautoflush {
+	margin-right: 0px;
+}
+
+.bpurge {
+	margin: 0 0 0 20px !important;
+}
+
+
+.ptext {
+	float: left;
+	width: 282px;
+}
+
+.mtext {
+	float: left;
+	width: 507px;
+	height: 25px;
+	line-height: 25px;
+}
+
+.mbut {
+	float: right;
+	width: 75px;
+}
+
+.purgebtn {
+	margin: 0 auto;
+	width: 200px;
+	text-align: center;
+}
+
+.butlabel {
+	margin: 0 0 22px;
+	line-height: 24px;
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.tiny {
+	height: 20px;
+	padding: 18px 20px 20px;
+}
+
+.toggleon {
+	background: url(onoff.jpg) 0px 0px no-repeat;
+	height: 24px;
+	width: 72px;
+	overflow: hidden;
+	display: block;
+	float: right;	
+}
+
+.toggleoff {
+	background: url(onoff.jpg) -72px 0px no-repeat;
+	height: 24px;
+	width: 72px;
+	overflow: hidden;
+	display: block;
+	float: right;
+}
+
+.toggles {
+	text-align: left;
+}
+
+.clrfl {
+	clear: both;
+}
