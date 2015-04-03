@@ -31,7 +31,7 @@ if ( ! function_exists( 'storefront_site_branding' ) ) {
 	 */
 	function storefront_site_branding() {
 		if ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) { ?>
-			<div class="site-branding"><?php jetpack_the_site_logo(); ?></div>
+			<div class="site-branding"><?php // jetpack_the_site_logo(); ?><img src="<?php bloginfo('template_directory');?>/images/logo.png"></div>
 		<?php } else { ?>
 			<div class="site-branding">
 				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
