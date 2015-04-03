@@ -167,7 +167,7 @@
 		li {
 			&.current-menu-item {
 				> a {
-					color: $color_body;
+					color: $color_brand !important;
 				}
 			}
 		}
@@ -178,18 +178,20 @@
 	 */
 	.main-navigation {
 		position: relative;
-		padding-top: 1.618em;
+		padding-top: 0;
+		border-bottom: 1px solid #ddd;
+		border-top: 1px solid #ddd;
 
 		ul.menu,
 		ul.nav-menu {
 			> li {
 				// The first level menu item
 				> a {
-					padding: 0 1em 2.244em;
+					padding: 1em 1.8em;
 				}
 
 				&:first-child {
-					margin-left: -1em;
+					margin-left: -1.5em;
 				}
 
 				&.menu-item-has-children,
@@ -318,9 +320,9 @@
 			}
 
 			a {
-				padding: 1.387em .857em;
+				padding: 1em .857em;
 				font-weight: 400;
-				color: lighten( $color_body, 20% );
+				color: lighten( $color_brand, 20% );
 
 				&:hover {
 					text-decoration: none;

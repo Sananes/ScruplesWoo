@@ -30,9 +30,9 @@ if ( ! function_exists( 'storefront_site_branding' ) ) {
 	 * @return void
 	 */
 	function storefront_site_branding() {
-		if ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) {
-			jetpack_the_site_logo();
-		} else { ?>
+		if ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) { ?>
+			<div class="site-branding"><?php jetpack_the_site_logo(); ?></div>
+		<?php } else { ?>
 			<div class="site-branding">
 				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 				<p class="site-description"><?php bloginfo( 'description' ); ?></p>

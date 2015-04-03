@@ -83,14 +83,14 @@
 	.widget_product_search {
 		input[type=text],
 		input[type=search] {
-			padding: 1.387em 1.618em;
-			line-height: 1;
+			padding: 1em 1em;
+			line-height: 1.1;
 			padding-left: 3.631em;
 		}
 
 		form {
 			&:before {
-				top: 1.387em;
+				top: 1.1em;
 				left: 1.618em;
 			}
 		}
@@ -1340,7 +1340,8 @@ dl.variation {
 			}
 		}
 
-		&:hover {
+		&:hover,
+		&.focus {
 			.widget_shopping_cart {
 				left: 0;
 			}
@@ -1527,7 +1528,7 @@ dl.variation {
 	.storefront-full-width-content.single-product {
 		div.product {
 			.images {
-				@include span(4 of 12);
+				@include span(6 of 12);
 				margin-bottom: 3.631em;
 
 				.thumbnails {
@@ -1542,7 +1543,7 @@ dl.variation {
 			}
 
 			.summary {
-				@include span(last 8 of 12);
+				@include span(last 6 of 12);
 				margin-bottom: 3.631em;
 			}
 
@@ -1738,19 +1739,28 @@ dl.variation {
 		border-width: 0 3px 3px 3px;
 	}
 
-	// Changing a payment method for a subscription
-	.woocommerce-info + #order_review {
-		border-width: 3px;
-		width: 100%;
-		float: none;
-
-		.payment_methods + .form-row {
-			padding: 1em;
-		}
-
-		.button#place_order {
-			display: block;
+	// Payment forms in account
+	.woocommerce-order-pay {
+		#order_review {
+			border-width: 3px;
 			width: 100%;
+			float: none;
+
+			#payment {
+				h3 {
+					padding-left: 1em;
+					padding-top: 1em;
+				}
+			}
+
+			.payment_methods + .form-row {
+				padding: 1em;
+			}
+
+			.button#place_order {
+				display: block;
+				width: 100%;
+			}
 		}
 	}
 
