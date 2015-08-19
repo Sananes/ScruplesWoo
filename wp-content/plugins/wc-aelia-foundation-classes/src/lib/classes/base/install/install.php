@@ -347,6 +347,20 @@ if(!class_exists('Aelia\WC\Aelia_Install')) {
 		}
 
 		/**
+		 * Extracts the version number from the name of an update method. The version
+		 * number has all the underscores replaced with periods.
+		 *
+		 * @param string method_name The name of an update method.
+		 * @return string The version extracted from the method name, with underscores
+		 * replaced with periods.
+		 * @since 1.5.6.150402
+		 */
+		protected function extract_version_from_method($method_name) {
+			$version = str_ireplace(self::UPDATE_METHOD_PREFIX, '', $method_name);
+			return str_ireplace('_', '.', $version);
+		}
+
+		/**
 		 * Runs all the update methods required to update the plugin to the latest
 		 * version.
 		 *
@@ -410,6 +424,11 @@ if(!class_exists('Aelia\WC\Aelia_Install')) {
 						$result = $this->$method();
 						if($result === false) {
 							break;
+						}
+						else {
+							// Keep track of the last successful update
+							$version = $this->extract_version_from_method($method);
+							update_option($plugin_id, $version);
 						}
 					}
 					catch(Exception $e) {

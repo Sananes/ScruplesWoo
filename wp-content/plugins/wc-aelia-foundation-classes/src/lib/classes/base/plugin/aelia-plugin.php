@@ -4,6 +4,7 @@ if(!defined('ABSPATH')) exit; // Exit if accessed directly
 
 use \ReflectionClass;
 use \Exception;
+use \WC_Admin_Reports;
 
 if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 	interface IAelia_Plugin {
@@ -185,26 +186,38 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		}
 
 		/**
+		 * Indicates if current visitor is a bot.
+		 *
+		 * @return bool
+		 * @since 1.5.6.150402
+		 */
+		protected static function visitor_is_bot() {
+			$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+			$bot_types = 'bot|crawl|slurp|spider';
+
+			$result = !empty($user_agent) ? preg_match("/$bot_types/", $user_agent) > 0 : false;
+			return apply_filters('wc_aelia_visitor_is_bot', $result);
+		}
+
+		/**
 		 * Ensures that the WooCommerce session is initialised. The method implements
 		 * checks to prevent redundant initialisations, in order to improve
 		 * performances.
 		 */
 		public static function init_woocommerce_session() {
 			global $woocommerce;
-			/* WooCommerce 2.1+ - Force setting of cart cookie, to ensure that session
-			 * data is loaded. This is necessary because the plugin requires access to
-			 * the session regardless of the cart status, and the cart cookies are the
-			 * ones that trigger the session initialisation.
+			/* WooCommerce 2.1+ - Initialise session, if needed. WooCommerce 2.0
+			 * and earlier initialise the session automatically as startup.
 			 */
 			if(version_compare($woocommerce->version, '2.1', '>=')) {
-				/* Make sure that the has_session() method exists, before using it. The
-				 * method was introduced in WooCommerce 2.1, but their dev team is known
-				 * for removing featurs without notice. If method does not exist, or if
-				 * its return value is false, initialise the session.
-				 */
-				if(!method_exists($woocommerce, 'has_session') ||
-					 !$woocommerce->session->has_session()) {
-					do_action('woocommerce_set_cart_cookies', true);
+				// If WooCommerce session was not initialised, start it
+				if(!Aelia_SessionManager::has_session()) {
+					// Only start the session if the visitor is not a bot
+					if(!self::visitor_is_bot()) {
+						// Initialise the session only if the visitor is not a bot. Bots don't use
+						// sessions and don't benefit from them, anyway
+						do_action('woocommerce_set_cart_cookies', true);
+					}
 				}
 			}
 		}
@@ -238,7 +251,7 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 */
 		protected function set_hooks() {
 			add_action('init', array($this, 'wordpress_loaded'));
-			add_action('init', array($this, 'run_updates'), 10);
+			add_action('admin_init', array($this, 'run_updates'));
 
 			// Called after all plugins have loaded
 			add_action('plugins_loaded', array($this, 'plugins_loaded'));
@@ -258,7 +271,7 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 * @return string
 		 */
 		public function path($key) {
-			return get_value($key, $this->paths, '');
+			return isset($this->paths[$key]) ? $this->paths[$key] : '';
 		}
 
 		/**
@@ -305,7 +318,7 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 * @return string
 		 */
 		public function url($key) {
-			return get_value($key, $this->urls, '');
+			return isset($this->urls[$key]) ? $this->urls[$key] : '';
 		}
 
 		/**
@@ -369,9 +382,10 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 * @return bool
 		 */
 		public function run_updates() {
-			// Run updates only when in Admin area. This should occur automatically when
-			// plugin is activated, since it's done in the Admin area
-			if(!is_admin()) {
+			// Run updates only when in Admin area. This should occur automatically
+			// when plugin is activated, since it's done in the Admin area. Updates
+			// are also NOT executed during Ajax calls
+			if(!is_admin() || self::doing_ajax()) {
 				return;
 			}
 
@@ -578,8 +592,8 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		protected function register_widget($widget_class, $stop_on_error = true) {
 			if(!class_exists($widget_class)) {
 				if($stop_on_error === true) {
-					$this->trigger_error(Aelia\WC\Messages::ERR_INVALID_WIDGET_CLASS,
-															 E_USER_ERROR, array($widget_class));
+					$this->trigger_error(\Aelia\WC\Messages::ERR_INVALID_WIDGET_CLASS,
+															 E_USER_WARNING, array($widget_class));
 				}
 				return false;
 			}
@@ -595,6 +609,57 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 */
 		public static function doing_ajax() {
 			return defined('DOING_AJAX') && DOING_AJAX;
+		}
+
+		/**
+		 * Indicates if we are preparing a report. The logic to determine which
+		 * report is being rendered was copied from WC_Admin_Reports class.
+		 *
+		 * @param mixed reports The report ID, or an array of report IDs. The function
+		 * will return true if we are rendering any of them.
+		 * @return bool
+		 * @since 1.5.19.150625
+		 * @see WC_Admin_Reports::output()
+		 */
+		public static function doing_reports($reports = array()) {
+			// Check if we are rendering a report page
+			if(is_admin() && isset($_GET['page']) && ($_GET['page'] === 'wc-reports')) {
+				/* If the "reports" argument is empty, we are just checking if we are
+				 * rendering ANY report page
+				 */
+				if(empty($reports)) {
+					return true;
+				}
+
+				if(!is_array($reports)) {
+					$reports = array($reports);
+				}
+
+				$available_reports = WC_Admin_Reports::get_reports();
+				$first_tab = array_keys($available_reports);
+				$current_tab = ! empty($_GET['tab']) ? sanitize_title($_GET['tab']) : $first_tab[0];
+				$current_report = isset($_GET['report']) ? sanitize_title($_GET['report']) : current(array_keys($available_reports[ $current_tab ]['reports']));
+
+				return empty($reports) || in_array($current_report, $reports);
+			}
+			return false;
+		}
+
+		/**
+		 * Indicates if we are on the "order edit" page.
+		 *
+		 * @return int|false The ID of the order being modified, or false if we are
+		 * on another page.
+		 * @since 1.5.19.150625
+		 */
+		public static function editing_order() {
+			if(!empty($_GET['action']) && ($_GET['action'] == 'edit') && !empty($_GET['post'])) {
+				global $post;
+				if(!empty($post) && ($post->type == 'shop_order')) {
+					return $post->ID;
+				}
+			}
+			return false;
 		}
 	}
 }

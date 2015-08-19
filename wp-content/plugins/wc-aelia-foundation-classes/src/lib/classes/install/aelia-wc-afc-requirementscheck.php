@@ -12,6 +12,11 @@ class Aelia_WC_AFC_RequirementsChecks extends Aelia_WC_RequirementsChecks {
 	// @var string The plugin for which the requirements are being checked. Change it in descendant classes.
 	protected $plugin_name = 'Aelia Foundation Classes for WooCommerce';
 
+	// @var array An array of WordPress plugins (name => version) required by the plugin.
+	protected $required_plugins = array(
+		'WooCommerce' => '2.1.9',
+	);
+
 	/**
 	 * Factory method. It MUST be copied to every descendant class, as it has to
 	 * be compatible with PHP 5.2 and earlier, so that the class can be instantiated

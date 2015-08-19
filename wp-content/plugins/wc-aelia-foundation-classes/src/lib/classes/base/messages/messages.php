@@ -39,7 +39,10 @@ class Messages {
 		$this->add_message(self::ERR_NOT_IMPLEMENTED, __('Not implemented.', $this->text_domain));
 		$this->add_error_message(self::ERR_INVALID_TEMPLATE,
 														 __('Rendering - Requested template could not be found in either plugin\'s ' .
-																'folders, nor in your theme. Plugin slug: "%s". Template name: "%s".'.
+																'folders, nor in your theme. Plugin slug: "%s". Template name: "%s".',
+																$this->text_domain));
+		$this->add_error_message(self::ERR_INVALID_WIDGET_CLASS,
+														 __('Invalid widget class: "%s".',
 																$this->text_domain));
 
 		// TODO Add here all the error messages used by the plugin

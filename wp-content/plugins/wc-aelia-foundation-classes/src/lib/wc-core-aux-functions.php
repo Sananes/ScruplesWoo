@@ -228,3 +228,55 @@ if(!function_exists('aelia_t')) {
 		return $value;
 	}
 }
+
+if(!function_exists('aelia_wc_version_is')) {
+	/**
+	 * Indicates if the WooCommerce version is greater or equal to the one passed
+	 * as a parameter.
+	 *
+	 * @param string $comparison_operator The operator to use for version comparison.
+	 * Any of the operators supported by the version_compare function can be used.
+	 * @param string version The version to which WooCommerce version will be compare.
+	 * @return bool The result of the version comparison.
+	 * @link http://php.net/manual/en/function.version-compare.php
+	 * @since 1.5.10.150505
+	 */
+	function aelia_wc_version_is($comparison_operator, $version) {
+		global $woocommerce;
+		return version_compare($woocommerce->version, $version, $comparison_operator);
+	}
+}
+
+if(!function_exists('aelia_wc_registered_order_types')) {
+	/**
+	 * Returns a list of registered order types. The order types API was sneakily
+	 * introduced in WooCommerce 2.2, without announcement and documentation. Since
+	 * the AFC plugin must provide backward compatibility, this function will ensure
+	 * that the list of order types can be retrieved in WC2.1 and earlier as well.
+	 *
+	 * @param bool keys_only If True, only the order types will be passed, without
+	 * the array of data associated to them.
+	 * @param bool include_refunds If True, the "shop_order_refunds" type will be
+	 * excluded from the result.
+	 * @return array
+	 * @see wc_register_order_type
+	 * @since 1.5.18.150604
+	 */
+	function aelia_wc_registered_order_types($keys_only = true, $include_refunds = false) {
+		if(function_exists('wc_get_order_types')) {
+			$result = wc_get_order_types();
+			// Remove the "refund" order type, if requested
+			if(!$include_refunds && isset($result['shop_order_refund'])) {
+				unset($result['shop_order_refuns']);
+			}
+		}
+		else {
+			$result = array('shop_order' => array());
+		}
+
+		if($keys_only) {
+			$result = array_keys($result);
+		}
+		return $result;
+	}
+}

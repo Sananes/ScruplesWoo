@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   SG_CachePress
- * @author    SiteGround 
+ * @author    SiteGround
  * @author    George Penkov
  * @author    Gary Jones <gamajo@gamajo.com>
  * @link      http://www.siteground.com/
@@ -77,7 +77,7 @@ class SG_CachePress_Supercacher {
      *
      * @return null
      */
-	public function purge_cache() {
+	public static function purge_cache($dontDie = false) {
 		global $sg_cachepress_supercacher;
 		if ( $sg_cachepress_supercacher->environment->is_using_cli() )
 			return;
@@ -87,8 +87,14 @@ class SG_CachePress_Supercacher {
 
 		$purge_request = $sg_cachepress_supercacher->environment->get_application_path() . '(.*)';
 
-		// Check if caching server is online
-		$hostname = trim( file_get_contents( '/etc/sgcache_ip', true ) );
+		// Check if caching server is varnish or nginx.
+		$sgcache_ip = '/etc/sgcache_ip';
+		$hostname = $_SERVER['SERVER_ADDR'];
+		$purge_method = "PURGE";
+		if (file_exists($sgcache_ip)) {
+			$hostname = trim( file_get_contents( $sgcache_ip, true ) );
+			$purge_method = "BAN";
+		}
 
 		$cache_server_socket = fsockopen( $hostname, 80, $errno, $errstr, 2 );
 		if( ! $cache_server_socket ) {
@@ -96,7 +102,7 @@ class SG_CachePress_Supercacher {
 			return;
 		}
 
-		$request = "BAN {$purge_request} HTTP/1.0\r\n";
+		$request = "$purge_method {$purge_request} HTTP/1.0\r\n";
       	$request .= "Host: {$_SERVER['SERVER_NAME']}\r\n";
       	$request .= "Connection: Close\r\n\r\n";
 
@@ -108,12 +114,41 @@ class SG_CachePress_Supercacher {
       	// Only die (or notify) if doing an Ajax request
 		if ( $sg_cachepress_supercacher->environment->action_data_is( 'sg-cachepress-purge' ) ) {
 			if ( preg_match( '/200/', $response ) )
+			{
+				if ($dontDie)
+					return true;
+
 				wp_die( 1 );
+			}
 			else
+			{
+				if ($dontDie)
+					return false;
+
 				wp_die( 0 );
+			}
 		}
 	}
 
+	/**
+	 * Purges the cache and redirects to referrer (admin bar button)
+	 *
+	 * @since 2.2.1
+	 */
+	public static function purge_cache_admin_bar()
+	{
+		if ( isset( $_GET['_wpnonce'] ) )
+		{
+			if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'sg-cachepress-purge' ) )
+			{
+				wp_nonce_ays( '' );
+			}
+
+			self::purge_cache(true);
+			wp_redirect( wp_get_referer() );
+			die();
+		}
+	}
 	/**
 	 * Print notification in the admin section, or via AJAX
 	 *
@@ -159,7 +194,8 @@ class SG_CachePress_Supercacher {
 		add_action( 'switch_theme', array( $this,'hook_switch_theme' ) );
 		add_action( 'customize_save', array( $this,'hook_switch_theme' ) );
 		add_action( 'automatic_updates_complete', array( $this,'hook_atomatic_update' ) );
-		add_action( 'future_to_publish', array( $this,'scheduled_goes_live' ) );		
+		add_action( 'future_to_publish', array( $this,'scheduled_goes_live' ) );
+		add_action( '_core_updated_successfully', array( $this,'core_update_hook' ) );		
 
 		// @todo Move the rest of this to a new method - and document what events it is capturing!
 
@@ -169,15 +205,15 @@ class SG_CachePress_Supercacher {
 					|| isset($_POST['skip-cropping']) || (isset($_POST['submit']) && $_POST['submit'] == 'Crop and Publish')
 					|| isset($_POST['remove-background']) || (isset($_POST['submit']) && $_POST['submit'] == 'Upload')
 					|| isset($_POST['save-background-options']))
-				$this->purge_cache();
+				self::purge_cache();
 
 			if ( isset( $_POST['action'] ) ) {
 				if ( in_array( $_POST['action'], array( 'widgets-order','save-widget','delete-selected' ) ) )
-					$this->purge_cache();
+					self::purge_cache();
 
 				if ( isset( $_POST['submit'] ) && 'update' === $_POST['action'] ) {
 					if ( in_array( $_POST['submit'], array( 'Update File', 'Save Changes' ) ) )
-						$this->purge_cache();
+						self::purge_cache();
 				}
 
 			}
@@ -189,23 +225,23 @@ class SG_CachePress_Supercacher {
 
 				if ( 'options-permalink.php' === $ref ) {
 					if ( 'update' === $_POST['action'] && 'Save Changes' === $_POST['submit'] && 'permalinks' === $_POST['option_page'] )
-						$this->purge_cache();
+						self::purge_cache();
 				}
 			}
 
 			if( isset( $_POST['save_menu'] ) ) {
 				// Add Menu
 				if( in_array( $_POST['save_menu'], array( 'Create Menu', 'Save Menu' ) ) )
-					$this->purge_cache();
+					self::purge_cache();
 
 			}
 		}
 
 		if ( ! empty( $_GET ) && isset( $_GET['action'] ) ) {
 			if ( isset( $_GET['menu'] ) && 'delete' === $_GET['action'] )
-				$this->purge_cache();
+				self::purge_cache();
 			if ( isset( $_GET['plugin'] ) && 'activate' === $_GET['action'] )
-				$this->purge_cache();
+				self::purge_cache();
 		}
 	}
 
@@ -218,7 +254,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_add_post( $post_id ) {
 		if ( $this->environment->post_data_is( 'Publish', 'publish' ) || $this->environment->action_data_is( 'editpost' ) || $this->environment->action_data_is( 'inline-save' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -230,7 +266,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_delete_post( $post_id ) {
 		if( isset( $_GET['action'] ) && ( 'delete' === $_GET['action'] || 'trash' === $_GET['action'] ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -242,7 +278,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_add_category( $cat_id ) {
 		if ( $this->environment->action_data_is( 'add-tag' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -254,7 +290,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_edit_category( $cat_id ) {
 		if ( $this->environment->action_data_is( 'editedtag' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -266,7 +302,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_delete_category( $cat_id ) {
 		if ( $this->environment->action_data_is( 'delete-tag' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -278,7 +314,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_add_link( $link_id ) {
 		if ( $this->environment->action_data_is( 'add' ) && $this->environment->post_data_is( 'Add Link', 'save' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -290,7 +326,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_edit_link( $link_id ) {
 		if ( $this->environment->action_data_is( 'editedtag' ) && $this->environment->post_data_is( 'Update', 'submit' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -302,7 +338,7 @@ class SG_CachePress_Supercacher {
 	 */
 	public function hook_delete_link( $link_id ) {
 		if ( $this->environment->action_data_is( 'delete-tag' ) && $this->environment->post_data_is( 'link_category', 'taxonomy' ) )
-			$this->purge_cache();
+			self::purge_cache();
 	}
 
 	/**
@@ -319,7 +355,7 @@ class SG_CachePress_Supercacher {
 
 			//  Purge post page
 			if ( $comment )
-				$this->purge_cache();
+				self::purge_cache();
 		}
 	}
 
@@ -337,7 +373,7 @@ class SG_CachePress_Supercacher {
 
 			//  Purge post page
 			if( $comment )
-				$this->purge_cache();
+				self::purge_cache();
 		}
 	}
 
@@ -355,7 +391,7 @@ class SG_CachePress_Supercacher {
 			|| ( isset( $_GET['action'] ) && isset( $_GET['c'] ) && 'trashcomment' === $_GET['action'] ) ) {
 			$comment = get_comment( $_POST['id'] );
 			if ( $comment )
-				$this->purge_cache();
+				self::purge_cache();
 		}
 	}
 
@@ -365,24 +401,50 @@ class SG_CachePress_Supercacher {
 	 * @since Unknown
 	 */
 	public function hook_switch_theme() {
-		$this->purge_cache();
+		self::purge_cache();
 	}
-	
+
 	/**
 	 * Purge cache when the Automatic Updates are completd.
 	 *
 	 * @since 3.8.1
 	 */
 	public function hook_atomatic_update() {
-		$this->purge_cache();
+		self::purge_cache();
 	}
-	
+
 	/**
 	 * Purge cache when Scheduled post becomes Published
 	 *
 	 * @since 3.8.1
 	 */
 	public function scheduled_goes_live() {
-		$this->purge_cache();
+		self::purge_cache();
+	}
+	
+	/**
+	 * Purge cache when after successful WordPress core update
+	 *
+	 * @since 3.8.1
+	 */
+	public function core_update_hook() {
+	    self::purge_cache();
+	}
+	
+	
+	/**
+	 * Returns if the cache header is on
+	 * @param string $url
+	 * @return bool
+	 */
+	public static function return_cache_result( $url )
+	{
+	    $response = wp_remote_get($url);
+	    $xProxyCache = wp_remote_retrieve_header( $response, 'x-proxy-cache' );
+
+	    if($xProxyCache == 'HIT')
+	        return true;
+	    else
+	        return false;
 	}
 }

@@ -11,15 +11,30 @@ if(!function_exists('get_value')) {
 	 * @param mixed $default The value to return if the key does not exist.
 	 * @return mixed The value from the array or object.
 	 */
-	function get_value($key, &$collection, $default = FALSE) {
+	function get_value($key, $collection, $default = FALSE) {
 		$result = $default;
-		if(is_array($collection) && array_key_exists($key, $collection)) {
+		if(is_array($collection) && isset($collection[$key])) {
 			$result = $collection[$key];
-		} elseif(is_object($collection) && property_exists($collection, $key)) {
+		} elseif(is_object($collection) && isset($collection->$key)) {
 			$result = $collection->$key;
 		}
 
 		return $result;
+	}
+}
+
+if(!function_exists('get_arr_value')) {
+	/**
+	 * Return the value from an associative array.
+	 *
+	 * @param string $key The key of the value.
+	 * @param mixed $collection The array search.
+	 * @param mixed $default The value to return if the key does not exist.
+	 * @return mixed The value from the array, or the default.
+	 * @since 1.5.12.150512
+	 */
+	function get_arr_value($key, array $collection, $default = FALSE) {
+		return isset($collection[$key]) ? $collection[$key] : $default;
 	}
 }
 

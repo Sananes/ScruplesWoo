@@ -3,8 +3,8 @@ Contributors: daigo75, aelia
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F8ND89AA8B8QJ
 Tags: woocommerce, utility
 Requires at least: 3.6
-Tested up to: 4.1
-Stable tag: 1.5.4.150316
+Tested up to: 4.2
+Stable tag: 1.5.19.150625
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,65 @@ Should you have any question about this product, please feel free to [contact us
 For more information about installation and management of plugins, please refer to [WordPress documentation](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 1.5.19.150625 =
+* Added new `Aelia_Plugin::editing_order()` method.
+* Added new `Aelia_Plugin::doing_reports()` method.
+* Improved rendering of setting pages. Now content posted by customer is escaped, to prevent issues due to HTML embedded in it.
+
+= 1.5.18.150604 =
+* Added new `aelia_wc_registered_order_types()` function. The function will provide a list of the registered order types even in WC2.1 and earlier.
+
+= 1.5.17.150529 =
+* Improved requirement checking. Now the plugin gracefully informs the user if an unsupported PHP version is installed.
+
+= 1.5.16.150519 =
+* Updated requirements. The AFC plugin now requires at least WooCommerce 2.1.9, as method `WC_Session_Handler::has_session()`, invoked by the plugin Session Manager, was introduced in that release.
+
+= 1.5.15.150518 =
+* Improved rendering of plugin settings page:
+	* Added check to prevent raising a warning when no plugin settings are found.
+	* Added CSS class to the plugin settings form, to simplify styling.
+
+= 1.5.14.150514 =
+* Improved performance. Moved call to updater and installer to the `admin_init` event.
+
+= 1.5.13.150514 =
+* Fixed bug in initialisation of WooCommerce session. the bug caused the session to be initialised when not needed.
+* Added caching of session status, to improve performance.
+
+= 1.5.12.150512 =
+* Optimised Composer autoloader to improve performance.
+* Updated GeoIP library and database.
+* Refactored `get_value()` function. The function now uses `isset()` to determine the existence of a key. NOTE: this change makes the function behave differently from before. Now it will return the default value also if the key IS set, but it's "null".
+* Refactored `Aelia_Plugin::path()` and `Aelia_Plugin::url()` to improve performance.
+* Added `get_arr_value()` function.
+
+= 1.5.11.150507 =
+* Extended `Aelia_SessionManager class`. Added `set_cookie()` and `get_cookie()` methods.
+
+= 1.5.10.150505 =
+* Added `aelia_wc_version_is()` function. The function allows quickly compare the version of WooCommerce against an arbitrary version value.
+
+= 1.5.9.150504 =
+* Added support for CloudFlare. The IP2Location class can now use the country detect by CloudFlare and skips its internal detection logic.
+* Added new *wc_aelia_ip2location_before_get_country_code* filter. This new filter will allow 3rd parties to set the country code as they wish, skipping the geolocation detection logic.
+
+= 1.5.8.150429 =
+* Improved check to prevent initialising a WooCommerce session when one was already started.
+* Added new method to check if a WooCommerce session was started.
+* Removed legacy code for WooCommerce 1.6.x.
+
+= 1.5.7.150408 =
+* Changed scope of `Aelia_Plugin::visitor_is_bot()` to static.
+* Updated GeoIP database.
+
+= 1.5.6.150402 =
+* Optimised auto-update logic. The logic now keeps track of the last successful step and, in case of error, it resumes the updates starting from it, rather than from the beginning .
+* Added logic to prevent automatic initialisation of sessions when bots visit the site.
+
+= 1.5.5.150318 =
+* Fixed bug in handling of error messages related to invalid widget classes.
 
 = 1.5.4.150316 =
 * Refactored `Aelia_WC_RequirementsChecks` class to fix incompatibility with wpMandrill plugin.

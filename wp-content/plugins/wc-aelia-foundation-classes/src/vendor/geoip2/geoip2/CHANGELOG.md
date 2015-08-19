@@ -1,6 +1,98 @@
 CHANGELOG
 =========
 
+2.3.1 (2015-06-30)
+------------------
+
+* Updated `maxmind/web-service-common` to version with fixes for PHP 5.3 and
+  5.4.
+
+2.3.0 (2015-06-29)
+------------------
+
+* Support for demographics fields `averageIncome` and `populationDensity` in
+  the `Location` record, returned by the Insights endpoint.
+* The `isAnonymousProxy` and `isSatelliteProvider` properties on
+  `GeoIP2\Record\Traits` have been deprecated. Please use our [GeoIP2
+  Anonymous IP database](https://www.maxmind.com/en/geoip2-anonymous-ip-database)
+  to determine whether an IP address is used by an anonymizing service.
+
+2.2.0-beta1 (2015-06-09)
+------------------------
+
+* Typo fix in documentation.
+
+2.2.0-alpha2 (2015-06-01)
+-------------------------
+
+* `maxmind-ws/web-service-common` was renamed to `maxmind/web-service-common`.
+
+2.2.0-alpha1 (2015-05-22)
+-------------------------
+
+* The library no longer uses Guzzle and instead uses curl directly.
+* Support for `timeout` and `connectTimout` were added to the `$options` array
+  passed to the `GeoIp2\WebService\Client` constructor. Pull request by Will
+  Bradley. GitHub #36.
+
+2.1.1 (2014-12-03)
+------------------
+
+* The 2.1.0 Phar builds included a shebang line, causing issues when loading
+  it as a library. This has been corrected. GitHub #33.
+
+2.1.0 (2014-10-29)
+------------------
+
+* Update ApiGen dependency to version that isn't broken on case sensitive
+  file systems.
+* Added support for the GeoIP2 Anonymous IP database. The
+  `GeoIP2\Database\Reader` class now has an `anonymousIp` method which returns
+  a `GeoIP2\Model\AnonymousIp` object.
+* Boolean attributes like those in the `GeoIP2\Record\Traits` class now return
+ `false` instead of `null` when they were not true.
+
+2.0.0 (2014-09-22)
+------------------
+
+* First production release.
+
+0.9.0 (2014-09-15)
+------------------
+
+* IMPORTANT: The deprecated `omni()` and `cityIspOrg()` methods have been
+  removed from `GeoIp2\WebService\Client`.
+
+0.8.1 (2014-09-12)
+------------------
+
+* The check added to the `GeoIP2\Database\Reader` lookup methods in 0.8.0 did
+  not work with the GeoIP2 City Database Subset by Continent with World
+  Countries. This has been fixed. Fixes GitHub issue #23.
+
+0.8.0 (2014-09-10)
+------------------
+
+* The `GeoIp2\Database\Reader` lookup methods (e.g., `city()`, `isp()`) now
+  throw a `BadMethodCallException` if they are used with a database that
+  does not match the method. In particular, doing a `city()` lookup on a
+  GeoIP2 Country database will result in an exception, and vice versa.
+* A `metadata()` method has been added to the `GeoIP2\Database\Reader` class.
+  This returns a `MaxMind\Db\Reader\Metadata` class with information about the
+  database.
+* The name attribute was missing from the RepresentedCountry class.
+
+0.7.0 (2014-07-22)
+------------------
+
+* The web service client API has been updated for the v2.1 release of the web
+  service. In particular, the `cityIspOrg` and `omni` methods on
+  `GeoIp2\WebService\Client` should be considered deprecated. The `city`
+  method now provides all of the data formerly provided by `cityIspOrg`, and
+  the `omni` method has been replaced by the `insights` method.
+* Support was added for GeoIP2 Connection Type, Domain and ISP databases.
+
+
 0.6.3 (2014-05-12)
 ------------------
 

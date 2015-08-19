@@ -1,17 +1,17 @@
 === SG CachePress ===
 Contributors: Hristo Sg
-Tags: varnish, caching, speed, memcache, memcached, performance, siteground
+Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
 Requires at least: 3.0.1
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The SG CachePress is a plugin that allows you to use dynamic cache powered by Varnish and Memcached to optimize the performance of your WordPress.
+The SG CachePress is a plugin that allows you to use the SiteGround dynamic cache and Memcached to optimize the performance of your WordPress.
 
 == Description ==
 
-The main functionality of SG CachePress is to purge your Varnish cache whenever your content updates. For example, when you create a new post, someone comments your articles, etc. In addition to that, if you have a working Memcached service on your server, the plugin will allow you to easily configure and enable WordPress to use it.
+The main functionality of SG CachePress is to purge your dynamic cache whenever your content updates. For example, when you create a new post, someone comments your articles, etc. In addition to that, if you have a working Memcached service on your server, the plugin will allow you to easily configure and enable WordPress to use it.
 
 = Requirements =
 
@@ -42,9 +42,9 @@ In order to work correctly, this plugin requires that your server meets the foll
 
 = Dynamic Cache Settings =
 
-* Dynamic Cache ON/OFF - enable or disable the Varnish-powered Dynamic caching system
+* Dynamic Cache ON/OFF - enable or disable the SiteGround Dynamic caching system
 * AutoFlush Cache ON/OFF - automatically flush the Dynamic cache when you edit your content
-* Purge Cache - Manually purge all cached data from the Varnish cache
+* Purge Cache - Manually purge all cached data from the dynamic cache
 
 = Exclude URLs From Dynamic Caching = 
 
@@ -54,6 +54,38 @@ This field allows you to exclude URLs from the cache. This means that if you nee
 * Enable Memcached - Store in the server's memory (using Memcached) frequently executed queries to the database for a faster access on a later use.
 
 == Changelog ==
+
+= Version 2.2.9 =
+* Bug fixes
+
+= Version 2.2.8 =
+* Bug fixing and improved notification behaviour
+* Fixed issues with MS installations
+
+= Version 2.2.7 =
+* Added testing box and notification if Dynamic Cache is not enabled in cPanel
+
+= Version 2.2.6 =
+* Fixed bug with Memcached causing issues after WP Database update
+
+= Version 2.2.5 =
+* Minor system improvements
+
+= Version 2.2.4 =
+* Minor system improvements
+
+= Version 2.2.3 =
+* Admin bar link visible only for admin users
+
+= Version 2.2.2 =
+* Minor bug fixes
+
+= Version 2.2.1 =
+* Added Purge SG Cache button
+* Redesigned mobile-friendly interface
+
+= Version 2.2.0 =
+* Added NGINX support
 
 = Version 2.1.7 =
 * Fixed plugin activation bug

@@ -54,9 +54,9 @@ class SG_CachePress_Environment {
 		if ( ! isset( $this->data['application_path'] ) ) {
 			$homeUrl = home_url( '/' );
 			$urlExplode = explode( $_SERVER['HTTP_HOST'], $homeUrl );
-			$this->data['applicaiton_path'] = $urlExplode[1];
+			$this->data['application_path'] = $urlExplode[1];
 		}
-		return $this->data['applicaiton_path'];
+		return $this->data['application_path'];
 	}
 
 	/**

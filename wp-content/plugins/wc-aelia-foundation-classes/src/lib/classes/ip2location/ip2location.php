@@ -45,33 +45,43 @@ class IP2Location {
 	public function get_country_code($ip_address){
 		//$ip_address = @gethostbyname($host);
 
-		$country_code = '';
-		// IP address must be either an IPv4 or an IPv6
-		if((filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) &&
-			 (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false)) {
-			$this->errors[] = sprintf(__('Method IP2Location::get_country_code() expects a valid IPv4 or IPv6 ' .
-																	 'address (it will not work with host names). "%s" was passed, which is ' .
-																	 'not a valid address.',
-																	 $this->text_domain),
-																$ip_address);
-			$country_code = false;
+		// Allow 3rd parties to set the country code, if they wish
+		$country_code = apply_filters('wc_aelia_ip2location_before_get_country_code', '');
+
+		// Get the country code from CloudFlare, if it was passed
+		if(empty($country_code) && !empty($_SERVER['HTTP_CF_IPCOUNTRY'])) {
+			$country_code =  $_SERVER['HTTP_CF_IPCOUNTRY'];
 		}
 
-		if($country_code !== false) {
-			try {
-				// Create the Reader object, which should be reused across lookups.
-				$reader = new Reader(self::geoip_db_file());
-				$record = $reader->country($ip_address);
-
-				$country_code = $record->country->isoCode;
-			}
-			catch(\Exception $e) {
-				$this->errors[] = sprintf(__('Error(s) occurred while retrieving Geolocation information ' .
-																		 'for IP Address "%s". Error: %s.',
+		// If the country code is still empty at this stage, perform the detection
+		if(empty($country_code)) {
+			// IP address must be either an IPv4 or an IPv6
+			if((filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) &&
+				 (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false)) {
+				$this->errors[] = sprintf(__('Method IP2Location::get_country_code() expects a valid IPv4 or IPv6 ' .
+																		 'address (it will not work with host names). "%s" was passed, which is ' .
+																		 'not a valid address.',
 																		 $this->text_domain),
-																	$ip_address,
-																	$e->getMessage());
+																	$ip_address);
 				$country_code = false;
+			}
+
+			if($country_code !== false) {
+				try {
+					// Create the Reader object, which should be reused across lookups.
+					$reader = new Reader(self::geoip_db_file());
+					$record = $reader->country($ip_address);
+
+					$country_code = $record->country->isoCode;
+				}
+				catch(\Exception $e) {
+					$this->errors[] = sprintf(__('Error(s) occurred while retrieving Geolocation information ' .
+																			 'for IP Address "%s". Error: %s.',
+																			 $this->text_domain),
+																		$ip_address,
+																		$e->getMessage());
+					$country_code = false;
+				}
 			}
 		}
 

@@ -38,6 +38,7 @@ class SG_CachePress_Options {
 	 */
 	public function get_option( $key = null ) {
 		$options = get_option( $this->options_key );
+
 		if ( $key && isset( $options[ $key ] ) )
 			return (int) $options[ $key ];
 		return $options;
@@ -132,9 +133,10 @@ class SG_CachePress_Options {
 	 */
 	public function get_defaults() {
 		return array(
-			'enable_cache'     => get_option( 'SGCP_Use_SG_Cache', 0 ),
-			'autoflush_cache'  => get_option( 'SGCP_Autoflush', 1 ),
-			'enable_memcached' => get_option( 'SGCP_Memcached', 1 ),
+			'enable_cache'               => get_option( 'SGCP_Use_SG_Cache', 0 ),
+			'autoflush_cache'            => get_option( 'SGCP_Autoflush', 1 ),
+			'enable_memcached'           => get_option( 'SGCP_Memcached', 1 ),
+		    'show_notice'                => get_option( 'SGCP_ShowNotice', 0 )
 		);
 	}
 
@@ -147,6 +149,7 @@ class SG_CachePress_Options {
 		delete_option( 'SGCP_Use_SG_Cache' );
 		delete_option( 'SGCP_Autoflush' );
 		delete_option( 'SGCP_Memcached' );
+		delete_option( 'SGCP_ShowNotice' );
 	}
 
 	/**

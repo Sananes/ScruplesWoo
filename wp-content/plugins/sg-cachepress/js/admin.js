@@ -115,3 +115,52 @@ function sg_cachepress_purged(data) {
 		jQuery('#sg-cachepress-purgefailure').fadeIn();
 	}
 }
+
+
+jQuery("#cachetest").submit(function( event ) { sg_cachepress_test_submit();  event.preventDefault(); });
+
+var cachepress_test_counter = 0;
+function sg_cachepress_test_submit( )
+{
+	jQuery('.status_test').slideUp();
+	jQuery('#sg-cachepress-test').prop('disabled',true).attr('value','Testing...');
+	jQuery('#testurl').prop('disabled',true);
+	var postUrl = jQuery("#testurl").val();
+	
+	var ajaxUrl = sgCachePressL10n.ajax_url;
+	jQuery.post(ajaxUrl,{action:'sg-cachepress-cache-test',url:postUrl},function(result){ sg_cachepress_test_result(result); });
+}
+
+function sg_cachepress_test_result(result)
+{
+	cachepress_test_counter = cachepress_test_counter + 1;
+	
+	if(result == 1)
+		sg_cachepress_test_result_success();
+
+	if(result == 0 && cachepress_test_counter == 1)
+		setTimeout("sg_cachepress_test_submit();",2000);
+	else if(result == 0)
+		sg_cachepress_test_result_fail();
+
+	if(result == 1 || cachepress_test_counter == 2)
+		cachepress_test_counter = 0;
+}
+
+function sg_cachepress_test_result_success()
+{
+	jQuery('#sg-cachepress-test').prop('disabled',false).attr('value','Test URL');
+	jQuery('#testurl').prop('disabled',false);
+	
+	jQuery('#status_test_value').html('<span class="cached">CACHED</span>');
+	jQuery('.status_test').slideDown();
+}
+
+function sg_cachepress_test_result_fail()
+{
+	jQuery('#sg-cachepress-test').prop('disabled',false).attr('value','Test URL');
+	jQuery('#testurl').prop('disabled',false);
+	
+	jQuery('#status_test_value').html('<span class="notcached">NOT CACHED</span>');
+	jQuery('.status_test').slideDown();
+}

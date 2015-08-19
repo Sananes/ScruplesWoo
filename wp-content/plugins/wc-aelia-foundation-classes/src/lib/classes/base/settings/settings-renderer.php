@@ -271,7 +271,7 @@ class Settings_Renderer {
 				}
 
 				$section_id = get_value('id', $section);
-				if(get_value($section_id, $wp_settings_fields[$page], false) == true) {
+				if(isset($wp_settings_fields[$page]) && get_value($section_id, $wp_settings_fields[$page], false) == true) {
 					echo '<table class="form-table">';
 					do_settings_fields($page, $section['id']);
 					echo '</table>';
@@ -307,7 +307,7 @@ class Settings_Renderer {
 		echo '<p>' . $this->page_description() . '</p>';
 
 		settings_errors();
-		echo '<form id="' . $this->_settings_key . '_form" method="post" action="options.php">';
+		echo '<form id="' . $this->_settings_key . '_form" method="post" action="options.php" class="wc-aelia-plugin-settings">';
 		settings_fields($this->_settings_key);
 		//do_settings_sections($this->_settings_key);
 		$this->render_settings_sections($this->_settings_key);
@@ -454,7 +454,7 @@ class Settings_Renderer {
 			'>';
 		foreach($dropdown_options as $value => $label) {
 			$selected_attr = in_array($value, $selected_options) ? 'selected="selected"' : '';
-			$html .= '<option value="' . $value . '" ' . $selected_attr . '>' . $label . '</option>';
+			$html .= '<option value="' . esc_html($value) . '" ' . $selected_attr . '>' . $label . '</option>';
 		}
 		$html .= '</select>';
 		if(!empty($attributes['description'])) {
@@ -483,7 +483,7 @@ class Settings_Renderer {
 			'<input type="' . $type . '" ' .
 			'id="' . $field_id . '" ' .
 			'name="' . $field_name . '" ' .
-			'value="' . $value . '" ' .
+			'value="' . esc_html($value) . '" ' .
 			$this->attributes_to_string($attributes) .
 			' />';
 		if(!empty($attributes['description'])) {
@@ -518,7 +518,7 @@ class Settings_Renderer {
 			'id="' . $field_id . '" ' .
 			'name="' . $field_name . '" ' .
 			$this->attributes_to_string($attributes) .
-			'>' . $value . '</textarea>';
+			'>' . esc_html($value) . '</textarea>';
 		if(!empty($attributes['description'])) {
 			$html .= '<p class="description">' . $attributes['description'] . '</p>';
 		}
