@@ -532,6 +532,9 @@
 	font-size: 1.3em;
 	text-decoration: underline !important;
 }
+.wpallimport-plugin .wpallimport-delete-posts-warning{
+	display: none;
+}
 /*--------------------------------------------------------------------------
 *
 *	Helpers
@@ -1125,6 +1128,35 @@
 	-webkit-border-top-right-radius: 4px;	
 	-moz-border-radius-bottomleft: 4px;
 	-webkit-border-bottom-left-radius: 4px;
+}
+.wpallimport-plugin .wpallimport-bottom-radius{
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;					
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;						
+	-webkit-border-bottom-right-radius: 4px;						
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;					
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-left-radius: 0px;						
+	-webkit-border-top-right-radius: 0px;
+}
+
+.wpallimport-plugin .wpallimport-top-radius{
+	border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;					
+	-moz-border-radius-bottomleft: 0px !important;
+	-moz-border-radius-bottomright: 0px !important;
+	-webkit-border-bottom-left-radius: 0px !important;						
+	-webkit-border-bottom-right-radius: 0px !important;						
+	border-top-left-radius: 4px !important;
+	border-top-right-radius: 4px !important;
+	-moz-border-radius-topleft: 4px !important;
+	-moz-border-radius-topright: 4px !important;
+	-webkit-border-top-left-radius: 4px !important;						
+	-webkit-border-top-right-radius: 4px !important;
 }
 .wpallimport-plugin .wpallimport-choose-post-type{ padding-top: 40px; }
 .wpallimport-plugin .wpallimport-file-upload-result{ padding-top: 30px; overflow: hidden; }
@@ -1885,7 +1917,8 @@
 	line-height: 25px;
 	width: 68% !important;
 }
-.wpallimport-plugin .wpallimport-custom-fields .wpallimport-custom-fields-actions{
+.wpallimport-plugin .wpallimport-custom-fields .wpallimport-custom-fields-actions,
+.wpallimport-plugin .wpallimport-real-estate .wpallimport-custom-fields-actions{
 	float: right;	
 	right: 30px;
 	position: relative;
@@ -2058,6 +2091,7 @@
 .wpallimport-plugin .post_taxonomy{	
 	/*margin-bottom: 15px;*/
 	overflow: hidden;
+	padding-left: 5px;
 	/*padding-bottom: 15px;*/
 }
 	.wpallimport-plugin .post_taxonomy .delim{
@@ -2196,8 +2230,8 @@
 	border: 0px;
 }
 .wpallimport-plugin .wpallimport-not-empty{
-	display: block;
-	padding: 5px;
+	/*display: block;
+	padding: 5px;*/
 }
 /*--------------------------------------------------------------------------
 *

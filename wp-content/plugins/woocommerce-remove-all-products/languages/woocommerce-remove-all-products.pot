@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Remove All Products\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 08:33-0300\n"
-"PO-Revision-Date: 2015-02-10 08:34-0300\n"
+"POT-Creation-Date: 2015-08-07 15:26-0300\n"
+"PO-Revision-Date: 2015-08-07 15:27-0300\n"
 "Last-Translator: Gabriel Reguly <wordpress@ppgr.com.br>\n"
 "Language-Team: omniWP\n"
 "Language: Português Brasileiro\n"
@@ -33,67 +33,67 @@ msgstr ""
 msgid "Your settings have been saved."
 msgstr ""
 
-#: ../plugin.php:107
+#: ../plugin.php:109
 msgid "No products found."
 msgstr ""
 
-#: ../plugin.php:109
+#: ../plugin.php:111
 #, php-format
 msgid "Found %s products."
 msgstr ""
 
-#: ../plugin.php:114
+#: ../plugin.php:116
 msgid "Delete all products, no confirmations will be asked!!"
 msgstr ""
 
-#: ../plugin.php:119
+#: ../plugin.php:129
 #, php-format
-msgid "Removing %s products."
+msgid "Trying to remove %s products."
 msgstr ""
 
-#: ../plugin.php:131
+#: ../plugin.php:141
 #, php-format
 msgid "Removed %s products."
 msgstr ""
 
-#: ../plugin.php:135
+#: ../plugin.php:145
 msgid "Stopped processing due to imminent timeout."
 msgstr ""
 
-#: ../plugin.php:140
+#: ../plugin.php:150
 msgid "Continue deleting all products, again no confirmations will be asked!!"
 msgstr ""
 
-#: ../plugin.php:166
+#: ../plugin.php:176
 msgid "Logged events"
 msgstr ""
 
-#: ../plugin.php:168
+#: ../plugin.php:178
 msgid "Clear Log"
 msgstr ""
 
-#: ../plugin.php:173
+#: ../plugin.php:183
 msgid "Timestamp"
 msgstr ""
 
-#: ../plugin.php:174
+#: ../plugin.php:184
 msgid "Event"
 msgstr ""
 
-#: ../plugin.php:175
+#: ../plugin.php:185
 msgid "User"
 msgstr ""
 
-#: ../plugin.php:236
-#: ../plugin.php:252
+#: ../plugin.php:246
+#: ../plugin.php:262
 msgid "Log Started."
 msgstr ""
 
-#: ../plugin.php:264
+#: ../plugin.php:274
 msgid "Log cleared."
 msgstr ""
 
-#: ../plugin.php:277
+#: ../plugin.php:287
 #, php-format
-msgid "Please rate <strong>WooCommerce Remove All Products</strong> <a href=\"%1$s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> on <a href=\"%1$s\" target=\"_blank\">WordPress.org</a> to help us keep this plugin free."
+msgid "Please rate <a href=\"%1$s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> for <strong>WooCommerce Remove All Products</strong> on <a href=\"%1$s\" target=\"_blank\">WordPress.org</a> and make the developer happy :-)"
 msgstr ""

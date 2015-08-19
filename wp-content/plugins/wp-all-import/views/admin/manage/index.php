@@ -161,7 +161,7 @@ $columns = apply_filters('pmxi_manage_imports_columns', $columns);
 												}
 											}
 											?>
-											<em><?php echo $path; ?></em>
+											<em><a href="javascript:void(0);" class="wp_all_import_show_path" rel="<?php echo $item['path']; ?>"><?php echo $path; ?></a></em>
 										<?php else:?>
 										<em><?php echo str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', $item['path'])); ?></em>
 										<?php endif; ?>
@@ -272,10 +272,15 @@ $columns = apply_filters('pmxi_manage_imports_columns', $columns);
 										_e('Import failed, please check logs', 'wp_all_import_plugin');
 									}
 									else{
-										$custom_type = get_post_type_object( $item['options']['custom_type'] );
-										$cpt_name = ( ! empty($custom_type)) ? $custom_type->labels->singular_name : '';
+										if (!empty($item['options']['custom_type'])){
+											$custom_type = get_post_type_object( $item['options']['custom_type'] );
+											$cpt_name = ( ! empty($custom_type)) ? $custom_type->label : '';
+										}
+										else{
+											$cpt_name = '';
+										}
 										printf(__('Last run: %s', 'wp_all_import_plugin'), ($item['registered_on'] == '0000-00-00 00:00:00') ? __('never', 'wp_all_import_plugin') : get_date_from_gmt($item['registered_on'], "m/d/Y g:i a")); echo '<br/>';
-										printf(__('%d %ss created', 'wp_all_import_plugin'), $item['created'], $cpt_name); echo '<br/>';
+										printf(__('%d %s created', 'wp_all_import_plugin'), $item['created'], $cpt_name); echo '<br/>';
 										printf(__('%d updated, %d skipped, %d deleted'), $item['updated'], $item['skipped'], $item['deleted']);
 										//printf(__('%d records', 'wp_all_import_plugin'), $item['post_count']);
 									}

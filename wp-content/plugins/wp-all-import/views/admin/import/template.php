@@ -31,7 +31,7 @@
 					<?php $this->warning() ?>
 				<?php endif ?>
 				
-				<?php $post_type = $post['custom_type'];?>
+				<?php $post_type = $post['custom_type']; ?>
 
 				<?php if ( in_array('caption', $visible_sections) ): ?>								
 
@@ -104,26 +104,29 @@
 					
 				<?php									
 
-					if ( in_array('main', $visible_sections) ) do_action('pmxi_extend_options_main', $post_type);
+					if ( in_array('main', $visible_sections) ) do_action('pmxi_extend_options_main', $post_type, $post);
 
 					if ( in_array('featured', $visible_sections) ) {
-						include( 'template/_featured_template.php' );
-						do_action('pmxi_extend_options_featured', $post_type);						
+						$is_images_section_enabled = apply_filters('wp_all_import_is_images_section_enabled', true, $post_type);						
+						if ( $is_images_section_enabled ) {							
+							PMXI_API::add_additional_images_section(__('Images', 'wp_all_import_plugin'), '', $post, $post_type, true, true);
+						}
+						do_action('pmxi_extend_options_featured', $post_type, $post);
 					}
 
 					if ( in_array('cf', $visible_sections) ){ 
 						include( 'template/_custom_fields_template.php' );
-						do_action('pmxi_extend_options_custom_fields', $post_type);																								
+						do_action('pmxi_extend_options_custom_fields', $post_type, $post);																								
 					}
 
 					if ( in_array('taxonomies', $visible_sections) ) {
 						include( 'template/_taxonomies_template.php' );					
-						do_action('pmxi_extend_options_taxonomies', $post_type);												
+						do_action('pmxi_extend_options_taxonomies', $post_type, $post);												
 					}									
 
 					if ( in_array('other', $visible_sections) ){ 
 						include( 'template/_other_template.php' );
-						do_action('pmxi_extend_options_other', $post_type);
+						do_action('pmxi_extend_options_other', $post_type, $post);
 					}
 
 					/*if ( in_array('nested', $visible_sections) ){ 
@@ -138,10 +141,11 @@
 				<div class="input wpallimport-section" style="padding-bottom: 8px; padding-left: 8px;">
 										
 					<p style="margin: 11px; float: left;">
+						<input type="hidden" name="save_template_as" value="0" />
 						<input type="checkbox" id="save_template_as" name="save_template_as" class="switcher-horizontal fix_checkbox" value="1" <?php echo ( ! empty($post['save_template_as'])) ? 'checked="checked"' : '' ?> /> 
 						<label for="save_template_as"><?php _e('Save settings as a template','wp_all_import_plugin');?></label>
 					</p>
-					<div class="switcher-target-save_template_as" style="float: left;">
+					<div class="switcher-target-save_template_as" style="float: left; overflow: hidden;">
 						<input type="text" name="name" placeholder="<?php _e('Template name...', 'wp_all_import_plugin') ?>" style="vertical-align:middle; line-height: 26px;" value="<?php echo esc_attr($post['name']) ?>" />		
 					</div>				
 					<?php $templates = new PMXI_Template_List(); ?>

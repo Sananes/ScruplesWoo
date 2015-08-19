@@ -3,7 +3,7 @@ Contributors: Gabriel Reguly
 Donate link: http://www.omniwp.com.br/donate/
 Tags: woocommerce, products, remove
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -41,6 +41,12 @@ If you want help with a customisation, hire a developer!
 
 == Changelog ==
 
+=  1.0.4 2015-08-07 =
+* Cosmetic: Changed wording from 'Removing 250 products' to 'Trying to remove 250 products'. Thanks Nick @https://github.com/greguly/WooCommerce-Remove-All-Products/issues/2
+
+= 1.0.3 =
+* Improvement: To fix memory/processing timeout errors now we get product count instead of getting the actual products
+
 = 1.0.2 =
 * Added: ask for users to review the plugin at WordPress.org
 * Improvement: Updated text domains 
@@ -52,6 +58,12 @@ If you want help with a customisation, hire a developer!
 * Initial plugin release
 
 == Upgrade Notice ==
+
+= 1.0.3 = 
+* Improvement, upgrade safe
+
+= 1.0.2 = 
+* Improvement, upgrade safe
 
 = 1.0.1 = 
 * Improvement, upgrade safe

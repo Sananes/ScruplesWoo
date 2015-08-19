@@ -1,10 +1,10 @@
 === WooCommerce Skrill Gateway Plugin ===
-Contributors: daigo75, jpBenfica
+Contributors: daigo75
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F8ND89AA8B8QJ
 Tags: woocommerce, skrill, moneybookers
 Requires at least: 3.6
-Tested up to: 3.9.1
-Stable tag: 1.2.20.150211
+Tested up to: 4.3
+Stable tag: 1.2.25.150811
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,7 +23,7 @@ The plugin will add a new payment gateway called Skrill (Moneybookers), which wi
 = Requirements =
 * WordPress 3.6 or later
 * PHP 5.3 or later
-* WooCommerce 2.0.x/2.1x/2.2.x
+* WooCommerce 2.1x/2.2.x/2.3.x/2.4.x
 * [Aelia Foundation Classes plugin for WooCommerce](http://aelia.co/downloads/wc-aelia-foundation-classes.zip) 1.0.10.140819 or later.
 
 = Current limitations =
@@ -84,6 +84,25 @@ If you wish to get more details about Skrill, please refer to [Skrill website](h
 This plugin is fully compatible with the [Currency Switcher](aelia.co/shop/currency-switcher-woocommerce/). If you are using the Currency Switcher, and you find out that the Skrill gateway is not appearing on the checkout page, please go to ```WooCommerce > Currency Switcher Options > Payment Gateways``` and make sure that **Skrill** is listed amongst the **Enabled Gateways**.
 
 == Changelog ==
+
+= 1.2.25.150811 =
+* Verified compatibility with WordPress 4.3.
+* Verified compatibility with WooCommerce 2.4.x.
+* Fixed path of log file in plugin settings UI.
+* Updated requirement checking class.
+
+= 1.2.24.150722 =
+* Added Dutch localisation files. Courtesy of Diane Bakker.
+
+= 1.2.23.150418 =
+* Updated class used for requirements checking. The class now supports automatic installation of required plugins.
+
+= 1.2.22.150303 =
+* Improved requirement checking. The plugin can now auto-install the AFC plugin.
+* Altered build script to include language files.
+
+= 1.2.21.150227 =
+* Updated base class usef for requirement checking.
 
 = 1.2.20.150211 =
 * Fixed incorrect class reference.

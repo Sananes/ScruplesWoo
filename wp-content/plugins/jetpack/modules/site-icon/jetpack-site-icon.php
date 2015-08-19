@@ -68,18 +68,28 @@ class Jetpack_Site_Icon {
 		add_filter( 'display_media_states',   array( $this, 'add_media_state' ) );
 		add_action( 'admin_init',             array( $this, 'admin_init' ) );
 		add_action( 'admin_init',             array( $this, 'delete_site_icon_hook' ) );
-		add_action( 'atom_head', array( $this, 'atom_icon' ) );
-		add_action( 'rss2_head', array( $this, 'rss2_icon' ) );
 
 		add_action( 'admin_print_styles-options-general.php', array( $this, 'add_general_options_styles' ) );
 
-		// Add the favicon to the front end and backend
-		add_action( 'wp_head',           array( $this, 'site_icon_add_meta' ) );
-		add_action( 'admin_head',        array( $this, 'site_icon_add_meta' ) );
+		// Add the favicon to the front end and backend if Core's site icon not used.
+		/**
+		 * As of WP 4.3 and JP 3.6, both are outputting the same icons so no need to fire these.
+		 * This is a temporary solution until Jetpack's module primary function is deprecated.
+		 * In the future, Jetpack's can output other sizes using Core's icon.
+		 */
+		if ( ( function_exists( 'has_site_icon' ) && ! has_site_icon() ) || ! function_exists( 'has_site_icon' ) ) {
+			add_action( 'wp_head',           array( $this, 'site_icon_add_meta' ) );
+			add_action( 'admin_head',        array( $this, 'site_icon_add_meta' ) );
+			add_action( 'atom_head',         array( $this, 'atom_icon' ) );
+			add_action( 'rss2_head',         array( $this, 'rss2_icon' ) );
+		}
+
+		// Check if site icon is available in core, and if so convert Jetpack's to use it.
+		add_action( 'admin_init',        array( 'Jetpack', 'jetpack_site_icon_available_in_core' ) );
 
 		add_action( 'delete_option',     array( 'Jetpack_Site_Icon', 'delete_temp_data' ), 10, 1); // used to clean up after itself.
 		add_action( 'delete_attachment', array( 'Jetpack_Site_Icon', 'delete_attachment_data' ), 10, 1); // in case user deletes the attachment via
-		add_filter( 'get_post_metadata', array( 'Jetpack_Site_Icon', 'delete_attachment_images'), 10, 4 );
+		add_filter( 'get_post_metadata', array( 'Jetpack_Site_Icon', 'delete_attachment_images' ), 10, 4 );
 	}
 
 	/**
@@ -132,13 +142,13 @@ class Jetpack_Site_Icon {
 			$rss_title = get_bloginfo_rss( 'name' );
 		}
 
-		$icon  = jetpack_site_icon_url( null,  32);
+		$icon  = jetpack_site_icon_url( null,  32 );
 		if( $icon  ) {
 			echo '
 	<image>
 		<url>' . convert_chars( $icon ) . '</url>
 		<title>' . $rss_title . '</title>
-		<link>' .  bloginfo_rss('url') . '</link>
+		<link>' .  get_bloginfo_rss( 'url' ) . '</link>
 		<width>32</width>
 		<height>32</height>
 	</image> '."\n";
@@ -191,9 +201,9 @@ class Jetpack_Site_Icon {
 	 */
 	public function upload_balavatar_head() {
 
-		wp_register_script( 'site-icon-crop',  plugin_dir_url( __FILE__ ). "js/site-icon-crop.js"  , array( 'jquery', 'jcrop' ) ,  self::$assets_version, false);
+		wp_register_script( 'jetpack-site-icon-crop',  plugin_dir_url( __FILE__ ). "js/site-icon-crop.js"  , array( 'jquery', 'jcrop' ) ,  self::$assets_version, false);
 		if ( isset( $_REQUEST['step'] )  && $_REQUEST['step'] == 2 ) {
-			wp_enqueue_script( 'site-icon-crop' );
+			wp_enqueue_script( 'jetpack-site-icon-crop' );
 			wp_enqueue_style( 'jcrop' );
 		}
 		wp_enqueue_style( 'site-icon-admin' );
@@ -230,7 +240,7 @@ class Jetpack_Site_Icon {
 		add_settings_section(
 		  $this->module,
 		  '',
-		  array( $this, 'site_icon_settings'),
+		  array( $this, 'site_icon_settings' ),
 		  'general'
 		);
 
@@ -323,10 +333,10 @@ class Jetpack_Site_Icon {
 
 			<h2 class="site-icon-title">
 			<?php if( jetpack_has_site_icon() ) {
-				esc_html_e( 'Update Site Icon', 'jetpack');
+				esc_html_e( 'Update Site Icon', 'jetpack' );
 			} else {
-				esc_html_e( 'Add Site Icon', 'jetpack');
-			} ?> <span class="small"><?php esc_html_e( 'select a file', 'jetpack'); ?></span></h2>
+				esc_html_e( 'Add Site Icon', 'jetpack' );
+			} ?> <span class="small"><?php esc_html_e( 'select a file', 'jetpack' ); ?></span></h2>
 			<p><?php esc_html_e( 'Upload a image that you want to use as your site icon. You will be asked to crop it in the next step.', 'jetpack' ); ?></p>
 
 
@@ -364,10 +374,10 @@ class Jetpack_Site_Icon {
 		$crop_ration = $crop_data['large_image_data'][0] / $crop_data['resized_image_data'][0]; // always bigger then 1
 
 		// lets make sure that the Javascript ia also loaded
-		wp_localize_script( 'site-icon-crop', 'Site_Icon_Crop_Data', self::initial_crop_data( $crop_data['large_image_data'][0] , $crop_data['large_image_data'][1], $crop_data['resized_image_data'][0], $crop_data['resized_image_data'][1] ) );
+		wp_localize_script( 'jetpack-site-icon-crop', 'Site_Icon_Crop_Data', self::initial_crop_data( $crop_data['large_image_data'][0] , $crop_data['large_image_data'][1], $crop_data['resized_image_data'][0], $crop_data['resized_image_data'][1] ) );
 		?>
 
-		<h2 class="site-icon-title"><?php esc_html_e( 'Site Icon', 'jetpack'); ?> <span class="small"><?php esc_html_e( 'crop the image', 'jetpack' ); ?></span></h2>
+		<h2 class="site-icon-title"><?php esc_html_e( 'Site Icon', 'jetpack' ); ?> <span class="small"><?php esc_html_e( 'crop the image', 'jetpack' ); ?></span></h2>
 		<div class="site-icon-crop-shell">
 			<form action="" method="post" enctype="multipart/form-data">
 			<p class="site-icon-submit-form"><input name="submit" value="<?php esc_attr_e( 'Crop Image', 'jetpack' ); ?>" type="submit" class="button button-primary button-large" /><?php printf( __( ' or <a href="%s">Cancel</a> and go back to the settings.' , 'jetpack' ), esc_url( admin_url( 'options-general.php' ) ) ); ?></p>
@@ -377,16 +387,16 @@ class Jetpack_Site_Icon {
 
 				<strong><?php esc_html_e( 'As your favicon', 'jetpack' ); ?></strong>
 				<div class="site-icon-crop-favicon-preview-shell">
-					<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ). "browser.png" ); ?>" class="site-icon-browser-preview" width="172" height="79" alt="<?php esc_attr_e( 'Browser Chrome' , 'jetpack'); ?>" />
+					<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ). "browser.png" ); ?>" class="site-icon-browser-preview" width="172" height="79" alt="<?php esc_attr_e( 'Browser Chrome' , 'jetpack' ); ?>" />
 					<div class="site-icon-crop-preview-favicon">
-						<img src="<?php echo esc_url( $image[0] ); ?>" id="preview-favicon" alt="<?php esc_attr_e( 'Preview Favicon' , 'jetpack'); ?>" />
+						<img src="<?php echo esc_url( $image[0] ); ?>" id="preview-favicon" alt="<?php esc_attr_e( 'Preview Favicon' , 'jetpack' ); ?>" />
 					</div>
 					<span class="site-icon-browser-title"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
 				</div>
 
 				<strong><?php esc_html_e( 'As a mobile icon', 'jetpack' ); ?></strong>
 				<div class="site-icon-crop-preview-homeicon">
-					<img src="<?php echo esc_url( $image[0] ); ?>" id="preview-homeicon" alt="<?php esc_attr_e( 'Preview Home Icon' , 'jetpack'); ?>" />
+					<img src="<?php echo esc_url( $image[0] ); ?>" id="preview-homeicon" alt="<?php esc_attr_e( 'Preview Home Icon' , 'jetpack' ); ?>" />
 				</div>
 			</div>
 			<img src="<?php echo esc_url( $image[0] ); ?>" id="crop-image" class="site-icon-crop-image"
@@ -438,6 +448,14 @@ class Jetpack_Site_Icon {
 		$dir = wp_upload_dir();
 
 		$site_icon_filename = $image_edit->generate_filename( dechex ( time() ) . 'v' . self::$version . '_site_icon', null, 'png' );
+
+		// If the attachment is a URL, then change it to a local file name to allow us to save and then upload the cropped image
+		$check_url = parse_url( $site_icon_filename );
+		if ( isset( $check_url['host'] ) ) {
+			$upload_dir = wp_upload_dir();
+			$site_icon_filename = $upload_dir['path'] . '/' . basename( $site_icon_filename );
+		}
+
 		$image_edit->save( $site_icon_filename );
 
 		add_filter( 'intermediate_image_sizes_advanced', array( 'Jetpack_Site_Icon', 'additional_sizes' ) );
@@ -457,7 +475,7 @@ class Jetpack_Site_Icon {
 		Jetpack_Options::update_option( 'site_icon_url', jetpack_site_icon_url( get_current_blog_id(), 512 ) );
 
 		?>
-		<h2 class="site-icon-title"><?php esc_html_e( 'Site Icon', 'jetpack'); ?> <span class="small"><?php esc_html_e( 'All Done', 'jetpack' ); ?></span></h2>
+		<h2 class="site-icon-title"><?php esc_html_e( 'Site Icon', 'jetpack' ); ?> <span class="small"><?php esc_html_e( 'All Done', 'jetpack' ); ?></span></h2>
 		<div id="message" class="updated below-h2"><p><?php esc_html_e( 'Your site icon has been uploaded!', 'jetpack' ); ?> <a href="<?php echo esc_url( admin_url( 'options-general.php' ) ); ?>" ><?php esc_html_e( 'Back to General Settings' , 'jetpack' ); ?></a></p></div>
 		<?php echo jetpack_get_site_icon( null, $size = '128' ); ?>
 		<?php echo jetpack_get_site_icon( null, $size = '48' ); ?>
@@ -712,7 +730,7 @@ class Jetpack_Site_Icon {
 		);
 		$attachment_id = wp_insert_attachment( $attachment, $filename );
 
-		if( ! function_exists( 'wp_generate_attachment_metadata') )  {
+		if( ! function_exists( 'wp_generate_attachment_metadata' ) )  {
 			// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
 			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		}
