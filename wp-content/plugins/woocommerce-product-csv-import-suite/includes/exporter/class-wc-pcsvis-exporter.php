@@ -27,10 +27,14 @@ class WC_PCSVIS_Exporter {
 
 		$wpdb->hide_errors();
 		@set_time_limit(0);
-		if ( function_exists( 'apache_setenv' ) )
+
+		// Disable GZIP
+		if ( function_exists( 'apache_setenv' ) ) {
 			@apache_setenv( 'no-gzip', 1 );
-		@ini_set('zlib.output_compression', 0);
-		@ob_clean();
+		}
+		@ini_set( 'zlib.output_compression', 'Off' );
+		@ini_set( 'output_buffering', 'Off' );
+		@ini_set( 'output_handler', '' );
 		header( 'Content-Type: text/csv; charset=UTF-8' );
 		header( 'Content-Disposition: attachment; filename=woocommerce-product-export.csv' );
 		header( 'Pragma: no-cache' );
@@ -186,49 +190,55 @@ class WC_PCSVIS_Exporter {
 				// Product attributes
 				if ( isset( $meta_data['_product_attributes'][0] ) ) {
 
-					$attributes = maybe_unserialize(maybe_unserialize( $meta_data['_product_attributes'][0] ));
+					$attributes = maybe_unserialize( maybe_unserialize( $meta_data['_product_attributes'][0] ) );
 
-					if ( ! empty( $attributes ) && is_array( $attributes ) ) foreach ( $attributes as $key => $attribute ) {
-
-						if ( ! $key || ! isset( $attribute['position'] ) || ! isset( $attribute['is_visible'] ) || ! isset( $attribute['is_variation'] ) ) continue;
-
-						if ( $attribute['is_taxonomy'] == 1 ) {
-
-							$terms = wp_get_post_terms( $product->ID, $key, array("fields" => "names") );
-							if ( !is_wp_error( $terms ) ) {
-								$attribute_value = implode( '|', $terms );
-							} else {
-								$attribute_value = '';
+					if ( ! empty( $attributes ) && is_array( $attributes ) ) {
+						foreach ( $attributes as $key => $attribute ) {
+							if ( ! $key ) {
+								continue;
 							}
 
-						} else {
+							if ( $attribute['is_taxonomy'] == 1 ) {
+								$terms = wp_get_post_terms( $product->ID, $key, array("fields" => "names") );
+								if ( ! is_wp_error( $terms ) ) {
+									$attribute_value = implode( '|', $terms );
+								} else {
+									$attribute_value = '';
+								}
+							} else {
+								if ( empty( $attribute['name'] ) ) {
+	                   	 			continue;
+	                   	 		}
+								$key             = $attribute['name'];
+								$attribute_value = $attribute['value'];
+							}
 
-							$key = $attribute['name'];
+							if ( ! isset( $attribute['position'] ) ) {
+								$attribute['position'] = 0;
+							}
+							if ( ! isset( $attribute['is_visible'] ) ) {
+								$attribute['is_visible'] = 0;
+							}
+							if ( ! isset( $attribute['is_variation'] ) ) {
+								$attribute['is_variation'] = 0;
+							}
 
-							$attribute_value = $attribute['value'];
+							$attribute_data      = $attribute['position'] . '|' . $attribute['is_visible'] . '|' . $attribute['is_variation'];
+							$_default_attributes = isset( $meta_data['_default_attributes'][0]  ) ? maybe_unserialize( maybe_unserialize( $meta_data['_default_attributes'][0] ) ) : '';
 
+							if ( is_array( $_default_attributes ) ) {
+								$_default_attribute = isset( $_default_attributes[ $key ] ) ? $_default_attributes[ $key ] : '';
+							} else {
+								$_default_attribute = '';
+							}
+
+							$product->attributes->$key = array(
+								'value'		=> $attribute_value,
+								'data'		=> $attribute_data,
+								'default'	=> $_default_attribute
+							);
 						}
-
-						$attribute_data 	= $attribute['position'] . '|' . $attribute['is_visible'] . '|' . $attribute['is_variation'];
-
-						$_default_attributes = isset( $meta_data['_default_attributes'][0]  ) ? maybe_unserialize( maybe_unserialize( $meta_data['_default_attributes'][0] ) ) : '';
-
-						if ( is_array( $_default_attributes ) ) {
-
-							$_default_attribute = isset( $_default_attributes[ $key ] ) ? $_default_attributes[ $key ] : '';
-
-						} else {
-							$_default_attribute = '';
-						}
-
-						$product->attributes->$key = array(
-							'value'		=> $attribute_value,
-							'data'		=> $attribute_data,
-							'default'	=> $_default_attribute
-						);
-
 					}
-
 				}
 
 				// GPF
@@ -283,7 +293,7 @@ class WC_PCSVIS_Exporter {
 					}
 
 					// Images
-					$images  = explode( ',', maybe_unserialize( maybe_unserialize( $meta_data['_product_image_gallery'][0] ) ) );
+					$images  = isset( $meta_data['_product_image_gallery'][0] ) ? explode( ',', maybe_unserialize( maybe_unserialize( $meta_data['_product_image_gallery'][0] ) ) ) : false;
 					$results = array();
 
 					if ( $images ) {
@@ -291,7 +301,10 @@ class WC_PCSVIS_Exporter {
 							if ( $featured_image_id == $image_id ) {
 								continue;
 							}
-							$image_file_names[] = current( wp_get_attachment_image_src( $image_id, 'full' ) );
+							$image = wp_get_attachment_image_src( $image_id, 'full' );
+							if ( $image ) {
+								$image_file_names[] = current( $image );
+							}
 						}
 					}
 
@@ -504,11 +517,15 @@ class WC_PCSVIS_Exporter {
                 $attributes = maybe_unserialize( maybe_unserialize( $_product_attributes ) );
                 if ( ! empty( $attributes ) && is_array( $attributes ) ) {
                 	foreach( $attributes as $key => $attribute ) {
-                   		if ( ! $key || ! isset( $attribute['position'] ) || ! isset( $attribute['is_visible'] ) || ! isset( $attribute['is_variation'] ) )
+                   		if ( ! $key ) {
                    	 		continue;
-
-                   	 	if ( ! strstr( $key, 'pa_' ) )
+                   		}
+                   	 	if ( ! strstr( $key, 'pa_' ) ) {
+                   	 		if ( empty( $attribute['name'] ) ) {
+                   	 			continue;
+                   	 		}
                    	 		$key = $attribute['name'];
+                   	 	}
 
                    	 	$result[ $key ] = $key;
                    	 }
@@ -519,5 +536,5 @@ class WC_PCSVIS_Exporter {
         sort( $result );
 
         return $result;
-    }	
+    }
 }
