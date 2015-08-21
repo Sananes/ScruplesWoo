@@ -7,7 +7,7 @@ Author URI: http://prospress.com/
 Text Domain: wcopc
 Domain Path: languages
 Plugin URI: http://www.woothemes.com/products/woocommerce-one-page-checkout/
-Version: 1.1.1
+Version: 1.2.1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -93,22 +93,27 @@ function is_wcopc_checkout( $post_id = null ) {
 	}
 
 	// If still no post_id return straight away
-	if ( empty( $post_id ) ) {
-		return false;
-	}
+	if ( empty( $post_id ) || is_admin() ) {
 
-	if ( 0 == PP_One_Page_Checkout::$shortcode_page_id ) {
-		$post_to_check = ! empty( $post ) ? $post : get_post( $post_id );
-		PP_One_Page_Checkout::check_for_shortcode( $post_to_check );
-	}
+		$is_opc = false;
 
-	// Compare IDs
-	if ( $post_id == PP_One_Page_Checkout::$shortcode_page_id ) {
-		return true;
 	} else {
-		return false;
+
+		if ( 0 == PP_One_Page_Checkout::$shortcode_page_id ) {
+			$post_to_check = ! empty( $post ) ? $post : get_post( $post_id );
+			PP_One_Page_Checkout::check_for_shortcode( $post_to_check );
+		}
+
+		// Compare IDs
+		if ( $post_id == PP_One_Page_Checkout::$shortcode_page_id || ( 'yes' == get_post_meta( $post_id, '_wcopc', true ) ) ) {
+			$is_opc = true;
+		} else {
+			$is_opc = false;
+		}
+
 	}
 
+	return apply_filters( 'is_wcopc_checkout', $is_opc );
 }
 
 /**
@@ -166,6 +171,8 @@ class PP_One_Page_Checkout {
 		require_once( 'classes/abstract-class-wcopc-template.php' );
 
 		require_once( 'classes/class-wcopc-easy-pricing-tables-template.php' );
+
+		require_once( 'classes/class-wcopc-compat-bookings.php' );
 
 		self::$plugin_url     = untrailingslashit( plugins_url( '/', __FILE__ ) );
 		self::$plugin_path    = untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -249,10 +256,15 @@ class PP_One_Page_Checkout {
 		add_action( 'wcopc_single_add_to_cart', array( __CLASS__, 'opc_single_add_to_cart' ) );
 		add_action( 'wcopc_simple_add_to_cart', array( __CLASS__, 'opc_single_add_to_cart_core_types' ) );
 		add_action( 'wcopc_variable_add_to_cart', array( __CLASS__, 'opc_single_add_to_cart_core_types' ) );
+		add_action( 'wcopc_deposit_add_to_cart', array( __CLASS__, 'opc_single_add_to_cart_core_types' ) );
 
 		// Unhook 'WC_Form_Handler::add_to_cart_action' from 'init' in OPC pages, to prevent products from being added to the cart when submitting an order
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'woocommerce_checkout' && isset( $_POST['is_opc'] ) ) {
-			remove_action( 'init', 'WC_Form_Handler::add_to_cart_action' );
+			if ( self::is_woocommerce_pre_2_3() ) {
+				remove_action( 'init', 'WC_Form_Handler::add_to_cart_action' );
+			} else {
+				remove_action( 'wp_loaded', 'WC_Form_Handler::add_to_cart_action', 20 );
+			}
 		}
 
 		// Tiny MCE button icon
@@ -268,8 +280,17 @@ class PP_One_Page_Checkout {
 			add_filter( 'woocommerce_add_to_cart_redirect', array( __CLASS__, 'add_to_cart_redirect' ) );
 		}
 
+		// Add option for enabling one page checkout on core single product page
+		add_filter( 'product_type_options', array( __CLASS__, 'product_type_options' ) );
+		add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save_product_meta' ), 20, 2 );
+		add_action( 'woocommerce_after_single_product_summary', array( __CLASS__, 'single_product_wcopc' ), 90 );
+		add_action( 'template_redirect', array( __CLASS__, 'filter_single_product_wcopc' ), 30 );
+
 		// Override the checkout template on OPC pages and Ajax requests to update checkout on OPC pages
 		add_filter( 'wc_get_template', array( __CLASS__, 'override_checkout_template' ), 10, 5 );
+
+		// Ensure we have a session when loading OPC pages
+		add_action( 'template_redirect', array( __CLASS__, 'maybe_set_session' ), 10 );
 
 		do_action( 'wcopc_loaded' );
 	}
@@ -374,7 +395,7 @@ class PP_One_Page_Checkout {
 	public static function override_checkout_template( $located, $template_name, $args, $template_path, $default_path ) {
 
 		if ( 'checkout/review-order.php' == $template_name && $default_path !== PP_One_Page_Checkout::$template_path && ! self::is_woocommerce_pre_2_3() && self::is_any_form_of_opc_page() ) {
-			$located = wc_locate_template( 'checkout/review-order.php', '', PP_One_Page_Checkout::$template_path );
+			$located = wc_locate_template( 'checkout/review-order-opc.php', '', PP_One_Page_Checkout::$template_path );
 		}
 
 		return $located;
@@ -549,6 +570,8 @@ class PP_One_Page_Checkout {
 					)
 				);
 			}
+			
+			$args = apply_filters( 'wcopc_products_query_args', $args );
 
 			$product_posts = get_posts( $args );
 
@@ -586,10 +609,8 @@ class PP_One_Page_Checkout {
 			<?php endif; ?>
 		</div><?php
 
-		$cart_needs_shipping = false;
-
 		// Make sure shipping address fields are displayed if any of the available products require shipping
-		if ( ! WC()->cart->needs_shipping_address() && ! empty( $products ) ) {
+		if ( get_option( 'woocommerce_calc_shipping' ) !== 'no' && ! WC()->cart->needs_shipping_address() && ! wc_ship_to_billing_address_only() && ! empty( $products ) ) {
 			foreach ( $products as $product ) {
 				if ( $product->needs_shipping() ) {
 					add_filter( 'woocommerce_cart_needs_shipping_address', '__return_true' );
@@ -843,6 +864,9 @@ class PP_One_Page_Checkout {
 			$response_data['result'] = 'failure';
 		}
 
+		// Check cart items are valid, this is usually done when the cart is loaded or customer checks out, but we need to do it here to ensure coupons and items are checked
+		do_action( 'woocommerce_check_cart_items' );
+
 		$response_data['products_in_cart'] = self::get_products_in_cart();
 
 		ob_start();
@@ -874,7 +898,7 @@ class PP_One_Page_Checkout {
 		check_ajax_referer( __FILE__, 'nonce' );
 
 		// Clear cart each time a new radio button is pressed
-		if ( isset( $_REQUEST['empty_cart'] ) ) {
+		if ( isset( $_REQUEST['empty_cart'] ) && ! apply_filters( 'wcopc_not_empty_cart', false ) ) {
 			WC()->cart->empty_cart();
 		}
 
@@ -898,7 +922,6 @@ class PP_One_Page_Checkout {
 
 		$response_data       = array();
 		$product_id          = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add_to_cart'] ) );
-		$opc_id              = isset( $_POST['opc_id'] ) ? absint( $_POST['opc_id'] ) : '';
 		$was_added_to_cart   = false;
 		$product             = wc_get_product( $product_id );
 		$add_to_cart_handler = apply_filters( 'woocommerce_add_to_cart_handler', $product->product_type, $product );
@@ -1046,6 +1069,9 @@ class PP_One_Page_Checkout {
 			$passed_validation = true;
 		}
 
+		// Check cart items are valid, this is usually done when the cart is loaded or customer checks out, but we need to do it here to ensure coupons and items are checked
+		do_action( 'woocommerce_check_cart_items' );
+
 		do_action( 'wcopc_ajax_add_to_cart_response_before' );
 
 		WC()->cart->maybe_set_cart_cookies();
@@ -1141,7 +1167,7 @@ class PP_One_Page_Checkout {
 			$suffix      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			$assets_path = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() ) . '/assets/';
 
-			wp_enqueue_script( 'woocommerce-one-page-checkout', self::get_url( '/js/one-page-checkout.js' ), array( 'jquery', 'wc-add-to-cart-variation' ), '1.0', true );
+			wp_enqueue_script( 'woocommerce-one-page-checkout', self::$plugin_url . '/js/one-page-checkout.js', array( 'jquery', 'wc-add-to-cart-variation' ), '1.0', true );
 
 			$params = array(
 				'wcopc_nonce'                 => wp_create_nonce( __FILE__ ),
@@ -1150,10 +1176,11 @@ class PP_One_Page_Checkout {
 
 			wp_localize_script( 'woocommerce-one-page-checkout', 'wcopc', $params );
 
-			wp_enqueue_script( 'prettyPhoto', $assets_path . 'js/prettyPhoto/jquery.prettyPhoto' . $suffix . '.js', array( 'jquery' ), '3.1.5', true );
-			wp_enqueue_script( 'prettyPhoto-init', $assets_path . 'js/prettyPhoto/jquery.prettyPhoto.init' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
-
-			wp_enqueue_style( 'woocommerce_prettyPhoto_css', $assets_path . 'css/prettyPhoto.css' );
+			if ( 'yes' === get_option( 'woocommerce_enable_lightbox' ) ) {
+				wp_enqueue_script( 'prettyPhoto', $assets_path . 'js/prettyPhoto/jquery.prettyPhoto' . $suffix . '.js', array( 'jquery' ), '3.1.5', true );
+				wp_enqueue_script( 'prettyPhoto-init', $assets_path . 'js/prettyPhoto/jquery.prettyPhoto.init' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
+				wp_enqueue_style( 'woocommerce_prettyPhoto_css', $assets_path . 'css/prettyPhoto.css' );
+			}
 
 			// Load chosen on WC < 2.3
 			if ( self::is_woocommerce_pre_2_3() && get_option( 'woocommerce_enable_chosen' ) == 'yes' ) {
@@ -1163,7 +1190,9 @@ class PP_One_Page_Checkout {
 
 			wp_enqueue_script( 'wc-checkout', $assets_path . 'js/frontend/checkout' . $suffix . '.js', array( 'jquery', 'woocommerce', 'wc-country-select', 'wc-address-i18n' ), WC_VERSION, true );
 
-			wp_enqueue_style( 'woocommerce-one-page-checkout', self::get_url( '/css/one-page-checkout.css' ) );
+			wp_enqueue_script( 'wc-credit-card-form' );
+
+			wp_enqueue_style( 'woocommerce-one-page-checkout', self::$plugin_url . '/css/one-page-checkout.css' );
 
 		}
 	}
@@ -1183,7 +1212,7 @@ class PP_One_Page_Checkout {
 
 		if ( 0 == self::$shortcode_page_id ) {
 			foreach ( $posts as $post ) {
-				if ( false !== stripos( $post->post_content, '[woocommerce_one_page_checkout' ) ) {
+				if ( ( false !== stripos( $post->post_content, '[woocommerce_one_page_checkout' ) ) || ( 'yes' == get_post_meta( $post->ID, '_wcopc', true ) ) ) {
 					self::$add_scripts = true;
 					self::$shortcode_page_id = $post->ID;
 					break;
@@ -1231,8 +1260,8 @@ class PP_One_Page_Checkout {
 	}
 
 	/**
-	 * Filter the result of `is_checkout()` for OPC posts/pages 
-	 * 
+	 * Filter the result of `is_checkout()` for OPC posts/pages
+	 *
 	 * @param  boolean  $return
 	 * @return boolean
 	 */
@@ -1285,25 +1314,7 @@ class PP_One_Page_Checkout {
 	}
 
 	/**
-	 * Helper function to get the URL of a given file.
-	 *
-	 * As this plugin may be used as both a stand-alone plugin and as a submodule of
-	 * a theme, the standard WP API functions, like plugins_url() can not be used.
-	 *
-	 * @since 1.0
-	 * @return string URL to this file
-	 */
-	public static function get_url( $file ) {
-
-		// Get the path of this file after the WP content directory
-		$post_content_path = substr( dirname( __FILE__ ), strpos( __FILE__, basename( WP_CONTENT_DIR ) ) + strlen( basename( WP_CONTENT_DIR ) ) );
-
-		// Return a content URL for this path & the specified file
-		return content_url( $post_content_path . $file );
-	}
-
-	/**
-	 * Helper function to get the URL of a given file.
+	 * Evaluate the OPC shortcode
 	 *
 	 * @since 1.0
 	 */
@@ -1499,7 +1510,6 @@ class PP_One_Page_Checkout {
 	 * Add 'wooommerce' body class. Helps with consistency of WooCommerce styles
 	 */
 	public static function opc_woocommerce_body_class($classes) {
-
 		global $post;
 
 		if ( empty( $post ) ) {
@@ -1508,6 +1518,10 @@ class PP_One_Page_Checkout {
 
 		if ( $post->ID == self::$shortcode_page_id ) {
 			array_push($classes, 'woocommerce', 'woocommerce-page');
+		}
+
+		if ( 'yes' == get_post_meta( $post->ID, '_wcopc', true ) ) {
+			array_push($classes, 'wcopc-product-single' );
 		}
 
 		return $classes;
@@ -1536,7 +1550,7 @@ class PP_One_Page_Checkout {
 
 	/**
 	 * Insert an OPC specific div for messages/notices. Helps with determining whether messages are displayed within
-	 * the viewport or not and allows better targeting of OPC specific messages/notices
+	 * the viewport or not and allows better targeting of OPC specific messages/notices.
 	 *
 	 * @since 1.1
 	 */
@@ -1545,7 +1559,7 @@ class PP_One_Page_Checkout {
 		echo '<div id="opc-messages"></div>';
 
 	}
-	
+
 	/**
 	 * If the store manager has manually added an add-to-cart param to the OPC page ID, after adding the product
 	 * to the cart, redirect to the OPC page without the add-to-cart param, to avoid adding the product again if
@@ -1564,6 +1578,99 @@ class PP_One_Page_Checkout {
 		return $url;
 	}
 
+	/*
+	 * Add checkbox to product data metabox title
+	 */
+	public static function product_type_options( $options ){
+
+		$options['wcopc'] = array(
+			'id'            => '_wcopc',
+			'wrapper_class' => '',
+			'label'         => __( 'One Page Checkout', 'wcopc'),
+			'description'   => __( 'Add checkout to product page.', 'wcopc'),
+			'default'       => 'no'
+		);
+
+		return $options;
+
+	}
+
+	/*
+	 * Save extra meta info
+	 */
+	public static function save_product_meta( $post_id, $post ) {
+
+		$product_type 	= empty( $_POST['product-type'] ) ? 'simple' : sanitize_title( stripslashes( $_POST['product-type'] ) );
+
+		if ( isset( $_POST['_wcopc'] ) ) {
+			update_post_meta( $post_id, '_wcopc', 'yes' );
+		} else {
+			update_post_meta( $post_id, '_wcopc', 'no' );
+		}
+
+	}
+
+	/**
+	 * Append opc checkout form template to core single product template if enabled
+	 */
+	public static function single_product_wcopc() {
+
+		if ( is_wcopc_checkout() ) {
+
+			do_action( 'wcopc_before_display_checkout' );
+
+			// Show non-cart errors
+			wc_print_notices();
+
+			WC()->cart->calculate_totals();
+
+			// Get checkout object for WC 2.0+
+			$checkout = WC()->checkout();
+
+			wc_get_template( 'checkout/form-checkout.php', array( 'checkout' => $checkout )  );
+
+		}
+
+	}
+
+	/**
+	 * Modifications to the core single product pages when opc is enabled
+	 */
+	public static function filter_single_product_wcopc() {
+
+		if ( is_wcopc_checkout() ) {
+
+			// modify add to cart text
+			add_filter( 'woocommerce_product_single_add_to_cart_text', array( __CLASS__, 'modify_single_add_to_cart_text' ) );
+
+			// remove upsells & related products
+			remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+			remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
+
+		}
+
+	}
+
+	/**
+	 * Make sure a session is set whenever loading an OPC page.
+	 *
+	 * WC 2.3.9 started using the customer_id in the session on the logged out user nonce (introduced with
+	 * https://github.com/woothemes/woocommerce/commit/242d7e76c5839c0461f583fd976522d0867aec07).
+	 * This meant that if the customer:
+	 * 1. loading an OPC page when they were not logged in an had no ideas in the cart, there would be no session
+	 *    so the nonce set on the page at the time of load would not use the session's customer_id
+	 * 2. once the customer added an item to the cart from the OPC page, the session would be set, but then the
+	 *    verificaiton of the nonce would fail, as the first nonce used no user ID and the verification is checking
+	 *    for a nonce with the session's customer_id
+	 *
+	 * @since 1.2.1
+	 */
+	public static function maybe_set_session() {
+		if ( is_wcopc_checkout() && ! WC()->session->has_session() ) {
+			WC()->session->set_customer_session_cookie( true );
+		}
+	}
+
 	/**
 	 * Check if the installed version of WooCommerce is older than 2.3.
 	 *
@@ -1578,5 +1685,27 @@ class PP_One_Page_Checkout {
 		}
 
 		return $woocommerce_is_pre_2_3;
+	}
+
+	/**
+	 * Deprecated Functions
+	 */
+
+	/**
+	 * This was a helper function to get the URL of a given file but it did not reliably work on Windows so has been removed.
+	 *
+	 * As this plugin may be used as both a stand-alone plugin and as a submodule of
+	 * a theme, the standard WP API functions, like plugins_url() can not be used.
+	 *
+	 * @since 1.0
+	 * @return string URL to this file
+	 */
+	public static function get_url( $file ) {
+		_deprecated_function( __METHOD__, '1.1.2' );
+
+		$post_content_path = substr( dirname( __FILE__ ), strpos( __FILE__, basename( WP_CONTENT_DIR ) ) + strlen( basename( WP_CONTENT_DIR ) ) );
+
+		// Return a content URL for this path & the specified file
+		return content_url( $post_content_path . $file );
 	}
 }

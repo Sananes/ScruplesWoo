@@ -1,3 +1,37 @@
+2015.06.10 - version 1.2.1
+ * Tweak: only load prettyPhoto JS and CSS when lightbox is enabled under WooCommerce > Products > Display
+ * Fix: make sure a session is set for non-authenticated users when loading an OPC page to fix compatibility with WC 2.3.9 which began using the customer_id in the session for the nonce user ID
+
+2015.05.22 - version 1.2
+ * Tweak: new "One Page Checkout" checkbox on all products to add the checkout fields below the product information
+ * Tweak: bundle support for WooCommerce Bookings so that bookable products can be added to pages using the Single Product product selection template
+ * Tweak: add 'wcopc_products_query_args' to allow for inclusion of hidden products and other customisations via code.
+ * Fix: parameters passed to callbacks on the 'opc_add_remove_product' and 'after_opc_add_remove_product' events triggered by one-page-checkout.js
+ * Fix: make sure admin pages are never identified as OPC pages just in case other plugins are calling front end hooks on the back end
+
+2015.04.17 - version 1.1.5
+ * Tweak: add support for Accound Funds extension by supporting the Deposit product type
+ * Tweak: enqueue the iframeResizer script on its own so that it can be dequeued/overridden individually
+ * Tweak: trigger add to cart/remove form cart on input event for number and quantity input elements
+ * Tweak: add a 1 second delay before adding to cart/removing from cart on number and input elements to avoid sending multiple update requests
+ * Fix: remove errant question mark in 'grouped' template
+ * Fix: update iframeResizer script to fix javascript error relating to the location of the '.map' file
+
+2015.03.13 - version 1.1.4
+ * Tweak: rename order table template to /review-order-opc.php to make sure OPC's template is used and not the theme's custom review-order.php template, but still allow themes and sites to customise the order table for OPC pages
+ * Fix: session expired error on OPC pages when the theme has a custom review-order.php template
+ * Fix: do not display shipping address fields even when physical products are in the cart if shipping is disabled site wide or the "Only ship to the users billing address" setting is enabled
+
+2015.03.03 - version 1.1.3
+ * Tweak: add new 'is_wcopc_checkout' filter to allow plugins, themes and custom code to always load OPC styles and scripts on certain pages (or all pages)
+ * Tweak: Reduce specificity of CSS selectors to ensure that our styles are still applied for OPC templates loaded outside of the main query, for example, with the One Pager theme.
+ * Fix: Do not re-add to cart order item/s when placing orders
+
+2015.02.20 - version 1.1.2
+ * Tweak: trigger 'woocommerce_check_cart_items' action to make WooCommerce and other extensions check the items added or removed to the cart via One Page Checkout
+ * Fix: remove cart coupons which require a specific product to be in the cart in order to be valid
+ * Fix: output scripts correctly on IIS servers
+
 2015.02.02 - version 1.1.1
  * WooCommerce 2.3 Compatibility
  * Tweak: Do not rely on wp_guess_url() when determining if the post is an OPC post

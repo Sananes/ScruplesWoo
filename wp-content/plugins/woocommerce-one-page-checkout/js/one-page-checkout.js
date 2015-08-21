@@ -2,29 +2,40 @@
  * One Page Checkout JS: add/remove items from a One Page Checkout page via Ajax
  */
 jQuery(document).ready(function($){
+
 	var response_messages = '';
+	var timeout;
+	var delay = 1000;
 
 	/**
 	 * Review Order Template Item Management (Removal & Quantity Adjustment)
 	 */
 
 	// Quantity buttons
-	$( '.checkout' ).on( 'change', '#order_review .opc_cart_item div.quantity input.qty', function(e) {
+	$( '.checkout' ).on( 'change input', '#order_review .opc_cart_item div.quantity input.qty', function(e) {
 
-		var data = {
-			quantity:    $(this).val(),
-			add_to_cart: parseInt( $(this).closest( '.opc_cart_item' ).data( 'add_to_cart' ) ),
-			update_key:  $(this).closest( '.opc_cart_item' ).data( 'update_key' ),
-			nonce:       wcopc.wcopc_nonce,
-		}
+		var input = $(this);
 
-		if ( data['quantity'] == 0 ) {
-			data['action'] = 'pp_remove_from_cart';
-		} else {
-			data['action'] = 'pp_update_add_in_cart';
-		}
+		clearTimeout(timeout);
 
-		$(this).ajax_add_remove_product( data, e );
+		timeout = setTimeout(function() {
+
+			var data = {
+				quantity:    input.val(),
+				add_to_cart: parseInt( input.closest( '.opc_cart_item' ).data( 'add_to_cart' ) ),
+				update_key:  input.closest( '.opc_cart_item' ).data( 'update_key' ),
+				nonce:       wcopc.wcopc_nonce,
+			}
+
+			if ( data['quantity'] == 0 ) {
+				data['action'] = 'pp_remove_from_cart';
+			} else {
+				data['action'] = 'pp_update_add_in_cart';
+			}
+
+			input.ajax_add_remove_product( data, e );
+
+		}, delay );
 
 		e.preventDefault();
 
@@ -51,7 +62,7 @@ jQuery(document).ready(function($){
 	 */
 
 	/* Add/remove products with button element or a tags */
-	$( '#opc-product-selection button.single_add_to_cart_button' ).on( 'click', function(e) {
+	$( '#opc-product-selection button.single_add_to_cart_button, .wcopc-product-single button.single_add_to_cart_button' ).on( 'click', function(e) {
 
 		var is_variable    = $(this).closest( '.variations_form' ).find( 'input[name="variation_id"]' ).length === 1 ? true : false,
 			add_to_cart_id = $(this).closest( '.cart' ).find( 'input[name="add-to-cart"]' ).val(),
@@ -61,8 +72,7 @@ jQuery(document).ready(function($){
 			action:       'pp_add_to_cart',
 			add_to_cart:  parseInt( add_to_cart_id ),
 			nonce:        wcopc.wcopc_nonce,
-			opc_id:       parseInt( $( '#opc-product-selection' ).data( 'opc_id' ) ),
-			input_data:   $(this).closest( '.product-quantity' ).find( 'input[name!="variation_id"][name!="product_id"][name!="add-to-cart"][name!="quantity"], select, textarea' ).serialize(),
+			input_data:   $(this).closest( '.product-quantity, .wcopc-product-single form' ).find( 'input[name!="variation_id"][name!="product_id"][name!="add-to-cart"][name!="quantity"], select, textarea' ).serialize(),
 		}
 
 		if ( is_variable ) {
@@ -80,29 +90,35 @@ jQuery(document).ready(function($){
 
 	} );
 
-
 	/**
 	 * Other Templates
 	 */
 
 	/* Add/remove products with number input type */
-	$( '#opc-product-selection input[type="number"][data-add_to_cart]' ).change( function(e) {
+	$( '#opc-product-selection input[type="number"][data-add_to_cart]' ).on( 'change input', function(e) {
 
-		var data = {
-			quantity:    $(this).val(),
-			add_to_cart: parseInt( $(this).data( 'add_to_cart' ) ),
-			input_data:  $(this).closest( '.product-quantity' ).find( 'input[name!="product_id"], select, textarea' ).serialize(),
-			opc_id:      parseInt ( $( '#opc-product-selection' ).data( 'opc_id' ) ),
-			nonce:       wcopc.wcopc_nonce,
-		}
+		var input = $(this);
 
-		if ( data['quantity'] == 0 ) {
-			data['action'] = 'pp_remove_from_cart';
-		} else {
-			data['action'] = 'pp_update_add_in_cart';
-		}
+		clearTimeout(timeout);
 
-		$(this).ajax_add_remove_product( data, e );
+		timeout = setTimeout(function() {
+
+			var data = {
+				quantity:    input.val(),
+				add_to_cart: parseInt( input.data( 'add_to_cart' ) ),
+				input_data:  input.closest( '.product-quantity' ).find( 'input[name!="product_id"], select, textarea' ).serialize(),
+				nonce:       wcopc.wcopc_nonce,
+			}
+
+			if ( data['quantity'] == 0 ) {
+				data['action'] = 'pp_remove_from_cart';
+			} else {
+				data['action'] = 'pp_update_add_in_cart';
+			}
+
+			input.ajax_add_remove_product( data, e );
+
+		}, delay );
 
 		e.preventDefault();
 
@@ -111,32 +127,41 @@ jQuery(document).ready(function($){
 	/* Add/remove products with radio or checkobox inputs */
 	$( '#opc-product-selection input[type="radio"][data-add_to_cart], #opc-product-selection input[type="checkbox"][data-add_to_cart]' ).on( 'change', function(e) {
 
-		var data = {
-			add_to_cart: parseInt( $(this).data( 'add_to_cart' ) ),
-			opc_id:      parseInt ( $( '#opc-product-selection' ).data( 'opc_id' ) ),
-			nonce:       wcopc.wcopc_nonce
-		}
+		var input = $(this);
 
-		if ( $(this).is( ':checked' ) ) {
+		clearTimeout(timeout);
 
-			if( $(this).prop( 'type' ) == 'radio' ) {
+		timeout = setTimeout(function() {
 
-				data.empty_cart = 'true';
-				$( 'input[data-add_to_cart]' ).prop( 'checked', false );
-				$(this).prop( 'checked', true );
-				$( '.selected' ).removeClass( 'selected' );
+			var data = {
+				add_to_cart: parseInt( input.data( 'add_to_cart' ) ),
+				nonce:       wcopc.wcopc_nonce
 			}
 
-			data.action = 'pp_add_to_cart';
-			$(this).parents( '.product-item' ).addClass( 'selected' );
+			if ( input.is( ':checked' ) ) {
 
-		} else {
+				if ( input.prop( 'type' ) == 'radio' ) {
 
-			data.action = 'pp_remove_from_cart';
-			$(this).parents( '.product-item' ).removeClass( 'selected' );
-		}
+					data.empty_cart = 'true';
+					$( 'input[data-add_to_cart]' ).prop( 'checked', false );
+					input.prop( 'checked', true );
+					$( '.selected' ).removeClass( 'selected' );
+				}
 
-		$(this).ajax_add_remove_product( data, e );
+				data.action = 'pp_add_to_cart';
+				input.parents( '.product-item' ).addClass( 'selected' );
+
+			} else {
+
+				data.action = 'pp_remove_from_cart';
+				input.parents( '.product-item' ).removeClass( 'selected' );
+
+			}
+
+			input.ajax_add_remove_product( data, e );
+
+		}, delay );
+
 	} );
 
 	/* Add/remove products with button element or a tags */
@@ -146,13 +171,12 @@ jQuery(document).ready(function($){
 			add_to_cart: parseInt( $(this).data( 'add_to_cart' ) ),
 			nonce:       wcopc.wcopc_nonce,
 			input_data:  $(this).closest( '.product-quantity' ).find( 'input[name!="product_id"], select, textarea' ).serialize(),
-			opc_id:      parseInt ( $( '#opc-product-selection' ).data( 'opc_id' ) )
 		}
 
 		// Toggle button on or off
 		if ( ! $(this).parents( '.product-item' ).hasClass( 'selected' ) ) {
 			data.action = 'pp_add_to_cart';
-			$(this).parents('.product-item').addClass( 'selected' );
+			$(this).parents( '.product-item' ).addClass( 'selected' );
 		} else {
 			data.action = 'pp_remove_from_cart';
 			$(this).parents( '.product-item' ).removeClass( 'selected' );
@@ -174,7 +198,6 @@ jQuery(document).ready(function($){
 			action:      'pp_add_to_cart',
 			add_to_cart: productParams['add-to-cart'],
 			empty_cart:  'true',
-			opc_id:      parseInt ( $( '#opc-product-selection' ).data( 'opc_id' ) ),
 			nonce:       wcopc.wcopc_nonce
 		}
 
@@ -182,7 +205,7 @@ jQuery(document).ready(function($){
 
 	} );
 
-	// Set response messages when the checkout is fully updated (becuase it would remove them if we set them before that)
+	// Set response messages when the checkout is fully updated (because it would remove them if we set them before that)
 	$( 'body' ).on( 'updated_checkout', function(){
 		if ( response_messages.length > 0 ) {
 			$( '#opc-messages' ).prepend( response_messages );
@@ -201,7 +224,7 @@ jQuery(document).ready(function($){
 	$.fn.ajax_add_remove_product = function( data, e ) {
 
 		// Custom event for devs to hook into before posting of products for processing
-		$('body').trigger( 'opc_add_remove_product', data );
+		$('body').trigger( 'opc_add_remove_product', [ data ] );
 
 		$.post( woocommerce_params.ajax_url, data, function( response ) {
 
@@ -264,7 +287,7 @@ jQuery(document).ready(function($){
 			response_messages = response.messages;
 
 			// Custom event for devs to hook into after products have been processed
-			$('body').trigger( 'after_opc_add_remove_product', data, response );
+			$('body').trigger( 'after_opc_add_remove_product', [ data, response ] );
 
 			// Tell WooCommerce to update totals
 			$('body').trigger( 'update_checkout' );
