@@ -139,33 +139,33 @@
 /**
  * Order Review Remove Button Styles
  */
-.woocommerce-page #order_review .opc_cart_item td.product-name {
+#order_review .opc_cart_item td.product-name {
 	padding-left: 1.8em;
 	min-width: 60%;
 	vertical-align: middle;
 }
-.woocommerce-page #order_review .product-remove {
+#order_review .product-remove {
 	display: inline-block;
 	margin-left: -1.2em;
 	float: left;
 }
-.woocommerce-page .opc_order_review .product-details {
+.opc_order_review .product-details {
 	display: inline-block;
 	float: left;
 	min-width: 70%;
 }
-.woocommerce-page .opc_order_review .product-quantity {
+.opc_order_review .product-quantity {
 	display: inline-block;
 	float: right;
 }
-.woocommerce-page .opc_order_review td.product-total {
+.opc_order_review td.product-total {
 	vertical-align: top;
 	padding-top: 0.6em;
 }
 /**
  * Order Review Remove Button Styles WC < 2.3
  */
-.woocommerce-page #order_review.opc_order_review a.remove {
+#order_review.opc_order_review a.remove {
 	display: inline-block;
 	height: 1em;
 	width: 1em;
@@ -176,7 +176,7 @@
 	color: red;
 	text-decoration: none;
 }
-.woocommerce-page #order_review.opc_order_review a.remove:hover {
+#order_review.opc_order_review a.remove:hover {
 	background-color: red;
 	color: #fff;
 }

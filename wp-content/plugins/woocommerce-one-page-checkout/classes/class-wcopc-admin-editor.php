@@ -10,18 +10,24 @@ class WCOPC_Admin_Editor {
 	 * Constructor
 	 */
 	public function __construct() {
+
 		add_action( 'admin_head', array( $this, 'add_shortcode_button' ), 20 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
 		add_filter( 'tiny_mce_version', array( $this, 'refresh_mce' ), 20 );
 		add_filter( 'mce_external_languages', array( $this, 'add_tinymce_lang' ), 20, 1 );
 
 		add_action( 'wp_ajax_one_page_checkout_shortcode_iframe', array( $this, 'one_page_checkout_shortcode_iframe' ), 9 );
+
 	}
 
 	/**
 	 * Add a button for the OPC shortcode to the WP editor.
 	 */
 	public function add_shortcode_button() {
-		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
+
+		$screen = get_current_screen();
+
+		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) || $screen->post_type == 'product' ) {
 			return;
 		}
 
@@ -29,6 +35,24 @@ class WCOPC_Admin_Editor {
 			add_filter( 'mce_external_plugins', array( $this, 'add_shortcode_tinymce_plugin' ), 20 );
 			add_filter( 'mce_buttons', array( $this, 'register_shortcode_button' ), 20 );
 		}
+	}
+
+	/**
+	 * Enqueue scripts
+	 */
+	public static function enqueue_scripts() {
+
+		global $pagenow, $typenow;
+
+		/**
+		 * Enqueue on post edit screens for all post types
+		 */
+		if ( $pagenow=='post-new.php' OR $pagenow=='post.php' ) {
+
+			wp_enqueue_script( 'iframe-resizer', PP_One_Page_Checkout::$plugin_url . '/js/admin/iframeResizer.min.js', array(), '2.8.5' );
+
+		}
+
 	}
 
 	/**
@@ -100,7 +124,7 @@ class WCOPC_Admin_Editor {
 		wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), WC_VERSION );
 
 		wp_enqueue_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
-		wp_enqueue_script( 'wcopc_iframeresizer_contentwindow', PP_One_Page_Checkout::$plugin_url . '/js/admin/iframe_resizer.content_window.min.js' );
+		wp_enqueue_script( 'wcopc_iframeresizer_contentwindow', PP_One_Page_Checkout::$plugin_url . '/js/admin/iframeResizer.contentWindow.min.js', array(), '2.8.5' );
 
 		if ( PP_One_Page_Checkout::is_woocommerce_pre_2_3() ) {
 			// Chosen is @deprecated (2.3) in favour of select2

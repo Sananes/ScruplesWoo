@@ -1,5 +1,54 @@
 *** Product CSV Import Suite Changelog ***
 
+2015.07.03 - version 1.10.1
+* Fix - Attach a grouped product to a parent if the parent exists
+
+2015.06.24 - version 1.10.0
+* Tweak - Update text domains.
+* Tweak - Update main file name.
+* Tweak - Added stock_status to variation export.
+* Tweak - Improve error messages.
+
+2015.04.13 - version 1.9.20
+* Fix - Remove ob_clean on export to prevent malformed CSV.
+
+2015.04.13 - version 1.9.19
+* Fix - Remove chosen.
+* Fix - Add total_sales once only.
+* Fix - Handle scheduled sales logic.
+
+2015.02.17 - version 1.9.18
+* Fix - Post title merge.
+
+2015.02.02 - version 1.9.17
+* Fix - JS notice.
+
+2015.01.28 - version 1.9.16
+* Fix - Notices.
+* Fix - Fix ampersand terms import.
+* Fix - Only allow variations to be private or published.
+* Fix - When not merging, prevent import if post ID is provided and conflicts.
+* Tweak - Support composites, bookings, photography and bundles.
+
+2014.12.11 - version 1.9.15
+* Fix - Ensure total_sales is set for new products.
+
+2014.12.09 - version 1.9.14
+* Fix merge when only declaring attribute_data and not attributes.
+
+2014.11.18 - version 1.9.12
+* Clear attribute table transients after import.
+* Correctly import 0 value attributes.
+
+2014.09.08 - version 1.9.11
+* When parsing attributes, only send them to the importer if inside the CSV.
+
+2014.08.01 - version 1.9.10
+* Export non-visible attributes, or attributes lacking is_visible data.
+
+2014.06.09 - version 1.9.9
+* Fix possible notice when exporting images.
+
 2014.06.09 - version 1.9.8
 * fixed undefined property on variation export
 
@@ -36,7 +85,7 @@
 * Option to merge empty rows, for example, if you want to wipe some attributes
 
 2013.11.18 - version 1.8.3
-* GPF Adwords grouping filter and Adwords labels 
+* GPF Adwords grouping filter and Adwords labels
 
 2013.10.29 - version 1.8.2
 * Remove menu_order order for exporting variations - breaks export

@@ -8,7 +8,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
-}?
+}
 
 ob_start();
 

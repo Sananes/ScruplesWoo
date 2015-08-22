@@ -19,21 +19,21 @@ class WC_PCSVIS_System_Status_Tools {
 	 */
 	public function tools( $tools ) {
 		$tools['delete_products'] = array(
-			'name'		=> __( 'Delete Products','wc_csv_import'),
-			'button'	=> __( 'Delete ALL products','wc_csv_import' ),
-			'desc'		=> __( 'This tool will delete all products allowing you to start fresh.', 'wc_csv_import' ),
+			'name'		=> __( 'Delete Products','woocommerce-product-csv-import-suite'),
+			'button'	=> __( 'Delete ALL products','woocommerce-product-csv-import-suite' ),
+			'desc'		=> __( 'This tool will delete all products allowing you to start fresh.', 'woocommerce-product-csv-import-suite' ),
 			'callback'  => array( $this, 'delete_products' )
 		);
 		$tools['delete_variations'] = array(
-			'name'		=> __( 'Delete Variations','wc_csv_import'),
-			'button'	=> __( 'Delete ALL variations','wc_csv_import' ),
-			'desc'		=> __( 'This tool will delete all variations allowing you to start fresh.', 'wc_csv_import' ),
+			'name'		=> __( 'Delete Variations','woocommerce-product-csv-import-suite'),
+			'button'	=> __( 'Delete ALL variations','woocommerce-product-csv-import-suite' ),
+			'desc'		=> __( 'This tool will delete all variations allowing you to start fresh.', 'woocommerce-product-csv-import-suite' ),
 			'callback'  => array( $this, 'delete_variations' )
 		);
 		$tools['delete_orphaned_variations'] = array(
-			'name'		=> __( 'Delete Orphans','wc_csv_import'),
-			'button'	=> __( 'Delete orphaned variations','wc_csv_import' ),
-			'desc'		=> __( 'This tool will delete variations which have no parent.', 'wc_csv_import' ),
+			'name'		=> __( 'Delete Orphans','woocommerce-product-csv-import-suite'),
+			'button'	=> __( 'Delete orphaned variations','woocommerce-product-csv-import-suite' ),
+			'desc'		=> __( 'This tool will delete variations which have no parent.', 'woocommerce-product-csv-import-suite' ),
 			'callback'  => array( $this, 'delete_orphaned_variations' )
 		);
 		return $tools;
@@ -59,7 +59,7 @@ class WC_PCSVIS_System_Status_Tools {
 			LEFT JOIN {$wpdb->posts} wp ON wp.ID = tr.object_id
 			WHERE wp.ID IS NULL" );
 
-		echo '<div class="updated"><p>' . sprintf( __( '%d Products Deleted', 'wc_csv_import' ), ( $result + $result2 ) ) . '</p></div>';
+		echo '<div class="updated"><p>' . sprintf( __( '%d Products Deleted', 'woocommerce-product-csv-import-suite' ), ( $result + $result2 ) ) . '</p></div>';
 	}
 
 	/**
@@ -81,7 +81,7 @@ class WC_PCSVIS_System_Status_Tools {
 			LEFT JOIN {$wpdb->posts} wp ON wp.ID = tr.object_id
 			WHERE wp.ID IS NULL" );
 
-		echo '<div class="updated"><p>' . sprintf( __( '%d Variations Deleted', 'wc_csv_import' ), $result ) . '</p></div>';
+		echo '<div class="updated"><p>' . sprintf( __( '%d Variations Deleted', 'woocommerce-product-csv-import-suite' ), $result ) . '</p></div>';
 	}
 
 	/**
@@ -96,8 +96,8 @@ class WC_PCSVIS_System_Status_Tools {
 			LEFT JOIN {$wpdb->posts} wp ON wp.ID = products.post_parent
 			WHERE wp.ID IS NULL AND products.post_type = 'product_variation';" ) );
 
-		echo '<div class="updated"><p>' . sprintf( __( '%d Variations Deleted', 'wc_csv_import' ), $result ) . '</p></div>';
-	}	
+		echo '<div class="updated"><p>' . sprintf( __( '%d Variations Deleted', 'woocommerce-product-csv-import-suite' ), $result ) . '</p></div>';
+	}
 }
 
 new WC_PCSVIS_System_Status_Tools();
