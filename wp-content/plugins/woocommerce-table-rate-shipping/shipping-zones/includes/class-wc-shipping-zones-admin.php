@@ -55,7 +55,12 @@ class WC_Shipping_Zones_Admin {
 
 			foreach ( $fields as $field ) {
 				$data[ $field ] = empty( $_POST[ $field ] ) ? '' : $_POST[ $field ];
-				$data[ $field ] = is_array( $data[ $field ] ) ? array_map( 'wc_clean', $data[ $field ] ) : wc_clean( $data[ $field ] );
+
+				if ( 'postcodes' === $field ) {
+					$data[ $field ] = array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $data[ $field ] ) ) );
+				} else {
+					$data[ $field ] = is_array( $data[ $field ] ) ? array_map( 'wc_clean', $data[ $field ] ) : wc_clean( $data[ $field ] );
+				}
 			}
 
 			// If name is left blank...
@@ -99,7 +104,7 @@ class WC_Shipping_Zones_Admin {
 			// If dealing with a postcode, grab that field too
 			if ( $data['zone_type'] == 'postcodes' ) {
 
-				$data['postcodes'] = array_filter( array_unique( array_map( 'strtoupper', array_map( 'esc_attr', array_map( 'trim', explode( "\n", $data['postcodes'] ) ) ) ) ) );
+				$data['postcodes'] = array_filter( array_unique( $data['postcodes'] ) );
 
 				if ( sizeof( $data['postcodes'] ) == 0 ) {
 					echo '<div class="updated error"><p>' . __('You must choose at least 1 postcode to add postcode zone.', SHIPPING_ZONES_TEXTDOMAIN) . '</p></div>';
