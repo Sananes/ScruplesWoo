@@ -7,8 +7,6 @@
  * @param mixed $table_rate_shipping
  */
 function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
-	global $woocommerce;
-
 	// Get shipping classes
 	$shipping_classes = get_terms( 'product_shipping_class', 'hide_empty=0' );
 	?>
@@ -16,7 +14,9 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 		<thead>
 			<tr>
 				<th class="check-column"><input type="checkbox"></th>
-				<th><?php _e('Shipping Class', 'woocommerce-table-rate-shipping'); ?>&nbsp;<a class="tips" data-tip="<?php _e('Shipping class this rate applies to.', 'woocommerce-table-rate-shipping'); ?>">[?]</a></th>
+				<?php if ( sizeof( $shipping_classes ) ) : ?>
+					<th><?php _e('Shipping Class', 'woocommerce-table-rate-shipping'); ?>&nbsp;<a class="tips" data-tip="<?php _e('Shipping class this rate applies to.', 'woocommerce-table-rate-shipping'); ?>">[?]</a></th>
+				<?php endif; ?>
 				<th><?php _e('Condition', 'woocommerce-table-rate-shipping'); ?>&nbsp;<a class="tips" data-tip="<?php _e('Condition vs. destination', 'woocommerce-table-rate-shipping'); ?>">[?]</a></th>
 				<th><?php _e('Min&ndash;Max', 'woocommerce-table-rate-shipping'); ?>&nbsp;<a class="tips" data-tip="<?php _e('Bottom and top range for the selected condition. ', 'woocommerce-table-rate-shipping'); ?>">[?]</a></th>
 				<th width="1%" class="checkbox"><?php _e('Break', 'woocommerce-table-rate-shipping'); ?>&nbsp;<a class="tips" data-tip="<?php _e('Break at this point. For per-order rates, no rates other than this will be offered. For calculated rates, this will stop any further rates being matched.', 'woocommerce-table-rate-shipping'); ?>">[?]</a></th>
@@ -30,7 +30,7 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 		</thead>
 		<tfoot>
 			<tr>
-				<th colspan="2"><a href="#" class="add button button-primary"><?php _e('+ Add Shipping Rate', 'woocommerce-table-rate-shipping'); ?></a></th>
+				<th colspan="2"><a href="#" class="add button button-primary"><?php _e('Add Shipping Rate', 'woocommerce-table-rate-shipping'); ?></a></th>
 				<th colspan="9"><span class="description"><?php _e('Define your table rates here in order of priority.', 'woocommerce-table-rate-shipping'); ?></span> <a href="#" class="dupe button"><?php _e('Duplicate selected rows', 'woocommerce-table-rate-shipping'); ?></a> <a href="#" class="remove button"><?php _e('Delete selected rows', 'woocommerce-table-rate-shipping'); ?></a></th>
 			</tr>
 		</tfoot>
@@ -48,6 +48,11 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 	// Javascript for Table Rates admin
 	ob_start();
 	?>
+	// Labels
+	jQuery('label[for="woocommerce_table_rate_handling_fee"], label[for="woocommerce_table_rate_max_cost"], label[for="woocommerce_table_rate_min_cost"]').each(function( i, el ) {
+		jQuery(el).data( 'o_label', jQuery(el).text() );
+	});
+
 	// Options which depend on calc type
 	jQuery('#woocommerce_table_rate_calculation_type').change(function(){
 
@@ -61,13 +66,9 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 
 		if ( selected ) {
 			jQuery( '#shipping_class_priorities' ).hide();
-		} else {
-			jQuery( '#shipping_class_priorities' ).show();
-		}
-
-		if ( selected ) {
 			jQuery( 'td.shipping_label, th.shipping_label' ).hide();
 		} else {
+			jQuery( '#shipping_class_priorities' ).show();
 			jQuery( 'td.shipping_label, th.shipping_label' ).show();
 		}
 
@@ -75,6 +76,22 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 			jQuery( '#shipping_class_priorities span.description.per_order' ).show();
 			jQuery( '#shipping_class_priorities span.description.per_class' ).hide();
 		}
+
+		var label_text = '<?php _e( 'Order', 'woocommerce-table-rate-shipping' ); ?>';
+
+		if ( selected == 'item' ) {
+			label_text = '<?php _e( 'Item', 'woocommerce-table-rate-shipping' ); ?>';
+		} else if ( selected == 'line' ) {
+			label_text = '<?php _e( 'Line Item', 'woocommerce-table-rate-shipping' ); ?>';
+		} else if ( selected == 'class' ) {
+			label_text = '<?php _e( 'Class', 'woocommerce-table-rate-shipping' ); ?>';
+		}
+
+		jQuery('label[for="woocommerce_table_rate_handling_fee"], label[for="woocommerce_table_rate_max_cost"], label[for="woocommerce_table_rate_min_cost"]').each(function( i, el ) {
+			var text  = jQuery(el).data( 'o_label' );
+			text = text.replace( '[item]', label_text );
+			jQuery(el).text( text );
+		});
 
 	}).change();
 
@@ -249,14 +266,7 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
 		});
 	};
 	<?php
-
-	$js = ob_get_clean();
-
-	if ( function_exists( 'wc_enqueue_js' ) ) {
-		wc_enqueue_js( $js );
-	} else {
-		$woocommerce->add_inline_js( $js );
-	}
+	wc_enqueue_js( ob_get_clean() );
 }
 
 /**
@@ -266,9 +276,7 @@ function wc_table_rate_admin_shipping_rows( $table_rate_shipping ) {
  * @return void
  */
 function wc_table_rate_admin_shipping_class_priorities( $shipping_method_id ) {
-	global $woocommerce;
-
-	$classes = $woocommerce->shipping->get_shipping_classes();
+	$classes = WC()->shipping->get_shipping_classes();
 	if (!$classes) :
 		echo '<p class="description">' . __('No shipping classes exist - you can ignore this option :)', 'woocommerce-table-rate-shipping') . '</p>';
 	else :
@@ -315,7 +323,7 @@ function wc_table_rate_admin_shipping_class_priorities( $shipping_method_id ) {
  * @return void
  */
 function wc_table_rate_admin_shipping_rows_process( $shipping_method_id ) {
-	global $woocommerce, $wpdb;
+	global $wpdb;
 
 	// Clear cache
 	$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_wc_ship_%')" );
@@ -360,7 +368,7 @@ function wc_table_rate_admin_shipping_rows_process( $shipping_method_id ) {
 		if ( ! isset( $rate_ids[ $i ] ) ) continue;
 
 		$rate_id                   = $rate_ids[ $i ];
-		$rate_class                = $shipping_class[ $i ];
+		$rate_class                = isset( $shipping_class[ $i ] ) ? $shipping_class[ $i ] : '';
 		$rate_condition            = $shipping_condition[ $i ];
 		$rate_min                  = isset( $shipping_min[ $i ] ) ? $shipping_min[ $i ] : '';
 		$rate_max                  = isset( $shipping_max[ $i ] ) ? $shipping_max[ $i ] : '';

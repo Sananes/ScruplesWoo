@@ -21,7 +21,7 @@ class WC_Shipping_Zone_Methods_Table extends WP_List_Table {
      * Constructor
      */
     public function __construct(){
-        global $status, $page, $woocommerce;
+        global $status, $page;
 
         $this->zone_id = (int) $_GET['zone'];
         $this->index = 0;

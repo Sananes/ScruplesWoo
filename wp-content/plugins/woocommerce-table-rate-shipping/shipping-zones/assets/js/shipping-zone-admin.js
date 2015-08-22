@@ -43,7 +43,7 @@ jQuery(function($) {
 
 		.on( 'click', '.select_all', function(){
 			$(this).closest('div').find('select option').attr("selected","selected");
-			$(this).closest('div').find('select').trigger('chosen:updated');
+			$(this).closest('div').find('select').trigger('chosen:updated').change();
 			return false;
 		});
 

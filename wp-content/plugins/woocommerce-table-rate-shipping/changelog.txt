@@ -1,5 +1,17 @@
 *** Table Rate Shipping Changelog ***
 
+2015.05.12 - version 2.9.0
+* Removed legacy notice code.
+* Reorganised options
+* Added new max cost option.
+* Hide shipping classes when unused.
+
+2015.04.21 - version 2.8.3
+* Fix - Potential XSS with add_query_arg.
+
+2015.02.17 - version 2.8.2
+* Fix - Postcode save method.
+
 2015.02.11 - version 2.8.1
 * Fix - Fatal error in cart and checkout when trying to register the shipping methods.
 

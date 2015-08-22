@@ -2,12 +2,12 @@
 
 /**
  * wc_table_rate_install function.
- * 
+ *
  * @access public
  * @return void
  */
 function wc_table_rate_install() {
-    global $wpdb, $woocommerce;
+    global $wpdb;
 
     $wpdb->hide_errors();
 
@@ -46,7 +46,7 @@ CREATE TABLE {$wpdb->prefix}woocommerce_shipping_table_rates (
 ) $collate;
 ";
     dbDelta($sql);
-    
+
     // Table for storing shipping zones
     $sql = "
 CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zones (
@@ -59,7 +59,7 @@ CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zones (
 ) $collate;
 ";
     dbDelta($sql);
-    
+
     // Table for storing a shipping zones locations which it applies to. Type can be postcode, state, or country.
     $sql = "
 CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zone_locations (
@@ -71,7 +71,7 @@ CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zone_locations (
 ) $collate;
 ";
     dbDelta($sql);
-    
+
     // Table for storing shipping zones individial shipping methods and their options
     $sql = "
 CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zone_shipping_methods (
@@ -83,6 +83,6 @@ CREATE TABLE {$wpdb->prefix}woocommerce_shipping_zone_shipping_methods (
 ) $collate;
 ";
     dbDelta($sql);
-    
+
     update_option( 'hide_table_rate_welcome_notice', '' );
 }
