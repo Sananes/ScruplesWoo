@@ -51,42 +51,26 @@ class WC_Admin_Status {
 				break;
 				case 'clear_expired_transients' :
 
-					// http://w-shadow.com/blog/2012/04/17/delete-stale-transients/
-					$rows = $wpdb->query( "
-						DELETE
-							a, b
-						FROM
-							{$wpdb->options} a, {$wpdb->options} b
-						WHERE
-							a.option_name LIKE '_transient_%' AND
-							a.option_name NOT LIKE '_transient_timeout_%' AND
-							b.option_name = CONCAT(
-								'_transient_timeout_',
-								SUBSTRING(
-									a.option_name,
-									CHAR_LENGTH('_transient_') + 1
-								)
-							)
-							AND b.option_value < UNIX_TIMESTAMP()
-					" );
+					/*
+					 * Deletes all expired transients. The multi-table delete syntax is used
+					 * to delete the transient record from table a, and the corresponding
+					 * transient_timeout record from table b.
+					 *
+					 * Based on code inside core's upgrade_network() function.
+					 */
+					$sql = "DELETE a, b FROM $wpdb->options a, $wpdb->options b
+						WHERE a.option_name LIKE %s
+						AND a.option_name NOT LIKE %s
+						AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
+						AND b.option_value < %d";
+					$rows = $wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_' ) . '%', $wpdb->esc_like( '_transient_timeout_' ) . '%', time() ) );
 
-					$rows2 = $wpdb->query( "
-						DELETE
-							a, b
-						FROM
-							{$wpdb->options} a, {$wpdb->options} b
-						WHERE
-							a.option_name LIKE '_site_transient_%' AND
-							a.option_name NOT LIKE '_site_transient_timeout_%' AND
-							b.option_name = CONCAT(
-								'_site_transient_timeout_',
-								SUBSTRING(
-									a.option_name,
-									CHAR_LENGTH('_site_transient_') + 1
-								)
-							)
-							AND b.option_value < UNIX_TIMESTAMP()
-					" );
+					$sql = "DELETE a, b FROM $wpdb->options a, $wpdb->options b
+						WHERE a.option_name LIKE %s
+						AND a.option_name NOT LIKE %s
+						AND b.option_name = CONCAT( '_site_transient_timeout_', SUBSTRING( a.option_name, 17 ) )
+						AND b.option_value < %d";
+					$rows2 = $wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_site_transient_' ) . '%', $wpdb->esc_like( '_site_transient_timeout_' ) . '%', time() ) );
 
 					echo '<div class="updated"><p>' . sprintf( __( '%d Transients Rows Cleared', 'woocommerce' ), $rows + $rows2 ) . '</p></div>';
 
@@ -159,24 +143,7 @@ class WC_Admin_Status {
 
 		// Manual translation update messages
 		if ( isset( $_GET['translation_updated'] ) ) {
-			switch ( $_GET['translation_updated'] ) {
-				case 2 :
-					echo '<div class="error"><p>' . __( 'Failed to install/update the translation:', 'woocommerce' ) . ' ' . __( 'Seems you don\'t have permission to do this!', 'woocommerce' ) . '</p></div>';
-					break;
-				case 3 :
-					echo '<div class="error"><p>' . __( 'Failed to install/update the translation:', 'woocommerce' ) . ' ' . sprintf( __( 'An authentication error occurred while updating the translation. Please try again or configure your %sUpgrade Constants%s.', 'woocommerce' ), '<a href="http://codex.wordpress.org/Editing_wp-config.php#WordPress_Upgrade_Constants">', '</a>' ) . '</p></div>';
-					break;
-				case 4 :
-					echo '<div class="error"><p>' . __( 'Failed to install/update the translation:', 'woocommerce' ) . ' ' . __( 'Sorry but there is no translation available for your language =/', 'woocommerce' ) . '</p></div>';
-					break;
-
-				default :
-					// Force WordPress find for new updates and hide the WooCommerce translation update
-					set_site_transient( 'update_plugins', null );
-
-					echo '<div class="updated"><p>' . __( 'Translations installed/updated successfully!', 'woocommerce' ) . '</p></div>';
-					break;
-			}
+			WC_Language_Pack_Upgrader::language_update_messages();
 		}
 
 		// Display message if settings settings have been saved
@@ -255,7 +222,7 @@ class WC_Admin_Status {
 
 		if ( ! empty( $_REQUEST['log_file'] ) && isset( $logs[ sanitize_title( $_REQUEST['log_file'] ) ] ) ) {
 			$viewed_log = $logs[ sanitize_title( $_REQUEST['log_file'] ) ];
-		} elseif ( $logs ) {
+		} elseif ( ! empty( $logs ) ) {
 			$viewed_log = current( $logs );
 		}
 
@@ -301,10 +268,10 @@ class WC_Admin_Status {
 	 */
 	public static function scan_template_files( $template_path ) {
 
-		$files         = scandir( $template_path );
-		$result        = array();
+		$files  = @scandir( $template_path );
+		$result = array();
 
-		if ( $files ) {
+		if ( ! empty( $files ) ) {
 
 			foreach ( $files as $key => $value ) {
 
@@ -329,8 +296,8 @@ class WC_Admin_Status {
 	 * @return array
 	 */
 	public static function scan_log_files() {
-		$files         = @scandir( WC_LOG_DIR );
-		$result        = array();
+		$files  = @scandir( WC_LOG_DIR );
+		$result = array();
 
 		if ( $files ) {
 
@@ -342,7 +309,9 @@ class WC_Admin_Status {
 					}
 				}
 			}
+
 		}
+
 		return $result;
 	}
 }

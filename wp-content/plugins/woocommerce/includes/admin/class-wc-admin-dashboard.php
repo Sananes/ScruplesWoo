@@ -163,6 +163,8 @@ class WC_Admin_Dashboard {
 					<?php printf( _n( "<strong>%s product</strong> out of stock", "<strong>%s products</strong> out of stock", $outofstock_count, 'woocommerce' ), $outofstock_count ); ?>
 				</a>
 			</li>
+			
+			<?php do_action( 'woocommerce_after_dashboard_status_widget', $reports ); ?>
 		</ul>
 		<?php
 	}
@@ -190,7 +192,7 @@ class WC_Admin_Dashboard {
 
 				echo get_avatar( $comment->comment_author, '32' );
 
-				$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+				$rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
 
 				echo '<div class="star-rating" title="' . esc_attr( $rating ) . '">
 					<span style="width:'. ( $rating * 20 ) . '%">' . $rating . ' ' . __( 'out of 5', 'woocommerce' ) . '</span></div>';

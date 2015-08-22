@@ -77,38 +77,38 @@ ul.page-numbers li span:hover {
   background: #FFF;
 }
 .widget_shopping_cart_content .buttons .button {
-  background: #000;
+  background: #b0976d;
 }
 .widget_shopping_cart_content .buttons .button:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .price_slider_wrapper .price_slider_amount .button {
-  background: #000;
+  background: #b0976d;
 }
 .widget_shopping_cart_content .total .amount {
-  color: #000;
+  color: #b0976d;
 }
 .price_slider_wrapper .price_slider .ui-slider-range,
 .price_slider_wrapper .price_slider .ui-slider-handle {
-  background-color: #000;
+  background-color: #b0976d;
 }
 .laborator-woocommerce .product-single .product-left-info .ribbon {
-  background-color: #000;
+  background-color: #b0976d;
 }
 .laborator-woocommerce .product-single .product-left-info .ribbon:after {
-  border-left-color: #000000;
+  border-left-color: #a78b5c;
 }
 a {
-  color: #333333;
+  color: #222222;
 }
 a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .wrapper .main {
-  background: #EEEEEE;
+  background: #ffffff;
 }
 body {
-  background: #EEEEEE;
+  background: #ffffff;
 }
 .header-cart {
   background: #222;
@@ -120,55 +120,55 @@ body {
   background-color: #222;
 }
 .blog .blog-post .blog_content .post-meta .comment_text {
-  color: #000;
+  color: #b0976d;
 }
 .widget_search div #searchsubmit,
 .widget_product_search div #searchsubmit {
-  background: #000;
+  background: #b0976d;
 }
 .widget_search div #searchsubmit:hover,
 .widget_product_search div #searchsubmit:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .laborator-woocommerce #wl-wrapper .wishlist_table .button {
-  background: #000;
+  background: #b0976d;
 }
 .laborator-woocommerce #wl-wrapper .wishlist_table .button:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .oxygen-top-menu > .wrapper > .main-menu-top > .main .main-menu-env .nav li.current_page_ancestor > a,
 .oxygen-top-menu > .wrapper > .main-menu-top > .main .main-menu-env .nav li.current-menu-item > a,
 .oxygen-top-menu > .wrapper > .main-menu-top > .main .main-menu-env .nav ul li.current-menu-parent a {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 ul.pagination li.active a,
 ul.page-numbers li.active a {
-  background: #000;
+  background: #b0976d;
 }
 .mobile-menu .cart-items span {
-  background: #000;
+  background: #b0976d;
 }
 .mobile-menu .nav ul > li.current-menu-item > a,
 .mobile-menu .nav ul > li.current-menu-parent > a,
 .mobile-menu .nav ul > li.current_page_parent > a {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 .mobile-menu .nav > li.current-menu-item > a,
 .mobile-menu .nav > li.current-menu-parent > a,
 .mobile-menu .nav > li.current_page_parent > a {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 .mobile-menu .nav ul > li > a:hover {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 .mobile-menu .nav > li > a:hover {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 ul.pagination li a:hover,
 ul.page-numbers li a:hover,
 ul.pagination li span:hover,
 ul.page-numbers li span:hover {
-  color: #000;
+  color: #b0976d;
 }
 .pagination > .active > a,
 .pagination > .active > span,
@@ -176,247 +176,247 @@ ul.page-numbers li span:hover {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background: #000 !important;
+  background: #b0976d !important;
 }
 footer .footer_main .footer-nav ul li.current_page_ancestor > a,
 footer .footer_main .footer-nav ul li.current-menu-item > a,
 footer .footer_main .footer-nav ul li.current-menu-parent > a {
-  color: #000;
+  color: #b0976d;
 }
 .widget_archive li a:hover,
 .widget_categories li a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .product_list_widget li > .amount {
-  color: #000;
+  color: #b0976d;
 }
 .product_list_widget li ins {
-  color: #000;
+  color: #b0976d;
 }
 ::selection {
-  background: #000 !important;
+  background: #b0976d !important;
 }
 ::-moz-selection {
-  background: #000 !important;
+  background: #b0976d !important;
 }
 .shop .items .item-wrapper .item .description .price {
-  color: #000;
+  color: #b0976d;
 }
 .shop .items .item-wrapper .item .quick-view a {
-  background: #000;
+  background: #b0976d;
 }
 .shop .items .item-wrapper .item .description .add-to-cart-btn:hover {
-  color: #000;
+  color: #b0976d;
 }
 .shop .items .item-wrapper .item .sale_tag .ribbon {
-  background: #000;
+  background: #b0976d;
 }
 .shop .items .item-wrapper .item .sale_tag .ribbon .ribbon-content:after {
-  border-left-color: #000000;
+  border-left-color: #987e52;
 }
 .btn.btn-default {
-  background: #000;
+  background: #b0976d;
 }
 .btn.btn-default:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .header-cart .cart-sub-total span {
-  color: #000;
+  color: #b0976d;
 }
 footer .footer_main .footer-nav ul li a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .blog .single_post .post_details .author_text a {
-  color: #000;
+  color: #b0976d;
 }
 .share-post .share-post-links a:hover {
-  background: #000;
+  background: #b0976d;
 }
 .comments h1 span {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .product-left-info .product-images .wish-list.wishlisted a {
-  color: #000;
+  color: #b0976d;
 }
 .shop .items .item-wrapper .item .wish-list.wishlisted a {
-  color: #000;
+  color: #b0976d;
 }
 .comments .author_post .author_about_part .date_time_reply_text a {
-  color: #000;
+  color: #b0976d;
 }
 .comments .form-submit #submit {
-  background: #000;
+  background: #b0976d;
 }
 .comments .form-submit #submit:hover {
-  background: #000000;
+  background: #987e52;
 }
 .widget_search div #s:focus,
 .widget_product_search div #s:focus {
-  border-color: #000;
+  border-color: #b0976d;
 }
 .oxygen-top-menu > .wrapper > .main-menu-top > .main .main-menu-env .nav > li .sub-menu > li:hover > a {
-  color: #000;
+  color: #b0976d;
 }
 .banner.banner-default .button_outer {
-  border-color: #333333;
+  border-color: #d4c6af;
 }
 .banner.banner-dark-red .button_outer {
-  border-color: #333333;
+  border-color: #cbba9f;
 }
 .banner.banner-default .btn {
-  background: #000000;
+  background: #987e52;
 }
 .banner.banner-default .btn:hover {
-  background: #000000;
+  background: #776240;
 }
 .banner.banner-dark-red {
-  background: #000000;
+  background: #a78b5c;
 }
 .banner.banner-default {
-  background: #000;
+  background: #b0976d;
 }
 .btn.btn-default.btn-bordered {
   background: none;
-  border-color: #000;
-  color: #000;
+  border-color: #b0976d;
+  color: #b0976d;
 }
 .btn.btn-default.btn-bordered:hover {
-  border-color: #000000;
-  color: #000000;
+  border-color: #a78b5c;
+  color: #a78b5c;
 }
 .shop .items .item-wrapper .item .description .type a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .search-results-header .row .results-text span {
-  color: #000;
+  color: #b0976d;
 }
 .search-results-header .row .results-text span {
-  color: #000;
+  color: #b0976d;
 }
 .search-results-header .row .results-text p a {
-  color: #000;
+  color: #b0976d;
 }
 body .search-results .search-entry:hover .title {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .myaccount-env .my_account_orders .order-number a {
-  color: #000;
+  color: #b0976d;
 }
 .oxygen-top-menu > .wrapper > .top-menu.main-menu-top .main-menu-env > .nav > li > a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .oxygen-top-menu > .wrapper > .top-menu-centered > .main .navs .main-menu-env .nav li.current-menu-item > a {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 .oxygen-top-menu > .wrapper > .top-menu-centered > .main .navs .main-menu-env .nav > li .sub-menu > li:hover > a {
-  color: #000;
+  color: #b0976d;
 }
 .oxygen-top-menu > .wrapper > .top-menu-centered > .main .navs .main-menu-env .nav li.current_page_ancestor > a {
-  color: #000 !important;
+  color: #b0976d !important;
 }
 .laborator-woocommerce .product-single .woocommerce-tabs #reviews #review_form input[type="submit"] {
-  background: #000;
+  background: #b0976d;
 }
 .laborator-woocommerce .product-single .woocommerce-tabs #reviews #review_form input[type="submit"]:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .laborator-woocommerce .product-single .woocommerce-tabs .tabs > li.active a {
-  border-bottom-color: #000;
+  border-bottom-color: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .product_meta .cat_posted_in a,
 .laborator-woocommerce .product-single .entry-summary .product_meta .tagged_as a,
 .laborator-woocommerce .product-single .entry-summary .product_meta .product_id a,
 .laborator-woocommerce .product-single .entry-summary .product_meta .sku_wrapper a {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .product_meta .sku_wrapper .sku {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .product_meta .product_id .value {
-  color: #000;
+  color: #b0976d;
 }
 .main-sidebar ul.nav .sub-menu li:hover > a {
-  color: #000;
+  color: #b0976d;
 }
 .main-sidebar ul.nav li > a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .main-sidebar ul.nav .sub-menu li.current-menu-item > a {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .price {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .quantity input[type="button"] {
-  background: #000;
+  background: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .quantity input[type="button"]:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .laborator-woocommerce .product-single .entry-summary .quantity input.qty {
-  background: #000000;
+  background: #a78b5c;
 }
 .top-first .breadcrumbs > span:last-child {
-  color: #000;
+  color: #b0976d;
 }
 .top-first .breadcrumb-menu ul.nav li a:hover {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .product-single .yith-wcwl-add-to-wishlist.laborator .yith-btn {
-  background: #000;
+  background: #b0976d;
 }
 .laborator-woocommerce .product-single .yith-wcwl-add-to-wishlist.laborator .yith-btn:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .laborator-woocommerce .items .product.product-type-variable .white-block .price span {
-  color: #000;
+  color: #b0976d;
 }
 ul.pagination.page-numbers li .current,
 ul.page-numbers.page-numbers li .current,
 ul.pagination.page-numbers li .current:hover,
 ul.page-numbers.page-numbers li .current:hover {
-  background: #000;
+  background: #b0976d;
 }
 .laborator-woocommerce .product-single .entry-summary .price ins {
-  color: #000;
+  color: #b0976d;
 }
 .shop .shop-grid .quickview-list .quickview-entry .quickview-wrapper .product-gallery-env .ribbon {
-  background: #000;
+  background: #b0976d;
 }
 .shop .shop-grid .quickview-list .quickview-entry .quickview-wrapper .product-gallery-env .ribbon:after {
-  border-left-color: #000000;
+  border-left-color: #a78b5c;
 }
 .header-cart .cart-items .cart-item .details .title:hover {
-  color: #000;
+  color: #b0976d;
 }
 .header-cart .cart-items .cart-item .details .price-quantity .price ins,
 .header-cart .cart-items .cart-item .details .price-quantity .price > .amount {
-  color: #000;
+  color: #b0976d;
 }
 .cart-env .cart-totals > li.total .value strong,
 .cart-env .cart-totals > li.order-total .value strong,
 .cart-env .cart-totals > li.total .value .amount,
 .cart-env .cart-totals > li.order-total .value .amount {
-  color: #000;
+  color: #b0976d;
 }
 .laborator-woocommerce .order_details.header li.order strong {
-  color: #000;
+  color: #b0976d;
 }
 .cart-env .cart-item-row .col .quantity input[type="button"] {
-  background: #000;
+  background: #b0976d;
 }
 .cart-env .cart-item-row .col .quantity input[type="button"]:hover {
-  background: #000000;
+  background: #a78b5c;
 }
 .lab_wpb_lookbook_carousel .lookbook-carousel .product-item:hover .lookbook-hover-info {
-  background: #000 !important;
+  background: #b0976d !important;
 }
 .lab_wpb_lookbook_carousel .lookbook-carousel .owl-controls .owl-pagination .owl-page.active span {
-  background: #000;
+  background: #b0976d;
 }
 .cart-env .cart-item-row .col .quantity input.qty {
-  background: #000000;
+  background: #a78b5c;
 }
 footer.footer_widgets ul li a:hover {
-  color: #000;
+  color: #b0976d;
 }
