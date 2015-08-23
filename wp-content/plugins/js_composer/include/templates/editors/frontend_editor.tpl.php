@@ -1,6 +1,6 @@
 <?php
 /** @var $editor Vc_Frontend_Editor */
-global $menu, $submenu, $parent_file, $post_ID, $post;
+global $menu, $submenu, $parent_file, $post_ID, $post, $post_type;
 $post_ID = $editor->post_id;
 $post = $editor->post;
 $post_type = $post->post_type;
@@ -15,8 +15,9 @@ require_once( $editor->adminFile( 'admin-header.php' ) );
 ?>
 	<div id="vc_preloader"></div>
 	<script type="text/javascript">
-		document.getElementById('vc_preloader').style.height = window.screen.availHeight;
-		var vc_mode = '<?php echo vc_mode() ?>';
+		document.getElementById( 'vc_preloader' ).style.height = window.screen.availHeight;
+		var vc_mode = '<?php echo vc_mode() ?>',
+			vc_iframe_src = '<?php echo esc_attr( $editor->url ); ?>';
 	</script>
 	<input type="hidden" name="vc_post_title" id="vc_title-saved" value="<?php echo esc_attr( $post_title ); ?>"/>
 	<input type="hidden" name="vc_post_id" id="vc_post-id" value="<?php echo esc_attr( $editor->post_id ); ?>"/>
@@ -25,10 +26,7 @@ require_once vc_path_dir( 'EDITORS_DIR', 'navbar/class-vc-navbar-frontend.php' )
 $nav_bar = new Vc_NavBar_Frontend( $post );
 $nav_bar->render();
 ?>
-	<div id="vc_inline-frame-wrapper">
-		<iframe src="<?php echo esc_attr( $editor->url ); ?>" scrolling="auto" style="width: 100%;"
-		        id="vc_inline-frame"></iframe>
-	</div>
+	<div id="vc_inline-frame-wrapper"></div>
 <?php
 // Add element popup
 require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-add-element-box.php' );
@@ -55,7 +53,8 @@ vc_include_template( 'editors/partials/frontend_controls.tpl.php' );
 	       value="<?php echo esc_attr( $editor->post_custom_css ); ?>" autocomplete="off"/>
 	<script type="text/javascript">
 		var vc_user_mapper = <?php echo json_encode(WPBMap::getUserShortCodes()) ?>,
-			vc_mapper = <?php echo json_encode(WPBMap::getShortCodes()) ?>;
+			vc_mapper = <?php echo json_encode(WPBMap::getShortCodes()) ?>,
+			vc_roles = <?php echo json_encode( array_merge( array( 'current_user' => $editor->current_user->roles ), (array) vc_settings()->get( 'groups_access_rules' ) ) ) ?>;
 	</script>
 
 	<script type="text/html" id="vc_settings-image-block">

@@ -1,10 +1,10 @@
 .vc_settings-tab-content {
     .css-control, .wp-picker-container {
-        opacity: 0.5;
+        .opacity(0.5);
     }
     &.color_enabled {
         .css-control, .wp-picker-container {
-            opacity: 1;
+            .opacity(1);
         }
     }
     .column_css_class {
@@ -14,7 +14,20 @@
             display: inline-block;
         }
     }
+	.submit {
+		margin-top: 0;
+		padding-top: 0;
+	}
     .vc_restore-button {
         margin: @vc_settings_right_control_button_margin;
     }
+}
+
+.vc_button-settings-less {
+	margin-bottom: 4px;
+}
+
+.vc_settings-less-spinner {
+	float: left;
+	margin-right: 5px;
 }

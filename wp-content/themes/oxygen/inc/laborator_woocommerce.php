@@ -16,7 +16,7 @@ define('SHOPSIDEBARALIGN', get_data('shop_sidebar') == 'Show Sidebar on Left' ? 
 define('SHOPSINGLESIDEBAR', in_array(get_data('shop_single_sidebar'), array('Show Sidebar on Left', 'Show Sidebar on Right')));
 define('SHOPSINGLESIDEBARALIGN', get_data('shop_single_sidebar') == 'Show Sidebar on Left' ? 'left' : 'right');
 
-define('SHOPCOLUMNS', SHOPSIDEBAR ? 3 : 4);
+define('SHOPCOLUMNS', apply_filters( 'lab_wc_shop_columns', (SHOPSIDEBAR ? 3 : 4 )));
 
 define('SHOPURL', get_permalink(translate_id(woocommerce_get_page_id('shop'))));
 define('MYACCOUNTURL', get_permalink(translate_id(woocommerce_get_page_id('myaccount'))));
@@ -490,71 +490,21 @@ function oxygen_yith_wcwl_add_to_wishlist()
 {
 	global $yith_wcwl, $product;
 
-	$url		   = $yith_wcwl->get_wishlist_url();
+	$product_id	   = $product->id;
+	$url           = $yith_wcwl->get_wishlist_url();
 	$product_type  = $product->product_type;
-	$exists		= $yith_wcwl->is_product_in_wishlist( $product->id );
+	$exists        = $yith_wcwl->is_product_in_wishlist( $product->id );
 
-	$url_to_add = $yith_wcwl->get_addtowishlist_url();
+	$url_to_add    = $yith_wcwl->get_addtowishlist_url();
 
 	?>
 	<div class="wish-list<?php echo $exists ? ' wishlisted' : ''; ?>">
-		<a href="#" class="yith-add-to-wishlist glyphicon glyphicon-heart<?php echo $exists ? ' wishlisted' : ''; ?>" data-listid="<?php echo $url_to_add; ?>"></a>
+		<a href="#" class="yith-add-to-wishlist add_to_wishlist glyphicon glyphicon-heart<?php echo $exists ? ' wishlisted' : ''; ?>" data-product-id="<?php echo $product_id ?>" data-product-type="<?php echo $product_type?>"></a>
 	</div>
 	<?php
 }
 
 
-function laborator_yith_wcwl_add_to_wishlist()
-{
-	global $yith_wcwl, $product;
-
-	$url		   = $yith_wcwl->get_wishlist_url();
-	$product_type  = $product->product_type;
-	$exists		= $yith_wcwl->is_product_in_wishlist( $product->id );
-
-	$url_to_add = $yith_wcwl->get_addtowishlist_url();
-
-
-	$label = apply_filters( 'yith_wcwl_button_label', get_option( 'yith_wcwl_add_to_wishlist_text' ) );
-	$icon = get_option( 'yith_wcwl_add_to_wishlist_icon' ) != 'none' ? '<i class="' . get_option( 'yith_wcwl_add_to_wishlist_icon' ) . '"></i>' : '';
-
-	$classes = get_option( 'yith_wcwl_use_button' ) == 'yes' ? 'class="add_to_wishlist single_add_to_wishlist button alt"' : 'class="add_to_wishlist"';
-
-	$html  = '<div class="yith-wcwl-add-to-wishlist laborator">';
-	#$html .= '<div class="yith-wcwl-add-button';  // the class attribute is closed in the next row
-
-	#$html .= $exists ? ' hide" style="display:none;"' : ' show"';
-
-	#$html .= '><a href="' . esc_url( $url_to_add ) . '" data-product-id="' . $product->id . '" data-product-type="' . $product_type . '" ' . $classes . ' >' . $icon . $label . '</a>';
-	#$html .= '<img src="' . esc_url( admin_url( 'images/wpspin_light.gif' ) ) . '" class="ajax-loading" id="add-items-ajax-loading" alt="" width="16" height="16" style="visibility:hidden" />';
-	#$html .= '</div>';
-
-	#$html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added!','yit' ) . '</span> <a href="' . esc_url( $url ) . '">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yit' ) ) . '</a></div>';
-	$html .= '<div class="yith-wcwl-wishlistexistsbrowse ' . ( $exists ? 'show' : 'hide' ) . '" style="display:' . ( $exists ? 'block' : 'none' ) . '"><span class="feedback">' . __( 'The product is already in the wishlist!', 'yit' ) . '</span> <a href="' . esc_url( $url ) . '" class="yith-btn">' . apply_filters( 'yith-wcwl-browse-wishlist-label', __( 'Browse Wishlist', 'yit' ) ) . '</a></div>';
-	$html .= '<div style="clear:both"></div><div class="yith-wcwl-wishlistaddresponse"></div>';
-
-	$html .= '</div>';
-	$html .= '<div class="clear"></div>';
-
-	echo $html;
-}
-
-# Wishlist Action Modify
-if(is_yith_wishlist_supported())
-{
-	$yith_wl_position = get_option( 'yith_wcwl_button_position' );
-	$yith_wl_position = empty( $yith_wl_position ) ? 'add-to-cart' : $yith_wl_position;
-
-	$yith_wl_positions = apply_filters( 'yith_wcwl_positions', array(
-		'add-to-cart' => array( 'hook' => 'woocommerce_single_product_summary', 'priority' => 31 ),
-		'thumbnails'  => array( 'hook' => 'woocommerce_product_thumbnails', 'priority' => 21 ),
-		'summary'	 => array( 'hook' => 'woocommerce_after_single_product_summary', 'priority' => 11 )
-	) );
-
-	if ( $yith_wl_position != 'shortcode' ) {
-		add_action( $yith_wl_positions[$yith_wl_position]['hook'], create_function( '', 'laborator_yith_wcwl_add_to_wishlist();' ), $yith_wl_positions[$yith_wl_position]['priority'] );
-	}
-}
 
 
 

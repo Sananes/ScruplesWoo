@@ -7,7 +7,7 @@
     border: 1px dashed @vc_welcome_border_rba;
     font-family: "Open Sans",Helvetica,sans-serif;
     a {
-        transition-property: none;
+        .transition-property(none);
     }
     .icon {
         margin-top: 36px;
@@ -46,6 +46,12 @@
         font-size: 14px;
         border: medium none !important;
         padding-left: 52px;
+		&:focus {
+			outline: none;
+		}
+    }
+    a#vc_no-content-add-element:last-child {
+      margin-right: 0;
     }
     .vc_add-text-block-button {
         margin-left: 15px;
@@ -55,6 +61,9 @@
         padding-left: 52px;
         font-size: 14px;
         border: medium none !important;
+		&:focus {
+			outline: none;
+		}
     }
     .vc_add-element-not-empty-button {
         width: 39px;

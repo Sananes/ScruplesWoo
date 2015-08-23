@@ -4,9 +4,9 @@
  *
  * Override this template by copying it to yourtheme/woocommerce/content-product.php
  *
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
- * @version     1.6.4
+ * @author  WooThemes
+ * @package WooCommerce/Templates
+ * @version 2.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -211,7 +211,7 @@ if($product_images)
 
 			<?php if(get_data('shop_quickview')): ?>
 
-				<?php if(is_shop() || is_product_category() || $quickview_enabled): ?>
+				<?php if(is_shop() || is_product_category() || is_product_tag() || $quickview_enabled): ?>
 				<div class="quick-view">
 					<a href="#">
 						<i class="entypo-popup"></i>

@@ -15,12 +15,21 @@ function initialize()
 			//center: position,
 			zoom: contact_vars.zoom,
 			disableDefaultUI: true,
-			mapTypeId: map_types[contact_vars.map_type_id]
+			mapTypeId: map_types[contact_vars.map_type_id],
+			scrollwheel: false
 		},
 		markers = [],
 		bounds = new google.maps.LatLngBounds();;
 
 	map = new google.maps.Map(document.getElementById("contact-map"), map_options);
+	
+	google.maps.event.addListener(map, 'click', function (event) {
+		map.setOptions( { 'scrollwheel': true });
+	});
+	
+	jQuery( '#contact-map' ).on( 'mouseout', function() {
+		map.setOptions( { 'scrollwheel': false });
+	} );
 
 	var markerUrl = contact_vars.shopPin;
 

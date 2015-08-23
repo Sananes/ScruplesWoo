@@ -81,7 +81,7 @@ $order_count = 'all' == $order_count ? -1 : ($order_count+1);
 								<input type="password" class="input-text" name="password_1" id="password_1" />
 							</p>
 							<p class="form-row form-row-last">
-								<label for="password_2"><?php _e( 'Confirm new password', 'woocommerce' ); ?></label>
+								<label for="password_2"><?php _e( 'Confirm new password', 'oxygen' ); ?></label>
 								<input type="password" class="input-text" name="password_2" id="password_2" />
 							</p>
 							<div class="clear"></div>

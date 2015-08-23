@@ -1,4 +1,10 @@
 .vc_shortcode-edit-form {
+    padding-bottom: 61px;
+    .vc_panel-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
 }
 .vc_properties-list {
     overflow-y: auto;
@@ -21,7 +27,7 @@
     display: block;
 }
 .vc_edit_form_elements {
-    .vc_column + .vc_column {
+    .vc_column + .vc_column, .vc_column-with-padding {
       padding-top: 15px;
     }
     .quicktags-toolbar {
@@ -100,7 +106,7 @@
         top: 0;
         right: 0;
         &:hover {
-            opacity: 0.7;
+            .opacity(0.7);
         }
     }
 }
@@ -130,14 +136,18 @@
     .vc_edit_color_option_variants(~'peacoc', @peacoc, #ffffff);
     .vc_edit_color_option_variants(~'chino', @chino, #ffffff);
     .vc_edit_color_option_variants(~'mulled_wine', @mulled_wine, #ffffff);
+    .vc_edit_color_option_variants(~'mulled-wine', @mulled_wine, #ffffff);
     .vc_edit_color_option_variants(~'vista_blue', @vista_blue, #ffffff);
+    .vc_edit_color_option_variants(~'vista-blue', @vista_blue, #ffffff);
     .vc_edit_color_option_variants(~'black', @black, #ffffff);
     .vc_edit_color_option_variants(~'grey', @grey, #666666);
     .vc_edit_color_option_variants(~'orange', @orange, #ffffff);
     .vc_edit_color_option_variants(~'sky', @sky, #ffffff);
     .vc_edit_color_option_variants(~'green', @green, #ffffff);
     .vc_edit_color_option_variants(~'juicy_pink', @juicy_pink, #ffffff);
+    .vc_edit_color_option_variants(~'juicy-pink', @juicy_pink, #ffffff);
     .vc_edit_color_option_variants(~'sandy_brown', @sandy_brown, #ffffff);
+    .vc_edit_color_option_variants(~'sandy-brown', @sandy_brown, #ffffff);
     .vc_edit_color_option_variants(~'purple', @purple, #ffffff);
     .vc_edit_color_option_variants(~'white', @white, #666666);
     .vc_edit_color_option_variants(~'custom', @white, #000000);
@@ -169,6 +179,13 @@ option, select {
         border-width: 0;
     }
 }
+.vc_shortcode-edit-form-deprecated-message {
+  padding-bottom: 15px;
+  .wpb_element_wrapper .vc_message_box {
+    margin: 0;
+    padding: 0 1em 1em 4em;
+  }
+}
 @import "../params/sorted_list.less";
 @import "../params/css_editor.less";
 @import "../params/options_field.less";
@@ -182,4 +199,6 @@ option, select {
 @import "../params/vc_grid.less";
 @import "../params/vc_grid_element.less";
 @import "../params/iconpicker.less";
+@import "../params/dropdown.less";
 @import "../lib/pixel_icons.less";
+@import "../params/hidden.less";

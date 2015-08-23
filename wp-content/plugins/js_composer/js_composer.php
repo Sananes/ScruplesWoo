@@ -3,7 +3,7 @@
 Plugin Name: WPBakery Visual Composer
 Plugin URI: http://vc.wpbakery.com
 Description: Drag and drop page builder for WordPress. Take full control over your WordPress site, build any layout you can imagine – no programming knowledge required.
-Version: 4.4.2
+Version: 4.6.2
 Author: Michael M - WPBakery.com
 Author URI: http://wpbakery.com
 */
@@ -19,7 +19,7 @@ if ( ! defined( 'WPB_VC_VERSION' ) ) {
 	/**
 	 *
 	 */
-	define( 'WPB_VC_VERSION', '4.4.2' );
+	define( 'WPB_VC_VERSION', '4.6.2' );
 }
 
 /**
@@ -115,11 +115,17 @@ class Vc_Manager {
 	private $plugin_name = 'js_composer/js_composer.php';
 
 	/**
+	 * Core singleton class
+	 * @var Singleton self - pattern realization
+	 */
+	private static $_instance;
+
+	/**
 	 * Constructor loads API functions, defines paths and adds required wp actions
 	 *
 	 * @since  4.2
 	 */
-	function __construct() {
+	private function __construct() {
 		$dir = dirname( __FILE__ );
 		/**
 		 * Define path settings for visual composer.
@@ -170,6 +176,39 @@ class Vc_Manager {
 		// Add hooks
 		add_action( 'plugins_loaded', array( &$this, 'pluginsLoaded' ), 9 );
 		add_action( 'init', array( &$this, 'init' ), 9 );
+
+		register_activation_hook( __FILE__, array( $this, 'activationHook' ) );
+	}
+
+	/**
+	 * Get the instane of VC_Manager
+	 *
+	 * @return self
+	 */
+	public static function getInstance() {
+		if ( ! ( self::$_instance instanceof self ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	/**
+	 * Cloning disabled
+	 */
+	private function __clone() {
+	}
+
+	/**
+	 * Serialization disabled
+	 */
+	private function __sleep() {
+	}
+
+	/**
+	 * De-serialization disabled
+	 */
+	private function __wakeup() {
 	}
 
 	/**
@@ -194,10 +233,8 @@ class Vc_Manager {
 	 */
 	public function init() {
 		do_action( 'vc_before_init' );
-
 		$this->setMode();
-		// Load components
-		$this->loadComponents();
+		do_action( 'vc_after_set_mode' );
 		/**
 		 * Set version of VC if required.
 		 */
@@ -228,12 +265,20 @@ class Vc_Manager {
 	}
 
 	/**
+	 * Enables to add hooks in activation process.
+	 * @since 4.5
+	 */
+	public function activationHook() {
+		do_action( 'vc_activation_hook' );
+	}
+
+	/**
 	 * Load required components to enable useful functionality.
 	 *
-	 * @access protected
+	 * @access public
 	 * @since 4.4
 	 */
-	protected function loadComponents() {
+	public function loadComponents() {
 		$manifest_file = apply_filters(
 			'vc_autoload_components_manifest_file',
 			vc_path_dir( 'AUTOLOAD_DIR', $this->components_manifest )
@@ -279,7 +324,7 @@ class Vc_Manager {
 		// License management and activation/deactivation methods.
 		vc_license()->addAjaxHooks();
 		// Settings page. Adds menu page in admin panel.
-		vc_settings()->addMenuPageHooks();
+		// vc_settings()->addMenuPageHooks();
 		// Load backend editor hooks
 		vc_backend_editor()->addHooksSettings();
 		// If auto updater is enabled initialize updating notifications service.
@@ -489,7 +534,7 @@ class Vc_Manager {
 			}
 		}
 
-		return $this->is_network_plugin;
+		return $this->is_network_plugin ? true : false;
 	}
 
 	/**
@@ -612,8 +657,8 @@ class Vc_Manager {
 			$vc->setEditForm( new Vc_Shortcode_Edit_Form() );
 
 			// DI for third-party plugins manager.
-			require_once $this->path('VENDORS_DIR', 'class-vc-vendors-manager.php');
-			$vc->setVendorsManager(new Vc_Vendors_Manager());
+			require_once $this->path( 'VENDORS_DIR', 'class-vc-vendors-manager.php' );
+			$vc->setVendorsManager( new Vc_Vendors_Manager() );
 
 			$this->factory['vc'] = $vc;
 			do_action( 'vc_after_init_vc' );
@@ -766,4 +811,8 @@ class Vc_Manager {
  * @since 4.2
  */
 global $vc_manager;
-$vc_manager = new Vc_Manager();
+if ( ! $vc_manager ) {
+	$vc_manager = Vc_Manager::getInstance();
+	// Load components
+	$vc_manager->loadComponents();
+}

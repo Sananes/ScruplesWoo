@@ -98,33 +98,34 @@
             disabled = is_locked  ? ' disabled="true"' : '',
             value = _.isObject(data) && !_.isUndefined(data.value) ? data.value : '';
             #>
-        <input type="text" name="{{ name }}" value="{{ value }}" class="vc_{{ name }}_field"{{ disabled }}>
+        <input type="text" name="{{ name }}" value="{{ value }}" class="vc_{{ name }}_field" {{ disabled }}>
 </script>
 <script type="text/html" id="_vcl-dropdown">
     <#
             var is_locked = vc.is_locked(data),
             disabled = is_locked  ? ' disabled="true"' : '';
             #>
-        <select name="{{ name }}" class="vc_dropdown"{{ disabled }}>
-        <option value=""></option>
-        <# if(_.isObject(data) && _.isArray(data.options)) { #>
-            <#
-                    _.each(data.options, function(opt) {
-                    var value, label;
-                    if(_.isArray(opt)) {
-                    value = opt[0];
-                    label = opt[1];
-                    } else {
-                    value = opt;
-                    label = opt;
-                    }#>
-                <option value="{{ value }}"
-                {{ data.value===value ? ' selected="true"' : '' }}>{{ label }}</option>
+        <select name="{{ name }}" class="vc_dropdown" {{ disabled }}>
+            <option value=""></option>
+            <# if(_.isObject(data) && _.isArray(data.options)) { #>
                 <#
-                        });
-                        #>
-                    <# } #>
-                        </select>
+                        _.each(data.options, function(opt) {
+                        var value, label;
+                        if(_.isArray(opt)) {
+                        value = opt[0];
+                        label = opt[1];
+                        } else {
+                        value = opt;
+                        label = opt;
+                        }#>
+                    <option value="{{ value }}"
+                            {{ data.value===value ?
+                    ' selected="true"' : '' }}>{{ label }}</option>
+                    <#
+                            });
+                            #>
+                        <# } #>
+        </select>
 </script>
 <script type="text/html" id="_vcl-checkboxes">
     <#
@@ -144,7 +145,7 @@
                 params = _.indexOf(data.value, value) >=0 ? ' checked="true"' : '';
             if(!_.isEmpty(params) && is_locked) params += ' disabled="true"';
             #>
-            <label><input type="checkbox" data-input="{{ name }}" value="{{ value }}"{{ params }}/> {{ label }}</label>
+            <label><input type="checkbox" data-input="{{ name }}" value="{{ value }}" {{ params }}/> {{ label }}</label>
             <#
                     });
                     } #>
@@ -158,5 +159,5 @@
                data-suggest-value="{{ name }}">
         <input type="text" name="{{ name }}_autosuggest" value=""
                placeholder="<?php _e('Click here and start typing...', 'js_composer'); ?>" class="vc_{{ name }}_field"
-               data-suggest="{{ name }}"{{ limit_param }} />
+               data-suggest="{{ name }}" {{ limit_param }}/>
 </script>

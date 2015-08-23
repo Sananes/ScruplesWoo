@@ -1,12 +1,12 @@
 <?php
+
 /**
  */
-
-
 class WPBakeryShortCode_VC_Tabs extends WPBakeryShortCode {
 	static $filter_added = false;
 	protected $controls_css_settings = 'out-tc vc_controls-content-widget';
-	protected $controls_list = array('edit', 'clone', 'delete');
+	protected $controls_list = array( 'edit', 'clone', 'delete' );
+
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 		// WPBakeryVisualComposer::getInstance()->addShortCode( array( 'base' => 'vc_tab' ) );
@@ -23,11 +23,11 @@ class WPBakeryShortCode_VC_Tabs extends WPBakeryShortCode {
 			if ( $param['param_name'] != 'content' ) {
 				//$shortcode_attributes[$param['param_name']] = $param['value'];
 				if ( isset( $param['value'] ) && is_string( $param['value'] ) ) {
-					$shortcode_attributes[$param['param_name']] = __( $param['value'], "js_composer" );
+					$shortcode_attributes[ $param['param_name'] ] = __( $param['value'], "js_composer" );
 				} elseif ( isset( $param['value'] ) ) {
-					$shortcode_attributes[$param['param_name']] = $param['value'];
+					$shortcode_attributes[ $param['param_name'] ] = $param['value'];
 				}
-			} else if ( $param['param_name'] == 'content' && $content == NULL ) {
+			} else if ( $param['param_name'] == 'content' && $content == null ) {
 				//$content = $param['value'];
 				$content = __( $param['value'], "js_composer" );
 			}
@@ -86,7 +86,7 @@ if ( count($tab_titles) ) {
 				// Get first element from the array
 				reset( $param_value );
 				$first_key = key( $param_value );
-				$param_value = $param_value[$first_key];
+				$param_value = $param_value[ $first_key ];
 			}
 			$iner .= $this->singleParamHtmlHolder( $param, $param_value );
 		}

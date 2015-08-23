@@ -63,6 +63,9 @@
   height: auto;
   text-align: center;
 }
+.demo-content-packs > li:nth-child(4n + 1) {
+  clear: left;
+}
 #lab_demo_content_container .plugins-to-install {
   margin-top: 25px;
 }
@@ -315,7 +318,7 @@
   display: none;
 }
 .lab-1cl-demo-success {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
@@ -432,4 +435,39 @@
   to {
     -webkit-transform: rotate(360deg);
   }
+}
+.lab-democi-table-php-requirements {
+  background: #fff;
+  padding: 10px 0;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.lab-democi-table-php-requirements .small {
+  font-size: 11px;
+  padding-top: 10px;
+}
+.lab-democi-table-php-requirements p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.lab-democi-table-php-requirements td,
+.lab-democi-table-php-requirements th {
+  text-align: left;
+  padding: 2px 15px;
+}
+.lab-democi-table-php-requirements .bold {
+  font-weight: bold;
+}
+.lab-democi-table-php-requirements .bold td,
+.lab-democi-table-php-requirements .bold th {
+  font-weight: bold;
+}
+.lab-democi-table-php-requirements .ok {
+  color: #68B828;
+}
+.lab-democi-table-php-requirements .notok {
+  color: #D5080F;
 }

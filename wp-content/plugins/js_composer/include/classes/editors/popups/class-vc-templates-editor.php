@@ -187,13 +187,16 @@ class Vc_Templates_Editor implements Vc_Render {
 	 *      array(
 	 *          array(
 	 *              'name'=>__('My custom template','my_plugin'),
-	 *              'image_path'=> preg_replace( '/\s/', '%20', plugins_url( 'images/my_image.png', __FILE__ ) ), // always use preg replace to be sure that "space" will not break logic
+	 *              'image_path'=> preg_replace( '/\s/', '%20', plugins_url( 'images/my_image.png', __FILE__ ) ), //
+	 * always use preg replace to be sure that "space" will not break logic
 	 *              'custom_class'=>'my_custom_class', // if needed
-	 *              'content'=>'[my_shortcode]yeah[/my_shortcode]', // Use HEREDoc better to escape all single-quotes and double quotes
+	 *              'content'=>'[my_shortcode]yeah[/my_shortcode]', // Use HEREDoc better to escape all single-quotes
+	 * and double quotes
 	 *          ),
 	 *          ...
 	 *      );
-	 * Also see filters 'vc_load_default_templates_panels' and 'vc_load_default_templates_welcome_block' to modify templates in panels tab and/or in welcome block.
+	 * Also see filters 'vc_load_default_templates_panels' and 'vc_load_default_templates_welcome_block' to modify
+	 * templates in panels tab and/or in welcome block.
 	 * @deprecated since 4.4 and moved to Vc_Templates_Panel_Editor::loadDefaultTemplates(), will be removed
 	 * @moved to Vc_Templates_Panel_Editor
 	 * @return array
@@ -313,7 +316,8 @@ class Vc_Templates_Editor implements Vc_Render {
 	/**
 	 * Load frontend default template content by index
 	 * Used in Vc_Frontend_Editor::loadShortcodes action 'vc_frontend_default_template'
-	 * @deprecated since 4.4 and will be removed,  use action 'vc_frontend_default_template_panel' instead and Vc_Templates_Panel_Editor::renderFrontendDefaultTemplate
+	 * @deprecated since 4.4 and will be removed,  use action 'vc_frontend_default_template_panel' instead and
+	 *     Vc_Templates_Panel_Editor::renderFrontendDefaultTemplate
 	 */
 	public function renderFrontendDefaultTemplate() {
 		$template_index = vc_post_param( 'template_name' );

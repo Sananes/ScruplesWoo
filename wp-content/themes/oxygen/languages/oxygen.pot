@@ -1,30 +1,23 @@
-# Loco Gettext template
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Oxygen\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-19 11:27+0100\n"
-"POT-Revision-Date: Mon Jun 22 2015 10:36:40 GMT+0200 (CEST)\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2015-08-13 12:40+0100\n"
+"PO-Revision-Date: 2015-07-08 13:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Loco - https://localise.biz/\n"
+"X-Generator: Poedit 1.8.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: style.css\n"
-"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
-"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
-"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
-"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
-"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: 404.php:29
 msgid "This page does not exist!"
@@ -47,7 +40,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: comments.php:31 inc/laborator_actions.php:685 tpls/contact-form.php:21
+#: comments.php:31 inc/laborator_actions.php:682 tpls/contact-form.php:21
 msgid "Message"
 msgstr ""
 
@@ -59,70 +52,70 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: inc/laborator_actions.php:609 inc/lib/class-tgm-plugin-activation.php:226
+#: inc/laborator_actions.php:606 inc/lib/class-tgm-plugin-activation.php:333
 msgid "Install Required Plugins"
 msgstr ""
 
-#: inc/laborator_actions.php:610 inc/lib/class-tgm-plugin-activation.php:227
+#: inc/laborator_actions.php:607 inc/lib/class-tgm-plugin-activation.php:334
 msgid "Install Plugins"
 msgstr ""
 
-#: inc/laborator_actions.php:611 inc/lib/class-tgm-plugin-activation.php:228
+#: inc/laborator_actions.php:608 inc/lib/class-tgm-plugin-activation.php:335
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr ""
 
-#: inc/laborator_actions.php:612
+#: inc/laborator_actions.php:609 inc/lib/class-tgm-plugin-activation.php:336
 msgid "Something went wrong with the plugin API."
 msgstr ""
 
-#: inc/laborator_actions.php:613 inc/lib/class-tgm-plugin-activation.php:230
+#: inc/laborator_actions.php:610 inc/lib/class-tgm-plugin-activation.php:338
 #, php-format
 msgid "This theme requires the following plugin: %1$s."
 msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:614 inc/lib/class-tgm-plugin-activation.php:231
+#: inc/laborator_actions.php:611 inc/lib/class-tgm-plugin-activation.php:343
 #, php-format
 msgid "This theme recommends the following plugin: %1$s."
 msgid_plural "This theme recommends the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:615 inc/lib/class-tgm-plugin-activation.php:232
+#: inc/laborator_actions.php:612
 #, php-format
 msgid ""
 "Sorry, but you do not have the correct permissions to install the %s plugin. "
 "Contact the administrator of this site for help on getting the plugin "
 "installed."
 msgid_plural ""
-"Sorry, but you do not have the correct permissions to install the %s plugins."
-" Contact the administrator of this site for help on getting the plugins "
-"installed."
+"Sorry, but you do not have the correct permissions to install the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins installed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:616 inc/lib/class-tgm-plugin-activation.php:233
+#: inc/laborator_actions.php:613 inc/lib/class-tgm-plugin-activation.php:368
 #, php-format
 msgid "The following required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:617 inc/lib/class-tgm-plugin-activation.php:234
+#: inc/laborator_actions.php:614 inc/lib/class-tgm-plugin-activation.php:373
 #, php-format
 msgid "The following recommended plugin is currently inactive: %1$s."
 msgid_plural "The following recommended plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:618 inc/lib/class-tgm-plugin-activation.php:235
+#: inc/laborator_actions.php:615
 #, php-format
 msgid ""
-"Sorry, but you do not have the correct permissions to activate the %s plugin."
-" Contact the administrator of this site for help on getting the plugin "
-"activated."
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugin. Contact the administrator of this site for help on getting the "
+"plugin activated."
 msgid_plural ""
 "Sorry, but you do not have the correct permissions to activate the %s "
 "plugins. Contact the administrator of this site for help on getting the "
@@ -130,7 +123,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:619 inc/lib/class-tgm-plugin-activation.php:236
+#: inc/laborator_actions.php:616 inc/lib/class-tgm-plugin-activation.php:353
 #, php-format
 msgid ""
 "The following plugin needs to be updated to its latest version to ensure "
@@ -141,7 +134,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:620 inc/lib/class-tgm-plugin-activation.php:237
+#: inc/laborator_actions.php:617
 #, php-format
 msgid ""
 "Sorry, but you do not have the correct permissions to update the %s plugin. "
@@ -154,73 +147,73 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:621 inc/lib/class-tgm-plugin-activation.php:238
+#: inc/laborator_actions.php:618 inc/lib/class-tgm-plugin-activation.php:383
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:622
+#: inc/laborator_actions.php:619
 msgid "Activate installed plugin"
 msgid_plural "Activate installed plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/laborator_actions.php:623 inc/lib/class-tgm-plugin-activation.php:240
+#: inc/laborator_actions.php:620 inc/lib/class-tgm-plugin-activation.php:397
 msgid "Return to Required Plugins Installer"
 msgstr ""
 
-#: inc/laborator_actions.php:624 inc/lib/class-tgm-plugin-activation.php:242
-#: inc/lib/class-tgm-plugin-activation.php:2107
+#: inc/laborator_actions.php:621 inc/lib/class-tgm-plugin-activation.php:399
+#: inc/lib/class-tgm-plugin-activation.php:3029
 msgid "Plugin activated successfully."
 msgstr ""
 
-#: inc/laborator_actions.php:625
+#: inc/laborator_actions.php:622
 #, php-format
 msgid "All plugins installed and activated successfully. %s"
 msgstr ""
 
-#: inc/laborator_actions.php:642
+#: inc/laborator_actions.php:639
 msgid "Rules of the Blog"
 msgstr ""
 
-#: inc/laborator_actions.php:643
+#: inc/laborator_actions.php:640
 msgid ""
 "Do not post violating content, tags like bold, italic and underline are "
 "allowed that means HTML can be used while commenting."
 msgstr ""
 
-#: inc/laborator_actions.php:682 tpls/contact-form.php:18
+#: inc/laborator_actions.php:679 tpls/contact-form.php:18
 #: woocommerce/find-a-list.php:69 woocommerce/single-product-reviews.php:61
 msgid "Name"
 msgstr ""
 
-#: inc/laborator_actions.php:683 tpls/contact-form.php:19
+#: inc/laborator_actions.php:680 tpls/contact-form.php:19
 msgid "E-mail"
 msgstr ""
 
-#: inc/laborator_actions.php:684 tpls/contact-form.php:20
+#: inc/laborator_actions.php:681 tpls/contact-form.php:20
 msgid "Phone Number"
 msgstr ""
 
-#: inc/laborator_actions.php:813
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:88
+#: inc/laborator_actions.php:810
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:92
 msgid "Testimonials"
 msgstr ""
 
-#: inc/laborator_actions.php:814
+#: inc/laborator_actions.php:811
 msgid "Testimonial"
 msgstr ""
 
-#: inc/laborator_actions.php:834
+#: inc/laborator_actions.php:831
 msgid "Warning:"
 msgstr ""
 
-#: inc/laborator_actions.php:835
+#: inc/laborator_actions.php:832
 msgid "Please set up menu locations for this theme. <a href=\""
 msgstr ""
 
-#: inc/laborator_actions.php:980
+#: inc/laborator_actions.php:979
 msgid "Check for available update."
 msgstr ""
 
@@ -234,68 +227,96 @@ msgid "Theme Options"
 msgstr ""
 
 #: inc/laborator_filters.php:245
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:267
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:270
 #: woocommerce/edit-my-list.php:144 woocommerce/view-a-list.php:156
 msgid "Image"
 msgstr ""
 
-#: inc/laborator_functions.php:97
+#: inc/laborator_functions.php:102
 msgid "&laquo; First"
 msgstr ""
 
-#: inc/laborator_functions.php:101 woocommerce/loop/pagination.php:32
+#: inc/laborator_functions.php:106 woocommerce/loop/pagination.php:32
 msgid "Previous"
 msgstr ""
 
-#: inc/laborator_functions.php:140 woocommerce/loop/pagination.php:33
+#: inc/laborator_functions.php:145 woocommerce/loop/pagination.php:33
 msgid "Next"
 msgstr ""
 
-#: inc/laborator_functions.php:144
+#: inc/laborator_functions.php:149
 msgid "Last &raquo;"
 msgstr ""
 
-#: inc/laborator_functions.php:351
+#: inc/laborator_functions.php:214
+msgid "Home"
+msgstr ""
+
+#: inc/laborator_functions.php:215
+#, php-format
+msgid "Category: \"%s\""
+msgstr ""
+
+#: inc/laborator_functions.php:216
+#, php-format
+msgid "Search Results for \"%s\" Query"
+msgstr ""
+
+#: inc/laborator_functions.php:217
+#, php-format
+msgid "Tag: \"%s\""
+msgstr ""
+
+#: inc/laborator_functions.php:218
+#, php-format
+msgid "Author: %s"
+msgstr ""
+
+#: inc/laborator_functions.php:219
+msgid "Error 404"
+msgstr ""
+
+#: inc/laborator_functions.php:356
 msgid "Page"
 msgstr ""
 
-#: inc/laborator_functions.php:405
+#: inc/laborator_functions.php:410
 msgid "says:"
 msgstr ""
 
-#: inc/laborator_functions.php:410
+#: inc/laborator_functions.php:415
 msgid "<span>Reply</span>"
 msgstr ""
 
-#: inc/laborator_functions.php:442
+#: inc/laborator_functions.php:447
 msgid "Share on Facebook"
 msgstr ""
 
-#: inc/laborator_functions.php:448
+#: inc/laborator_functions.php:453
 msgid "Share on Twitter"
 msgstr ""
 
-#: inc/laborator_functions.php:454
+#: inc/laborator_functions.php:459
 msgid "Share on Google+"
 msgstr ""
 
-#: inc/laborator_functions.php:460
+#: inc/laborator_functions.php:465
 msgid "Share on Tumblr"
 msgstr ""
 
-#: inc/laborator_functions.php:466
+#: inc/laborator_functions.php:471
 msgid "Share on LinkedIn"
 msgstr ""
 
-#: inc/laborator_functions.php:472
+#: inc/laborator_functions.php:477
 msgid "Share on Pinterest"
 msgstr ""
 
-#: inc/laborator_functions.php:478
+#: inc/laborator_functions.php:483
 msgid "Share on VKontakte"
 msgstr ""
 
-#: inc/laborator_functions.php:484
+#: inc/laborator_functions.php:489
 msgid "Share via Email"
 msgstr ""
 
@@ -307,19 +328,11 @@ msgstr ""
 msgid "Return to homepage"
 msgstr ""
 
-#: inc/laborator_woocommerce.php:533
-msgid "The product is already in the wishlist!"
-msgstr ""
-
-#: inc/laborator_woocommerce.php:533
-msgid "Browse Wishlist"
-msgstr ""
-
-#: inc/laborator_woocommerce.php:647 tpls/header-cart.php:36
+#: inc/laborator_woocommerce.php:597 tpls/header-cart.php:36
 msgid "Your cart is empty!"
 msgstr ""
 
-#: inc/laborator_woocommerce.php:669
+#: inc/laborator_woocommerce.php:619
 msgid "Payment method"
 msgstr ""
 
@@ -341,309 +354,552 @@ msgstr ""
 msgid "Error! Please enter a higher value"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:229
-msgid "Something went wrong."
-msgstr ""
+#: inc/lib/class-tgm-plugin-activation.php:348
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to install the %1$s "
+"plugin."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to install the %1$s "
+"plugins."
+msgstr[0] ""
+msgstr[1] ""
 
-#: inc/lib/class-tgm-plugin-activation.php:239
+#: inc/lib/class-tgm-plugin-activation.php:358
+#, php-format
+msgid "There is an update available for: %1$s."
+msgid_plural "There are updates available for the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:363
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to update the %1$s plugin."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to update the %1$s "
+"plugins."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:378
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to activate the %1$s "
+"plugin."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to activate the %1$s "
+"plugins."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:388
+msgid "Begin updating plugin"
+msgid_plural "Begin updating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:393
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/lib/class-tgm-plugin-activation.php:241
+#: inc/lib/class-tgm-plugin-activation.php:398
 msgid "Return to the dashboard"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:243
-#: inc/lib/class-tgm-plugin-activation.php:1769
+#: inc/lib/class-tgm-plugin-activation.php:400
+#: inc/lib/class-tgm-plugin-activation.php:2832
 msgid "The following plugin was activated successfully:"
 msgid_plural "The following plugins were activated successfully:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/lib/class-tgm-plugin-activation.php:244
+#: inc/lib/class-tgm-plugin-activation.php:401
+#, php-format
+msgid "No action taken. Plugin %1$s was already active."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:402
+#, php-format
+msgid ""
+"Plugin not activated. A higher version of %s is needed for this theme. "
+"Please update the plugin."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:403
 #, php-format
 msgid "All plugins installed and activated successfully. %1$s"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:245
+#: inc/lib/class-tgm-plugin-activation.php:404
 msgid "Dismiss this notice"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:595
-#: inc/lib/class-tgm-plugin-activation.php:2337
+#: inc/lib/class-tgm-plugin-activation.php:405
+msgid "Please contact the administrator of this site for help."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:520
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:521
+msgid "Update Required"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:635
+msgid "Set the parent_slug config variable instead."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:828
+#: inc/lib/class-tgm-plugin-activation.php:3438
 msgid "Return to the Dashboard"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1281
-msgid "Private Repository"
+#: inc/lib/class-tgm-plugin-activation.php:935
+msgid ""
+"The remote plugin package does not contain a folder with the desired slug "
+"and renaming did not work."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1285
-msgid "Pre-Packaged"
+#: inc/lib/class-tgm-plugin-activation.php:935
+#: inc/lib/class-tgm-plugin-activation.php:938
+msgid ""
+"Please contact the plugin provider and ask them to package their plugin "
+"according to the WordPress guidelines."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1290
-msgid "WordPress Repository"
+#: inc/lib/class-tgm-plugin-activation.php:938
+msgid ""
+"The remote plugin package consists of more than one file, but the files are "
+"not packaged in a folder."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1293
+#: inc/lib/class-tgm-plugin-activation.php:1116
+#: inc/lib/class-tgm-plugin-activation.php:2828
+msgctxt "plugin A *and* plugin B"
+msgid "and"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:1881
+#, php-format
+msgctxt "%s = version number"
+msgid "TGMPA v%s"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2167
 msgid "Required"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1293
+#: inc/lib/class-tgm-plugin-activation.php:2170
 msgid "Recommended"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1296
+#: inc/lib/class-tgm-plugin-activation.php:2186
+msgid "WordPress Repository"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2189
+msgid "External Source"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2192
+msgid "Pre-Packaged"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2209
 msgid "Not Installed"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1299
+#: inc/lib/class-tgm-plugin-activation.php:2213
 msgid "Installed But Not Activated"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1416
+#: inc/lib/class-tgm-plugin-activation.php:2215
+msgid "Active"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2221
+msgid "Required Update not Available"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2224
+msgid "Requires Update"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2227
+msgid "Update recommended"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2235
+#, php-format
+msgctxt "%1$s = install status, %2$s = update status"
+msgid "%1$s, %2$s"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2280
+#, php-format
+msgctxt "plugins"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2283
+#, php-format
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2286
+#, php-format
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2289
+#, php-format
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2371
+msgctxt "as in: \"version nr unknown\""
+msgid "unknown"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2379
+msgid "Installed version:"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2387
+msgid "Minimum required version:"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2399
+msgid "Available version:"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2422
+#, php-format
+msgid ""
+"No plugins to install, update or activate. <a href=\"%1$s\">Return to the "
+"Dashboard</a>"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2436
+msgid "Plugin"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2437
+msgid "Source"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2438
+msgid "Type"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2442
+msgid "Version"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2443
+#: woocommerce/myaccount/my-orders.php:36
+#: woocommerce/myaccount/my-orders.php:57
+msgid "Status"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2491
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Install %2$s"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1438
+#: inc/lib/class-tgm-plugin-activation.php:2495
+#, php-format
+msgctxt "%2$s = plugin name in screen reader markup"
+msgid "Update %2$s"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2500
 #, php-format
 msgctxt "%2$s = plugin name in screen reader markup"
 msgid "Activate %2$s"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1481
-#, php-format
-msgid "No plugins to install or activate. <a href=\"%1$s\">Return to the Dashboard</a>"
+#: inc/lib/class-tgm-plugin-activation.php:2570
+msgid "Upgrade message from the plugin author:"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1497
-msgid "Plugin"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:1498
-msgid "Source"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:1499
-msgid "Type"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:1500
-#: woocommerce/myaccount/my-orders.php:34
-#: woocommerce/myaccount/my-orders.php:55
-msgid "Status"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:1518
+#: inc/lib/class-tgm-plugin-activation.php:2603
 msgid "Install"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1519
+#: inc/lib/class-tgm-plugin-activation.php:2609
+msgid "Update"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2612
 msgid "Activate"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1630
+#: inc/lib/class-tgm-plugin-activation.php:2643
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2645
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2681
 msgid "No plugins are available to be installed at this time."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:1746
+#: inc/lib/class-tgm-plugin-activation.php:2683
+msgid "No plugins are available to be updated at this time."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2788
+msgid "No plugins were selected to be activated. No action taken."
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:2814
 msgid "No plugins are available to be activated at this time."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2090
-msgid "Install package not available."
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2091
-#, php-format
-msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2092
-msgid "Unpacking the package&#8230;"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2093
-msgid "Installing the plugin&#8230;"
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2094
-msgid "Plugin install failed."
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2095
-msgid "Plugin installed successfully."
-msgstr ""
-
-#: inc/lib/class-tgm-plugin-activation.php:2106
+#: inc/lib/class-tgm-plugin-activation.php:3028
 msgid "Plugin activation failed."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2229
+#: inc/lib/class-tgm-plugin-activation.php:3362
+#, php-format
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: inc/lib/class-tgm-plugin-activation.php:3364
 #, php-format
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2230
+#: inc/lib/class-tgm-plugin-activation.php:3365
 #, php-format
 msgid "The installation of %1$s failed."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2234
+#: inc/lib/class-tgm-plugin-activation.php:3369
 msgid ""
 "The installation and activation process is starting. This process may take a "
 "while on some hosts, so please be patient."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2235
+#: inc/lib/class-tgm-plugin-activation.php:3370
 #, php-format
 msgid "%1$s installed and activated successfully."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2235
-#: inc/lib/class-tgm-plugin-activation.php:2242
+#: inc/lib/class-tgm-plugin-activation.php:3370
+#: inc/lib/class-tgm-plugin-activation.php:3376
 msgid "Show Details"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2235
-#: inc/lib/class-tgm-plugin-activation.php:2242
+#: inc/lib/class-tgm-plugin-activation.php:3370
+#: inc/lib/class-tgm-plugin-activation.php:3376
 msgid "Hide Details"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2236
+#: inc/lib/class-tgm-plugin-activation.php:3371
 msgid "All installations and activations have been completed."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2237
+#: inc/lib/class-tgm-plugin-activation.php:3372
 #, php-format
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2241
+#: inc/lib/class-tgm-plugin-activation.php:3375
 msgid ""
 "The installation process is starting. This process may take a while on some "
 "hosts, so please be patient."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2242
+#: inc/lib/class-tgm-plugin-activation.php:3376
 #, php-format
 msgid "%1$s installed successfully."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2243
+#: inc/lib/class-tgm-plugin-activation.php:3377
 msgid "All installations have been completed."
 msgstr ""
 
-#: inc/lib/class-tgm-plugin-activation.php:2244
+#: inc/lib/class-tgm-plugin-activation.php:3378
 #, php-format
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:42
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:72
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:80
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:34
+msgid "You must upload a <b>.wie</b> file generated by this plugin."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:77
+msgid "Import file could not be found. Please try again."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:112
+msgid "Import data could not be read. Please try a different file."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:154
+msgid "Sidebar does not exist in theme (using Inactive)"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:176
+msgid "Site does not support widget"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:212
+msgid "Widget already exists"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:261
+msgid "Imported"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:264
+msgid "Imported to Inactive"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/import.php:271
+msgid "No Title"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:27
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:28
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:63
+msgid "Widget Importer & Exporter"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:73
+msgctxt "heading"
+msgid "Import Widgets"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:76
+msgid "Please select a <b>.wie</b> file generated by this plugin."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:85
+msgctxt "button"
+msgid "Import Widgets"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:96
+msgctxt "heading"
+msgid "Export Widgets"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:99
+msgid "Click below to generate a <b>.wie</b> file for all active widgets."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:103
+msgctxt "button"
+msgid "Export Widgets"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:145
+msgctxt "heading"
+msgid "Import Results"
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/widget-importer-exporter/includes/page.php:150
+#, php-format
+msgid ""
+"You can manage your <a href=\"%s\">Widgets</a> or <a href=\"%s\">Go Back</a>."
+msgstr ""
+
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:42
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:72
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:80
 msgid "There was an error when reading this WXR file"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:43
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:43
 msgid ""
 "Details are shown above. The importer will now try again with a different "
 "parser..."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:84
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:89
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:279
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.
-#: php:468
-msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:84
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:89
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:279
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/parsers.php:468
+msgid ""
+"This does not appear to be a WXR file, missing/invalid WXR version number"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:124
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:133
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:184
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:188
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:197
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:123
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:132
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:183
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:187
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:196
 msgid "Sorry, there has been an error."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:125
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:124
 msgid "The file does not exist, please try again."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:168
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:167
 msgid "All done."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:168
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:167
 msgid "Have fun!"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:169
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:168
 msgid "Remember to update the passwords and roles of imported users."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:189
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:188
 #, php-format
 msgid ""
 "The export file could not be found at <code>%s</code>. It is likely that "
 "this was caused by a permissions problem."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:205
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:204
 #, php-format
 msgid ""
 "This WXR file (version %s) may not be supported by this version of the "
 "importer. Please consider updating."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:230
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:229
 #, php-format
 msgid ""
 "Failed to import author %s. Their posts will be attributed to the current "
 "user."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:256
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:255
 msgid "Assign Authors"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:257
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:256
 msgid ""
 "To make it easier for you to edit and save the imported content, you may "
 "want to reassign the author of the imported item to an existing user of this "
-"site. For example, you may want to import all the entries as "
-"<code>admin</code>s entries."
+"site. For example, you may want to import all the entries as <code>admin</"
+"code>s entries."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:259
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:258
 #, php-format
 msgid ""
 "If a new user is created by WordPress, a new password will be randomly "
@@ -651,177 +907,146 @@ msgid ""
 "the new user&#8217;s details will be necessary."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:269
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:268
 msgid "Import Attachments"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:272
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:271
 msgid "Download and import file attachments"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:276
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:275
 #: woocommerce/single-product-reviews.php:72
 msgid "Submit"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:289
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:288
 msgid "Import author:"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:300
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:299
 msgid "or create new user with login name:"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:303
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:302
 msgid "as a new user:"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:311
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:310
 msgid "assign posts to an existing user:"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:313
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:312
 msgid "or assign posts to an existing user:"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:314
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:313
 msgid "- Select -"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:364
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:363
 #, php-format
 msgid ""
 "Failed to create new user for %s. Their posts will be attributed to the "
 "current user."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:415
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:414
 #, php-format
 msgid "Failed to import category %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:455
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:454
 #, php-format
 msgid "Failed to import post tag %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:501
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:642
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:500
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:641
 #, php-format
 msgid "Failed to import %s %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:527
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:526
 #, php-format
 msgid "Failed to import &#8220;%s&#8221;: Invalid post type %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:549
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:548
 #, php-format
 msgid "%s &#8220;%s&#8221; already exists."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:608
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:607
 #, php-format
 msgid "Failed to import %s &#8220;%s&#8221;"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:773
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:772
 msgid "Menu item skipped due to missing menu slug"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:780
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:779
 #, php-format
 msgid "Menu item skipped due to invalid menu slug: %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:843
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:842
 msgid "Fetching attachments is not enabled"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:856
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:855
 msgid "Invalid file type"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:900
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:899
 msgid "Remote server did not respond"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:906
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:905
 #, php-format
 msgid "Remote server returned error response %1$d %2$s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:913
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:912
 msgid "Remote file is incorrect size"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:918
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:917
 msgid "Zero size file downloaded"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:924
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:923
 #, php-format
 msgid "Remote file is too large, limit is %s"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:1023
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:1022
 msgid "Import WordPress"
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:1030
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:1029
 #, php-format
 msgid ""
 "A new version of this importer is available. Please update to version %s to "
 "ensure compatibility with newer export files."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:1045
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:1044
 msgid ""
 "Howdy! Upload your WordPress eXtended RSS (WXR) file and we&#8217;ll import "
 "the posts, pages, comments, custom fields, categories, and tags into this "
 "site."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:1046
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:1045
 msgid "Choose a WXR (.xml) file to upload, then click Upload file and import."
 msgstr ""
 
-#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-
-#: importer.php:1120
+#: inc/lib/laborator/laborator-demo-content-importer/wordpress-importer/wordpress-importer.php:1117
 msgid ""
-"Import <strong>posts, pages, comments, custom fields, categories, and "
-"tags</strong> from a WordPress export file."
+"Import <strong>posts, pages, comments, custom fields, categories, and tags</"
+"strong> from a WordPress export file."
 msgstr ""
 
 #: inc/lib/laborator/laborator_likes.php:331
@@ -875,125 +1100,125 @@ msgstr ""
 msgid "You can apply subtitle but its optional."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:101
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:105
 msgid "Text Banner"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:102
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:106
 msgid "Include a Call to Action banner."
 msgstr ""
 
 #. Author of the plugin/theme
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:107
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:262
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:187
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:63
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:259
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:123
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:151
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:94
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:111
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:265
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:191
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:67
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:263
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:127
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:155
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:98
 msgid "Laborator"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:112
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:307
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:68
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:277
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:116
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:310
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:72
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:281
 msgid "Widget title"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:115
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:310
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:71
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:280
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:119
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:313
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:75
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:284
 msgid "What text use as widget title. Leave blank if no title is needed."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:121
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:88
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:125
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:92
 msgid "Text"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:123
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:127
 msgid "Free shipping over $125 for international orders"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:124
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:128
 msgid "Banner content."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:129
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:334
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:104
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:133
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:337
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:108
 msgid "URL (Link)"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:131
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:135
 msgid "Button link."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:136
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:140
 msgid "Banner Color"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:144
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:156
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:349
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:148
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:160
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:352
 msgid "Select the type of banner."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:149
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:342
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:153
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:345
 msgid "Banner Type"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:161
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:378
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:255
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:111
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:353
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:167
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:203
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:123
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:165
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:381
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:259
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:115
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:357
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:171
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:207
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:127
 msgid "Extra class name"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:164
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:381
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:258
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:114
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:356
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:170
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:206
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:126
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:168
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:384
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:262
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:118
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:360
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:174
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:210
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:130
 msgid ""
 "If you wish to style particular content element differently, then use this "
 "field to add a class name and then refer to it in your css file."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:169
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:386
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:263
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:119
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:361
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:175
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:211
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:131
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:173
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:389
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:267
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:123
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:365
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:179
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:215
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:135
 msgid "Css"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:171
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:388
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:265
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:121
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:363
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:177
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:213
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:133
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner.php:175
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:391
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:269
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:125
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:367
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:181
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:217
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:137
 msgid "Design options"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:63
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:66
 #: woocommerce/cart/cart-empty.php:24 woocommerce/cart/cart.php:26
 #, php-format
 msgid "%d item"
@@ -1001,353 +1226,354 @@ msgid_plural "%d items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:256
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:259
 msgid "Image Banner"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:257
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:260
 msgid "Graphical banner or category with text."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:270
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:273
 msgid "Set the banner image."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:275
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:317
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:278
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:321
 msgid "Image size"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:278
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:281
 msgid ""
 "Enter the banner background size. Type: {width}x{height}, if you enter just "
 "a number it will resize the image by height."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:284
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:287
 msgid "Use as Category Link"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:288
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:291
 msgid "No"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:289
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:292
 msgid "Yes"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:291
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:294
 msgid ""
 "Instead of setting custom link, you can link this banner to a product "
 "category."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:297
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:300
 msgid "Category"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:301
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:304
 msgid "Select product category. Second Line is category items counter."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:317
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:320
 msgid "Second Line"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:320
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:323
 msgid "Second Line Text."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:326
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:329
 msgid "Font Color"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:328
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:331
 msgid "Select font color"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:336
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:339
 msgid "Banner link."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:354
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:325
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:357
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:329
 msgid "Overlay Color"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:357
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:360
 msgid "Select banner overlay layer color."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:362
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:365
 msgid "Box Animation"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:365
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:368
 msgid ""
 "Select transition of the element when it is visible in viewport. <a "
 "href='http://daneden.github.io/animate.css/' target='_blank'>View "
 "transitions live &raquo;</a>"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:370
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:373
 msgid "Animation Delay"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:373
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_banner2.php:376
 msgid ""
 "When the elements is in viewport set the delay when the animation should "
 "start. Example values: <em>1s, 500ms</em>."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:86
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:90
 #: tpls/blog-post.php:52
 msgid "Read more..."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:181
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:185
 msgid "Blog Posts"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:182
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:186
 msgid "Display blog posts with carousel."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:193
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:265
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:129
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:157
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:197
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:269
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:133
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:161
 msgid "Products Query"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:200
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:272
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:136
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:164
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:204
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:276
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:140
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:168
 msgid "Create WordPress loop, to populate products from your site."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:205
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:293
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:181
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:209
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:297
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:185
 msgid "Columns count"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:214
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:148
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:176
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:190
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:218
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:152
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:180
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:194
 msgid ""
 "Based on layout columns you use, select number of columns to wrap the "
 "product."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:219
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:223
 msgid "Equal Heights"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:224
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:228
 msgid "Set equal heights for all blog posts."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:229
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:233
 msgid "More URL"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:231
-msgid "Will add a link at the end of posts to continue to read more. (Optional)"
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:235
+msgid ""
+"Will add a link at the end of posts to continue to read more. (Optional)"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:236
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:240
 msgid "Enable Carousel"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:241
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:245
 msgid "Activate horizontal scroll carousel for this widget."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:246
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:309
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:195
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:250
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:313
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:199
 msgid "Auto Rotate"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:249
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:312
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:198
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_blog.php:253
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:316
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:202
 msgid ""
 "You can set automatical rotation of carousel, unit is seconds. Enter 0 to "
 "disable."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:57
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:61
 msgid "Feature Tab"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:58
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:62
 msgid "Good way to list your features."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:76
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:80
 msgid "Block Type"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:82
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:86
 msgid "Select the type of featured tab box."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:90
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:94
 msgid "Your brilliant description about this feautre."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:91
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:95
 msgid "Feature small description."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:96
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:100
 msgid "Icon"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:99
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:103
 msgid "Tab icon to display."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:106
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_featuretab.php:110
 msgid "Tab link."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:82
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:87
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:86
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:91
 msgid "Loading products..."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:161
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:165
 #: woocommerce/loop/price.php:30
 msgid "Select Options"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:167
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:171
 #: woocommerce/loop/price.php:33
 msgid "Select Products"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:179
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:183
 #: woocommerce/edit-my-list.php:116 woocommerce/edit-my-list.php:280
 #: woocommerce/edit-my-list.php:298 woocommerce/loop/price.php:40
 #: woocommerce/view-a-list.php:273
 msgid "Add to Cart"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:193
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:197
 msgid "Adding to cart..."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:253
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:257
 msgid "Lookbook Carousel"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:254
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:258
 msgid "Display shop products on full width."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:285
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:289
 msgid "Full Width"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:287
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:291
 msgid "Yes, please"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:288
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:292
 msgid "Allow Lookbook container to occopy full width of the browser."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:304
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:308
 msgid "Select number of columns you want to paginate products."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:320
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:324
 msgid ""
 "Set the product image size to show. Type: {width}x{height}, if you enter "
 "just a number it will resize the image by height."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:328
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:332
 msgid "Background color of the layer when product is hovered."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:333
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:337
 msgid "Spacing"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:336
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:340
 msgid "Set elements margin in pixels unit."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:341
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:345
 msgid "Pager and Pagination"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:345
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:349
 msgid "Show pager (next, prev)<br />"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:346
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:350
 msgid "Show pagination (dots)"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:348
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_lookbook.php:352
 msgid "Set the visibility of pager and pagination."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:117
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:121
 msgid "Products"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:118
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:122
 msgid "Display shop products on custom query."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:141
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:169
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:145
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:173
 msgid "Filter Products by Type"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:153
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:157
 msgid "Row Clearing"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:162
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products.php:166
 msgid ""
 "Based on layout columns you use, select when the product items will be "
 "cleared to new row."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:145
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:149
 msgid "Products Carousel"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:146
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_products_carousel.php:150
 msgid "Display shop products with Touch Carousel."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:89
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:93
 msgid "Show what your clients say."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:99
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:103
 msgid "Testimonials Query"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:110
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:114
 msgid "Create WordPress loop, to show testimonials from your site."
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:115
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:119
 msgid "Auto Switch"
 msgstr ""
 
-#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:118
+#: inc/lib/visual-composer/laborator-shortcodes/laborator_testimonials.php:122
 msgid "Set autoswitch interval to change testimonials. Set 0 to disable."
 msgstr ""
 
@@ -1358,9 +1584,9 @@ msgstr ""
 #: inc/lib/visual-composer/vc-modify.php:197
 msgid ""
 "In order to make <strong>Oxygen Theme</strong> fully compatible with "
-"<strong>Visual Composer</strong> you must replace some plugin files manually,"
-" because your server does not give permissions to automatically replace "
-"these files."
+"<strong>Visual Composer</strong> you must replace some plugin files "
+"manually, because your server does not give permissions to automatically "
+"replace these files."
 msgstr ""
 
 #: inc/lib/visual-composer/vc-modify.php:199
@@ -1553,10 +1779,6 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: woocommerce/add-to-wishlist-link.php:18
-msgid "This item is already in one of your wishlists:"
-msgstr ""
-
 #: woocommerce/add-to-wishlist-modal.php:7
 msgid "Your Public Lists"
 msgstr ""
@@ -1623,8 +1845,8 @@ msgid "Subtotal"
 msgstr ""
 
 #: woocommerce/cart/cart-totals.php:78 woocommerce/cart/cart.php:58
-#: woocommerce/myaccount/my-orders.php:35
-#: woocommerce/myaccount/my-orders.php:58
+#: woocommerce/myaccount/my-orders.php:37
+#: woocommerce/myaccount/my-orders.php:60
 #: woocommerce/order/order-details.php:28
 msgid "Total"
 msgstr ""
@@ -1730,13 +1952,13 @@ msgstr ""
 msgid "Calculate"
 msgstr ""
 
-#: woocommerce/checkout/cart-errors.php:24
+#: woocommerce/checkout/cart-errors.php:26
 msgid ""
 "There are some issues with the items in your cart (shown above). Please go "
 "back to the cart page and resolve these issues before checking out."
 msgstr ""
 
-#: woocommerce/checkout/cart-errors.php:28
+#: woocommerce/checkout/cart-errors.php:30
 msgid "Return To Cart"
 msgstr ""
 
@@ -1791,6 +2013,7 @@ msgid "Your order"
 msgstr ""
 
 #: woocommerce/checkout/form-pay.php:38
+#: woocommerce/checkout/review-order.php:35
 #, php-format
 msgid "Quantity: %d"
 msgstr ""
@@ -1833,8 +2056,9 @@ msgstr ""
 #: woocommerce/checkout/payment.php:43
 msgid ""
 "Since your browser does not support JavaScript, or it is disabled, please "
-"ensure you click the <em>Update Totals</em> button before placing your order."
-" You may be charged more than the amount stated above if you fail to do so."
+"ensure you click the <em>Update Totals</em> button before placing your "
+"order. You may be charged more than the amount stated above if you fail to "
+"do so."
 msgstr ""
 
 #: woocommerce/checkout/payment.php:43
@@ -1858,8 +2082,8 @@ msgstr ""
 
 #: woocommerce/checkout/thankyou.php:25
 msgid ""
-"Unfortunately your order cannot be processed as the originating "
-"bank/merchant has declined your transaction."
+"Unfortunately your order cannot be processed as the originating bank/"
+"merchant has declined your transaction."
 msgstr ""
 
 #: woocommerce/checkout/thankyou.php:29
@@ -1870,7 +2094,7 @@ msgstr ""
 msgid "Please attempt your purchase again."
 msgstr ""
 
-#: woocommerce/checkout/thankyou.php:35 woocommerce/myaccount/my-orders.php:68
+#: woocommerce/checkout/thankyou.php:35 woocommerce/myaccount/my-orders.php:70
 msgid "Pay"
 msgstr ""
 
@@ -1923,16 +2147,17 @@ msgid "Privacy Settings"
 msgstr ""
 
 #: woocommerce/create-a-list.php:66 woocommerce/edit-my-list.php:381
-#: woocommerce/my-lists.php:92
+#: woocommerce/my-lists.php:92 woocommerce/wishlist-view.php:238
 msgid "Public"
 msgstr ""
 
 #: woocommerce/create-a-list.php:66 woocommerce/edit-my-list.php:381
-msgid "Anyone can search for and see this list. You can also share using a link."
+msgid ""
+"Anyone can search for and see this list. You can also share using a link."
 msgstr ""
 
 #: woocommerce/create-a-list.php:70 woocommerce/edit-my-list.php:385
-#: woocommerce/my-lists.php:93
+#: woocommerce/my-lists.php:93 woocommerce/wishlist-view.php:232
 msgid "Shared"
 msgstr ""
 
@@ -1943,7 +2168,7 @@ msgid ""
 msgstr ""
 
 #: woocommerce/create-a-list.php:74 woocommerce/edit-my-list.php:389
-#: woocommerce/my-lists.php:94
+#: woocommerce/my-lists.php:94 woocommerce/wishlist-view.php:235
 msgid "Private"
 msgstr ""
 
@@ -2069,8 +2294,8 @@ msgstr ""
 #: woocommerce/find-a-list.php:60
 #, php-format
 msgid ""
-"<a class=\"wl-clear-results up pull-right btn btn-black btn-sm\" "
-"href=\"%s\">Clear Results</a>"
+"<a class=\"wl-clear-results up pull-right btn btn-black btn-sm\" href=\"%s"
+"\">Clear Results</a>"
 msgstr ""
 
 #: woocommerce/find-a-list.php:62
@@ -2155,7 +2380,7 @@ msgstr ""
 
 #: woocommerce/loop/quick-view.php:80 woocommerce/loop/sale-flash.php:34
 #: woocommerce/single-product/sale-flash.php:30
-#: woocommerce/wishlist-view.php:123
+#: woocommerce/wishlist-view.php:187
 msgid "Out of Stock"
 msgstr ""
 
@@ -2185,7 +2410,7 @@ msgstr ""
 #: woocommerce/loop/result-count.php:32
 #, php-format
 msgctxt "%1$d = first, %2$d = last, %3$d = total"
-msgid "Showing %1$d–%2$d of %3$d results qysh"
+msgid "Showing %1$d&ndash;%2$d of %3$d results"
 msgstr ""
 
 #: woocommerce/my-lists.php:41
@@ -2235,6 +2460,7 @@ msgstr ""
 
 #: woocommerce/myaccount/form-change-password.php:29
 #: woocommerce/myaccount/form-lost-password.php:80
+#: woocommerce/wishlist-view.php:41
 msgid "Save"
 msgstr ""
 
@@ -2270,13 +2496,13 @@ msgstr ""
 #: woocommerce/myaccount/form-edit-address.php:25
 #: woocommerce/myaccount/my-address.php:19
 #: woocommerce/myaccount/my-address.php:25
-#: woocommerce/order/order-details.php:201
+#: woocommerce/order/order-details-customer.php:47
 msgid "Billing Address"
 msgstr ""
 
 #: woocommerce/myaccount/form-edit-address.php:25
 #: woocommerce/myaccount/my-address.php:20
-#: woocommerce/order/order-details.php:218
+#: woocommerce/order/order-details-customer.php:58
 msgid "Shipping Address"
 msgstr ""
 
@@ -2364,41 +2590,41 @@ msgid_plural "%s downloads remaining"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/myaccount/my-orders.php:26
-#: woocommerce/myaccount/my-orders.php:101
+#: woocommerce/myaccount/my-orders.php:28
+#: woocommerce/myaccount/my-orders.php:103
 #: woocommerce/myaccount/nav-tabs.php:19
 msgid "Recent Orders"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:32
+#: woocommerce/myaccount/my-orders.php:34
 msgid "Order"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:33
-#: woocommerce/myaccount/my-orders.php:52
+#: woocommerce/myaccount/my-orders.php:35
+#: woocommerce/myaccount/my-orders.php:54
 msgid "Date"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:47
+#: woocommerce/myaccount/my-orders.php:49
 msgid "Order Number"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:59
+#: woocommerce/myaccount/my-orders.php:61
 #, php-format
 msgid "%s for %s item"
 msgid_plural "%s for %s items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/myaccount/my-orders.php:75
+#: woocommerce/myaccount/my-orders.php:77 woocommerce/wishlist-view.php:45
 msgid "Cancel"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:81
+#: woocommerce/myaccount/my-orders.php:83
 msgid "View"
 msgstr ""
 
-#: woocommerce/myaccount/my-orders.php:103
+#: woocommerce/myaccount/my-orders.php:105
 msgid "You have no recent orders yet!"
 msgstr ""
 
@@ -2427,8 +2653,9 @@ msgstr ""
 #: woocommerce/myaccount/view-order.php:26
 #, php-format
 msgid ""
-"Order <mark class=\"order-number\">%s</mark> was placed on <mark class=\"order-"
-"date\">%s</mark> and is currently <mark class=\"order-status\">%s</mark>."
+"Order <mark class=\"order-number\">%s</mark> was placed on <mark class="
+"\"order-date\">%s</mark> and is currently <mark class=\"order-status\">%s</"
+"mark>."
 msgstr ""
 
 #: woocommerce/myaccount/view-order.php:33 woocommerce/order/tracking.php:23
@@ -2466,54 +2693,30 @@ msgstr ""
 msgid "Track"
 msgstr ""
 
-#: woocommerce/order/order-details.php:22
-msgid "Order Details"
+#: woocommerce/order/order-details-customer.php:16
+msgid "Customer Details"
 msgstr ""
 
-#: woocommerce/order/order-details.php:66
-#, php-format
-msgid "Download file%s"
-msgstr ""
-
-#: woocommerce/order/order-details.php:132
-#: woocommerce/order/order-details.php:136
-#, php-format
-msgid "(Includes %s)"
-msgstr ""
-
-#: woocommerce/order/order-details.php:154
-msgid "Refunded:"
-msgstr ""
-
-#: woocommerce/order/order-details.php:163
+#: woocommerce/order/order-details-customer.php:22
 msgid "Note:"
 msgstr ""
 
-#: woocommerce/order/order-details.php:180
-msgid "Customer details"
-msgstr ""
-
-#: woocommerce/order/order-details.php:186
+#: woocommerce/order/order-details-customer.php:29
 msgid "Email:"
 msgstr ""
 
-#: woocommerce/order/order-details.php:186 woocommerce/share.php:39
-#: woocommerce/single-product-reviews.php:66
-msgid "Email"
-msgstr ""
-
-#: woocommerce/order/order-details.php:190
+#: woocommerce/order/order-details-customer.php:36
 msgid "Telephone:"
 msgstr ""
 
-#: woocommerce/order/order-details.php:190
-msgid "Telephone"
-msgstr ""
-
-#: woocommerce/order/order-details.php:206
-#: woocommerce/order/order-details.php:223
+#: woocommerce/order/order-details-customer.php:50
+#: woocommerce/order/order-details-customer.php:61
 #: woocommerce/single-product/meta.php:26
 msgid "N/A"
+msgstr ""
+
+#: woocommerce/order/order-details.php:22
+msgid "Order Details"
 msgstr ""
 
 #: woocommerce/order/tracking.php:12
@@ -2533,20 +2736,24 @@ msgstr ""
 msgid " ago"
 msgstr ""
 
-#: woocommerce/share.php:15
+#: woocommerce/share.php:16
 msgid "Facebook"
 msgstr ""
 
-#: woocommerce/share.php:21
+#: woocommerce/share.php:22
 msgid "Twitter"
 msgstr ""
 
-#: woocommerce/share.php:27
+#: woocommerce/share.php:28
 msgid "Pinterest"
 msgstr ""
 
-#: woocommerce/share.php:33
-msgid "Google Plus"
+#: woocommerce/share.php:34
+msgid "Google+"
+msgstr ""
+
+#: woocommerce/share.php:40 woocommerce/single-product-reviews.php:66
+msgid "Email"
 msgstr ""
 
 #: woocommerce/single-product-reviews.php:41
@@ -2594,19 +2801,16 @@ msgid "Your Review"
 msgstr ""
 
 #: woocommerce/single-product-reviews.php:104
-msgid "Only logged in customers who have purchased this product may leave a review."
+msgid ""
+"Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
-#: woocommerce/single-product/add-to-cart/variable.php:27
-msgid "Choose an option"
-msgstr ""
-
-#: woocommerce/single-product/add-to-cart/variable.php:62
-msgid "Clear selection"
-msgstr ""
-
-#: woocommerce/single-product/add-to-cart/variable.php:93
+#: woocommerce/single-product/add-to-cart/variable.php:23
 msgid "This product is currently out of stock and unavailable."
+msgstr ""
+
+#: woocommerce/single-product/add-to-cart/variable.php:34
+msgid "Clear selection"
 msgstr ""
 
 #: woocommerce/single-product/meta.php:26
@@ -2644,7 +2848,7 @@ msgstr ""
 msgid "Rated %s out of 5"
 msgstr ""
 
-#: woocommerce/single-product/related.php:38
+#: woocommerce/single-product/related.php:44
 msgid "Related Products"
 msgstr ""
 
@@ -2733,36 +2937,57 @@ msgstr ""
 msgid "Share with Friends: "
 msgstr ""
 
-#: woocommerce/wishlist-view.php:41
+#: woocommerce/wishlist-view.php:31
+msgid "Edit title"
+msgstr ""
+
+#: woocommerce/wishlist-view.php:81
 msgid "Product Name"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:47
+#: woocommerce/wishlist-view.php:88
 msgid "Unit Price"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:55
+#: woocommerce/wishlist-view.php:101
 msgid "Stock Status"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:83
+#: woocommerce/wishlist-view.php:148 woocommerce/wishlist-view.php:252
 msgid "Remove this product"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:109
+#: woocommerce/wishlist-view.php:176
 msgid "Free!"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:126
+#: woocommerce/wishlist-view.php:190
 msgid "In Stock"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:152
+#: woocommerce/wishlist-view.php:201
+#, php-format
+msgid "Added on : %s"
+msgstr ""
+
+#: woocommerce/wishlist-view.php:220
+msgid "Move"
+msgstr ""
+
+#: woocommerce/wishlist-view.php:252
+msgid "Remove"
+msgstr ""
+
+#: woocommerce/wishlist-view.php:262
 msgid "No products were added to the wishlist"
 msgstr ""
 
-#: woocommerce/wishlist-view.php:178
-msgid "Ask an estimate of costs"
+#: woocommerce/wishlist-view.php:279
+msgid "Add the selected products to the cart"
+msgstr ""
+
+#: woocommerce/wishlist-view.php:287 woocommerce/wishlist-view.php:330
+msgid "Ask for an estimate"
 msgstr ""
 
 #. Theme Name of the plugin/theme

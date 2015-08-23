@@ -6,7 +6,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     1.6.4
+ * @version     2.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -14,15 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $woocommerce_loop, $category_image, $animation_delay;
 
 // Store loop count we're currently on
-if ( empty( $woocommerce_loop['loop'] ) )
+if ( empty( $woocommerce_loop['loop'] ) ) {
 	$woocommerce_loop['loop'] = 0;
+}
 
 // Store column count for displaying the grid
-if ( empty( $woocommerce_loop['columns'] ) )
+if ( empty( $woocommerce_loop['columns'] ) ) {
 	$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+}
 
 // Increase loop count
-$woocommerce_loop['loop']++;
+$woocommerce_loop['loop'] ++;
 
 # start: modified by Arlind Nushi
 $rand_id = "el_" . time() . mt_rand(10000,99999);
@@ -37,7 +39,7 @@ $animation_delay += 100;
 ?>
 <div class="col-sm-3 col-xs-6">
 
-	<div id="<?php echo $rand_id; ?>" class="product-category product lab_wpb_banner_2 wpb_content_element banner-type-2">
+	<div id="<?php echo $rand_id; ?>" <?php wc_product_cat_class( 'product-category product lab_wpb_banner_2 wpb_content_element banner-type-2' ); ?>>
 
 		<?php do_action( 'woocommerce_before_subcategory', $category ); ?>
 
@@ -76,8 +78,8 @@ $animation_delay += 100;
 
 	<?php
 
-	$imagesize = getimagesize($category_image);
 	/*
+	$imagesize = getimagesize($category_image);
 ?>
 	<script type="text/javascript">
 		jQuery(function($)

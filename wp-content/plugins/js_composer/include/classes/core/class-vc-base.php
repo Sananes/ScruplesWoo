@@ -35,13 +35,21 @@ class Vc_Base {
 	 */
 	protected $templates_panel_editor = false;
 	/**
-	 * Post object for VC.
+	 * Post object for VC in Admin.
 	 *
 	 * @since  4.4
 	 * @access protected
 	 * @var bool|Vc_Post_Admin
 	 */
 	protected $post_admin = false;
+	/**
+	 * Post object for VC.
+	 *
+	 * @since  4.4.3
+	 * @access protected
+	 * @var bool|Vc_Post_Admin
+	 */
+	protected $post = false;
 	/**
 	 * List of shortcodes map to VC.
 	 *
@@ -65,7 +73,9 @@ class Vc_Base {
 	 */
 	public function init() {
 		do_action( 'vc_before_init_base' );
-		is_admin() && $this->postAdmin()->init();
+		if ( is_admin() ) {
+			$this->postAdmin()->init();
+		}
 		add_filter( 'body_class', array( &$this, 'bodyClass' ) );
 		add_filter( 'the_excerpt', array( &$this, 'excerptFilter' ) );
 		add_action( 'wp_head', array( &$this, 'addMetaData' ) );
@@ -101,6 +111,7 @@ class Vc_Base {
 		do_action( 'vc_build_page' );
 		add_action( 'template_redirect', array( &$this, 'frontCss' ) );
 		add_action( 'wp_head', array( &$this, 'addFrontCss' ), 1000 );
+		add_action( 'wp_head', array( &$this, 'addNoScript' ), 1000 );
 		add_action( 'template_redirect', array( &$this, 'frontJsRegister' ) );
 		add_filter( 'the_content', array( &$this, 'fixPContent' ), 11 );
 	}
@@ -122,7 +133,6 @@ class Vc_Base {
 		add_action( 'edit_post', array( &$this, 'save' ) );
 		add_action( 'wp_ajax_wpb_single_image_src', array( &$this, 'singleImageSrc' ) );
 		add_action( 'wp_ajax_wpb_gallery_html', array( &$this, 'galleryHTML' ) );
-		add_action( 'admin_init', array( &$this, 'composerRedirect' ) );
 		add_filter( 'plugin_action_links', array( &$this, 'pluginActionLinks' ), 10, 2 );
 	}
 
@@ -241,7 +251,7 @@ class Vc_Base {
 	 */
 	public function addShortCode( array $shortcode ) {
 		require_once vc_path_dir( 'SHORTCODES_DIR', 'shortcodes.php' );
-		$this->shortcodes[$shortcode['base']] = new WPBakeryShortCodeFishBones( $shortcode );
+		$this->shortcodes[ $shortcode['base'] ] = new WPBakeryShortCodeFishBones( $shortcode );
 	}
 
 	/**
@@ -253,10 +263,10 @@ class Vc_Base {
 	 *
 	 * @param string $tag
 	 *
-	 * @return WPBakeryShortCodeFishBones
+	 * @return WPBakeryShortCodeFishBones|null
 	 */
 	public function getShortCode( $tag ) {
-		return $this->shortcodes[$tag];
+		return isset( $this->shortcodes[ $tag ] ) ? $this->shortcodes[ $tag ] : null;
 	}
 
 	/**
@@ -295,7 +305,7 @@ class Vc_Base {
 	 */
 	public function galleryHTML() {
 		$images = vc_post_param( 'content' );
-		if ( !empty( $images ) ) {
+		if ( ! empty( $images ) ) {
 			echo fieldAttachedImages( explode( ",", $images ) );
 		}
 		die();
@@ -308,7 +318,7 @@ class Vc_Base {
 	public function createShortCodes() {
 		remove_all_shortcodes();
 		foreach ( WPBMap::getShortCodes() as $sc_base => $el ) {
-			$this->shortcodes[$sc_base] = new WPBakeryShortCodeFishBones( $el );
+			$this->shortcodes[ $sc_base ] = new WPBakeryShortCodeFishBones( $el );
 		}
 	}
 
@@ -324,7 +334,7 @@ class Vc_Base {
 	 * @param $value
 	 */
 	public function updateShortcodeSetting( $tag, $name, $value ) {
-		$this->shortcodes[$tag]->setSettings( $name, $value );
+		$this->shortcodes[ $tag ]->setSettings( $name, $value );
 	}
 
 	/**
@@ -371,17 +381,17 @@ class Vc_Base {
 	 */
 	public function parseShortcodesCustomCss( $content ) {
 		$css = '';
-		if ( !preg_match( '/\s*(\.[^\{]+)\s*\{\s*([^\}]+)\s*\}\s*/', $content ) ) {
+		if ( ! preg_match( '/\s*(\.[^\{]+)\s*\{\s*([^\}]+)\s*\}\s*/', $content ) ) {
 			return $css;
 		}
 		preg_match_all( '/' . get_shortcode_regex() . '/', $content, $shortcodes );
 		foreach ( $shortcodes[2] as $index => $tag ) {
 			$shortcode = WPBMap::getShortCode( $tag );
-			$attr_array = shortcode_parse_atts( trim( $shortcodes[3][$index] ) );
-			if ( isset( $shortcode['params'] ) && !empty( $shortcode['params'] ) ) {
+			$attr_array = shortcode_parse_atts( trim( $shortcodes[3][ $index ] ) );
+			if ( isset( $shortcode['params'] ) && ! empty( $shortcode['params'] ) ) {
 				foreach ( $shortcode['params'] as $param ) {
-					if ( $param['type'] == 'css_editor' && isset( $attr_array[$param['param_name']] ) ) {
-						$css .= $attr_array[$param['param_name']];
+					if ( $param['type'] == 'css_editor' && isset( $attr_array[ $param['param_name'] ] ) ) {
+						$css .= $attr_array[ $param['param_name'] ];
 					}
 				}
 			}
@@ -405,15 +415,15 @@ class Vc_Base {
 	 * @param integer $id
 	 */
 	public function addPageCustomCss( $id = null ) {
-		if ( !is_singular() ) {
+		if ( ! is_singular() ) {
 			return;
 		}
-		if ( !$id ) {
+		if ( ! $id ) {
 			$id = get_the_ID();
 		}
 		if ( $id ) {
 			$post_custom_css = get_post_meta( $id, '_wpb_post_custom_css', true );
-			if ( !empty( $post_custom_css ) ) {
+			if ( ! empty( $post_custom_css ) ) {
 				echo '<style type="text/css" data-type="vc_custom-css">';
 				echo $post_custom_css;
 				echo '</style>';
@@ -435,16 +445,16 @@ class Vc_Base {
 	 *
 	 */
 	public function addShortcodesCustomCss( $id = null ) {
-		if ( !is_singular() ) {
+		if ( ! is_singular() ) {
 			return;
 		}
-		if ( !$id ) {
+		if ( ! $id ) {
 			$id = get_the_ID();
 		}
 
 		if ( $id ) {
 			$shortcodes_custom_css = get_post_meta( $id, '_wpb_shortcodes_custom_css', true );
-			if ( !empty( $shortcodes_custom_css ) ) {
+			if ( ! empty( $shortcodes_custom_css ) ) {
 				echo '<style type="text/css" data-type="vc_shortcodes-custom-css">';
 				echo $shortcodes_custom_css;
 				echo '</style>';
@@ -461,14 +471,12 @@ class Vc_Base {
 		$this->addShortcodesCustomCss();
 	}
 
-	/**
-	 * @todo remove or refactor.
-	 */
-	public function composerRedirect() {
-		if ( get_option( 'wpb_js_composer_do_activation_redirect', false ) ) {
-			delete_option( 'wpb_js_composer_do_activation_redirect' );
-			wp_redirect( admin_url( 'options-general.php?page=vc_settings&build_css=1' ) );
-		}
+	public function addNoScript() {
+		echo '<noscript>';
+		echo '<style>';
+		echo ' .wpb_animate_when_almost_visible { opacity: 1; }';
+		echo '</style>';
+		echo '</noscript>';
 	}
 
 	/**
@@ -480,12 +488,12 @@ class Vc_Base {
 	 * @access public
 	 */
 	public function frontCss() {
-		wp_register_style( 'flexslider', vc_asset_url( 'lib/flexslider/flexslider.css' ), false, WPB_VC_VERSION, 'screen' );
-		wp_register_style( 'nivo-slider-css', vc_asset_url( 'lib/nivoslider/nivo-slider.css' ), false, WPB_VC_VERSION, 'screen' );
-		wp_register_style( 'nivo-slider-theme', vc_asset_url( 'lib/nivoslider/themes/default/default.css' ), array( 'nivo-slider-css' ), WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'flexslider', vc_asset_url( 'lib/bower/flexslider/flexslider.css' ), false, WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'nivo-slider-css', vc_asset_url( 'lib/bower/nivoslider/nivo-slider.css' ), false, WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'nivo-slider-theme', vc_asset_url( 'lib/bower/nivoslider/themes/default/default.css' ), array( 'nivo-slider-css' ), WPB_VC_VERSION, 'screen' );
 		wp_register_style( 'prettyphoto', vc_asset_url( 'lib/prettyphoto/css/prettyPhoto.css' ), false, WPB_VC_VERSION, 'screen' );
 		wp_register_style( 'isotope-css', vc_asset_url( 'css/lib/isotope.css' ), false, WPB_VC_VERSION, 'all' );
-		wp_register_style( 'font-awesome', vc_asset_url( 'lib/font-awesome/css/font-awesome.min.css' ), false, WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'font-awesome', vc_asset_url( 'lib/bower/font-awesome/css/font-awesome.min.css' ), false, WPB_VC_VERSION, 'screen' );
 
 		$front_css_file = vc_asset_url( 'css/js_composer.css' );
 		$upload_dir = wp_upload_dir();
@@ -503,7 +511,7 @@ class Vc_Base {
 
 			$custom_css_url = $upload_dir['baseurl'] . '/' . vc_upload_dir() . '/custom.css';
 			// @todo fix file_get_content()
-			if ( strlen( trim( file_get_contents( $custom_css_path ) ) ) > 0 ) {
+			if ( strlen( trim( vc_file_get_contents( $custom_css_path ) ) ) > 0 ) {
 				$custom_css_url = str_replace( array(
 					'http://',
 					'https://'
@@ -541,23 +549,24 @@ class Vc_Base {
 	 * @access public
 	 */
 	public function frontJsRegister() {
-		wp_register_script( 'jquery_ui_tabs_rotate', vc_asset_url( 'lib/jquery-ui-tabs-rotate/jquery-ui-tabs-rotate.js' ), array(
+		wp_register_script( 'tweet', vc_asset_url( 'lib/jquery.tweet/jquery.tweet.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'jcarousellite', vc_asset_url( 'lib/jcarousellite/jcarousellite_1.0.1.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'prettyphoto', vc_asset_url( 'lib/prettyphoto/js/jquery.prettyPhoto.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'waypoints', vc_asset_url( 'lib/waypoints/waypoints.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+
+		wp_register_script( 'jquery_ui_tabs_rotate', vc_asset_url( 'lib/bower/jquery-ui-tabs-rotate/jquery-ui-tabs-rotate.js' ), array(
 			'jquery',
 			'jquery-ui-tabs'
 		), WPB_VC_VERSION, true );
+		wp_register_script( 'isotope', vc_asset_url( 'lib/bower/isotope/dist/isotope.pkgd.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'twbs-pagination', vc_asset_url( 'lib/bower/twbs-pagination/jquery.twbsPagination.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'nivo-slider', vc_asset_url( 'lib/bower/nivoslider/jquery.nivo.slider.pack.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'flexslider', vc_asset_url( 'lib/bower/flexslider/jquery.flexslider-min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_accordion_script', vc_asset_url( 'lib/vc_accordion/vc-accordion.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_tabs_script', vc_asset_url( 'lib/vc_tabs/vc-tabs.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_tta_autoplay_script', vc_asset_url( 'lib/vc-tta-autoplay/vc-tta-autoplay.js' ), array( 'vc_accordion_script' ), WPB_VC_VERSION, true );
+
 		wp_register_script( 'wpb_composer_front_js', vc_asset_url( 'js/js_composer_front.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-
-		wp_register_script( 'tweet', vc_asset_url( 'lib/jquery.tweet/jquery.tweet.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'isotope', vc_asset_url( 'lib/isotope/dist/isotope.pkgd.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'jcarousellite', vc_asset_url( 'lib/jcarousellite/jcarousellite_1.0.1.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'twbs-pagination', vc_asset_url( 'lib/twbs-pagination/jquery.twbsPagination.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'nivo-slider', vc_asset_url( 'lib/nivoslider/jquery.nivo.slider.pack.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'flexslider', vc_asset_url( 'lib/flexslider/jquery.flexslider-min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'prettyphoto', vc_asset_url( 'lib/prettyphoto/js/jquery.prettyPhoto.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'waypoints', vc_asset_url( 'lib/waypoints/waypoints.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		//wp_register_script( 'jcarousellite', vc_asset_url( 'js/jcarousellite_1.0.1.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true);
-		//wp_register_script( 'anythingslider', vc_asset_url( 'js/jquery.anythingslider.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true);
-
 		/**
 		 * @since 4.4
 		 */
@@ -579,14 +588,28 @@ class Vc_Base {
 		 * Save register only core js files and check for backend or front
 		 */
 		// $this->frontJsRegister();
-		wp_register_script( 'isotope', vc_asset_url( 'lib/isotope/dist/isotope.pkgd.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'wpb_scrollTo_js', vc_asset_url( 'lib/scrollTo/jquery.scrollTo.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_php_js', vc_asset_url( 'lib/php.default/php.default.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
-		wp_register_script( 'wpb_json-js', vc_asset_url( 'lib/json-js/json2.js' ), false, WPB_VC_VERSION, true );
+
+		wp_register_script( 'isotope', vc_asset_url( 'lib/bower/isotope/dist/isotope.pkgd.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'wpb_scrollTo_js', vc_asset_url( 'lib/bower/scrollTo/jquery.scrollTo.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'wpb_json-js', vc_asset_url( 'lib/bower/json-js/json2.js' ), false, WPB_VC_VERSION, true );
+
+		wp_register_script( 'wpb_js_composer_js_listeners', vc_asset_url( 'js/lib/events.js' ), array(
+			'jquery',
+			'backbone',
+			'wpb_json-js',
+		), WPB_VC_VERSION, true );
+
+		wp_localize_script( 'wpb_js_composer_js_listeners', 'vcData', apply_filters( 'vc_global_js_data', array(
+			'version' => WPB_VC_VERSION,
+			'debug' => wpb_debug(),
+		) ) );
+
 		wp_register_script( 'wpb_js_composer_js_tools', vc_asset_url( 'js/backend/composer-tools.js' ), array(
 			'jquery',
 			'backbone',
-			'wpb_json-js'
+			'wpb_json-js',
+			'wpb_js_composer_js_listeners'
 		), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_js_composer_settings', vc_asset_url( 'js/backend/composer-settings-page.js' ), array(
 			'jquery',
@@ -598,7 +621,10 @@ class Vc_Base {
 			'mce-view',
 			'wpb_js_composer_js_view'
 		), WPB_VC_VERSION, true );
-		wp_register_script( 'wpb_js_composer_js_atts', vc_asset_url( 'js/params/composer-atts.js' ), array( 'wpb_js_composer_js_tools' ), WPB_VC_VERSION, true );
+		wp_register_script( 'wpb_js_composer_js_atts', vc_asset_url( 'js/params/composer-atts.js' ), array(
+			'wp-color-picker',
+			'wpb_js_composer_js_tools'
+		), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_js_composer_js_storage', vc_asset_url( 'js/backend/composer-storage.js' ), array( 'wpb_js_composer_js_atts' ), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_js_composer_js_models', vc_asset_url( 'js/backend/composer-models.js' ), array( 'wpb_js_composer_js_storage' ), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_js_composer_editor_panels', vc_asset_url( 'js/editors/panels.js' ), array( 'wpb_js_composer_js_models' ), WPB_VC_VERSION, true );
@@ -606,8 +632,8 @@ class Vc_Base {
 		wp_register_script( 'wpb_js_composer_js_custom_views', vc_asset_url( 'js/backend/composer-custom-views.js' ), array( 'wpb_js_composer_js_view' ), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_jscomposer_autosuggest_js', vc_asset_url( 'lib/autosuggest/jquery.autoSuggest.js' ), array( 'wpb_js_composer_js_view' ), WPB_VC_VERSION, true );
 		wp_register_script( 'wpb_jscomposer_teaser_js', vc_asset_url( 'js/backend/composer-teaser.js' ), array(), WPB_VC_VERSION, true );
-		if ( !vc_is_as_theme() || ( vc_is_as_theme() && 'admin_settings_page' !== vc_mode() ) ) {
-			wp_register_script( 'ace-editor', vc_asset_url( 'lib/ace-builds/src-min-noconflict/ace.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		if ( ! vc_is_as_theme() || ( vc_is_as_theme() && 'admin_settings_page' !== vc_mode() ) ) {
+			wp_register_script( 'ace-editor', vc_asset_url( 'lib/bower/ace-builds/src-min-noconflict/ace.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
 		}
 		/**
 		 * vc_filter: vc_i18n_locale_composer_js_view - @since 4.4
@@ -646,7 +672,7 @@ class Vc_Base {
 			'set_image' => __( 'Set Image', 'js_composer' ),
 			'are_you_sure_reset_css_classes' => __( 'Are you sure that you want to remove all your data?', 'js_composer' ),
 			'loop_frame_title' => __( 'Loop settings' ),
-			'enter_custom_layout' => __( 'Enter custom layout for your row:', 'js_composer' ),
+			'enter_custom_layout' => __( 'Custom row layout', 'js_composer' ),
 			'wrong_cells_layout' => __( 'Wrong row layout format! Example: 1/2 + 1/2 or span6 + span6.', 'js_composer' ),
 			'row_background_color' => __( 'Row background color', 'js_composer' ),
 			'row_background_image' => __( 'Row background image', 'js_composer' ),
@@ -656,6 +682,7 @@ class Vc_Base {
 			'guides_off' => __( 'Guides OFF', 'js_composer' ),
 			'template_save' => __( 'New template successfully saved!', 'js_composer' ),
 			'template_added' => __( 'Template added to the page.', 'js_composer' ),
+			'template_added_with_id' => __( 'Template added to the page. Template has ID attributes, make sure that they are not used more than once on the same page.', 'js_composer' ),
 			'template_removed' => __( 'Template successfully removed.', 'js_composer' ),
 			'template_is_empty' => __( 'Nothing to save. Template is empty.', 'js_composer' ),
 			'css_updated' => __( 'Page settings updated!', 'js_composer' ),
@@ -668,6 +695,8 @@ class Vc_Base {
 			'gfonts_loading_google_font' => __( 'Loading Font...', 'js_composer' ),
 			'gfonts_unable_to_load_google_fonts' => __( 'Unable to load Google Fonts', 'js_composer' ),
 			//'gfonts_font_loaded' => __( 'Google Font loaded successfully', 'js_composer' ),
+			'no_title_parenthesis' => sprintf( '(%s)', __( 'no title', 'js_composer' ) ),
+			'error_while_saving_image_filtered' => __( 'Error while applying filter to the image. Check your server and memory settings.', 'js_composer' ),
 		) ) );
 
 		/**
@@ -690,8 +719,8 @@ class Vc_Base {
 
 		wp_register_style( 'ui-custom-theme', vc_asset_url( 'css/ui-custom-theme/jquery-ui-less.custom.css' ), false, WPB_VC_VERSION, false );
 		wp_register_style( 'isotope-css', vc_asset_url( 'css/lib/isotope.css' ), false, WPB_VC_VERSION, 'screen' );
-		wp_register_style( 'animate-css', vc_asset_url( 'lib/animate-css/animate.css' ), false, WPB_VC_VERSION, 'screen' );
-		wp_register_style( 'font-awesome', vc_asset_url( 'lib/font-awesome/css/font-awesome.min.css' ), false, WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'animate-css', vc_asset_url( 'lib/bower/animate-css/animate.min.css' ), false, WPB_VC_VERSION, 'screen' );
+		wp_register_style( 'font-awesome', vc_asset_url( 'lib/bower/font-awesome/css/font-awesome.min.css' ), false, WPB_VC_VERSION, 'screen' );
 		$backend_default_css = 'css/js_composer_backend_editor.css';
 		wp_register_style( 'js_composer', vc_asset_url( $backend_default_css ), array(
 			'isotope-css',
@@ -730,7 +759,7 @@ class Vc_Base {
 	 * @return string url to settings page
 	 */
 	public function getSettingsPageLink() {
-		return add_query_arg( array( 'page' => 'vc_settings' ), admin_url( 'options-general.php' ) );
+		return add_query_arg( array( 'page' => 'vc-general' ), admin_url( 'admin.php' ) );
 	}
 
 
@@ -766,8 +795,8 @@ class Vc_Base {
 	/**
 	 * Builds excerpt for post from content.
 	 *
-	 * Hooked class method by the_excerpt WP filter. When user creates content with VC all content is always wrapped by shortcodes.
-	 * This methods calls do_shortcode for post's content and then creates a new excerpt.
+	 * Hooked class method by the_excerpt WP filter. When user creates content with VC all content is always wrapped by
+	 * shortcodes. This methods calls do_shortcode for post's content and then creates a new excerpt.
 	 *
 	 * @since  4.2
 	 * @access public
@@ -778,7 +807,7 @@ class Vc_Base {
 	 */
 	public function excerptFilter( $output ) {
 		global $post;
-		if ( empty( $output ) && !empty( $post->post_content ) ) {
+		if ( empty( $output ) && ! empty( $post->post_content ) ) {
 			$text = strip_tags( do_shortcode( $post->post_content ) );
 			$excerpt_length = apply_filters( 'excerpt_length', 55 );
 			$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[...]' );

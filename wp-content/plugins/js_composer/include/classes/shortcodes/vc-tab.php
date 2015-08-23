@@ -1,12 +1,12 @@
 <?php
-define( 'TAB_TITLE', __( "Tab", "js_composer" ) );
+define( 'TAB_TITLE', __( 'Tab', 'js_composer' ) );
 require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-column.php' );
 
 class WPBakeryShortCode_VC_Tab extends WPBakeryShortCode_VC_Column {
 	protected $controls_css_settings = 'tc vc_control-container';
 	protected $controls_list = array( 'add', 'edit', 'clone', 'delete' );
 	protected $predefined_atts = array(
-		'tab_id' => TAB_TITLE,
+		'tab_id' => '',
 		'title' => ''
 	);
 	protected $controls_template_file = 'editors/partials/backend_controls_tab.tpl.php';

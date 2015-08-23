@@ -124,6 +124,7 @@
 					.transall;
 
 					a {
+						text-decoration: none;
 						.transall;
 
 						&.is-loading {
@@ -543,6 +544,8 @@
 				white-space: nowrap;
 				display: table;
 				display: inline-block;
+				position: relative;
+				top: 15px;
 
 				@media screen and (max-device-width: 600px){
 					display: block;
@@ -565,6 +568,8 @@
 						.btn-default;
 						display: table-cell;
 						padding: 3px 15px;
+						display: block;
+					    float: left;
 					}
 
 					&.qty {
@@ -577,6 +582,8 @@
 						&:extend(.heading-font);
 						//top: 2px;
 						width: 50px;
+						display: block;
+					    float: left;
 						//text-indent: 10px;
 					}
 
@@ -1027,7 +1034,27 @@
 
 		// YITH wishlist
 		.yith-wcwl-add-to-wishlist {
-			display: none;
+			display: block;
+			
+			.yith-wcwl-add-button {
+				display: none !important;
+			}
+			
+			.yith-wcwl-wishlistaddedbrowse,
+			.yith-wcwl-wishlistexistsbrowse {
+				padding-top: 20px;
+				
+				a {
+					display: inline-block;
+					padding: 5px @base-padding;
+					font-size: @font-size-small;
+					background-color: @active-text-color;
+					color: #fff;
+					line-height: 1;
+					margin: 0 @base-padding;
+					&:extend(.to-uppercase);
+				}
+			}
 
 			&.laborator {
 				position: relative;
@@ -1060,3 +1087,8 @@
 }
 
 .keyframes(~"bounceIcons, 50%{ transform: scale(1.35); } 100%{ transform: scale(1); }");
+
+body #yith-wcwl-popup-message, 
+body #yith-wcwl-message {
+	display: none !important;
+}

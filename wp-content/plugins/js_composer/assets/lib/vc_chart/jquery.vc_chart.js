@@ -47,7 +47,6 @@
             this.$canvas = this.$el.find('canvas');
             this.draw();
             this.setWayPoint();
-            if(this.options.responsive === true) this.setResponsive();
 
         },
         setupColor: function() {
@@ -66,6 +65,12 @@
                 that.draw(true);
             });
         },
+		resize: function() {
+			if(this.options.responsive) {
+				if(this.animated === true) this.circle.stop();
+				this.draw(true);
+			}
+		},
           draw: function(redraw) {
             var w = this.$el.addClass('vc_ready').width(),
                 border_w = 5,
@@ -143,10 +148,15 @@
     if ( typeof window['vc_pieChart'] !== 'function' ) {
         window.vc_pieChart = function() {
             $('.vc_pie_chart:visible').vcChat();
-        }
+        };
     }
     $(document).ready(function(){
-        !window.vc_iframe && vc_pieChart();
+        if(!window.vc_iframe) {
+			window.vc_pieChart();
+			$(window).on('resize', function(){
+				$('.vc_pie_chart.vc_ready').vcChat('resize');
+			});
+		}
     });
 
 })(window.jQuery);

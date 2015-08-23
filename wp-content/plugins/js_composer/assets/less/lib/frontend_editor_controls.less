@@ -1,3 +1,4 @@
+@vc_controls-padding: 32px;
 .vc_vc_tabs, .vc_vc_accordion, .vc_vc_tour, .vc_vc_row_inner {
     margin-top: 0 !important;
 }
@@ -25,8 +26,8 @@
     }
 }
 // Custom elements css
-.vc_vc_row_inner {
-    padding-top: 32px;
+.vc_vc_row_inner, .vc_vc_row > .vc_parallax {
+    padding-top: @vc_controls-padding;
 }
 .vc_vc_raw_js {
     .wpb_wrapper {
@@ -187,4 +188,17 @@
 }
 .vc_empty-shortcode-element {
     min-height: 32px;
+}
+.vc_vc_tta_accordion {
+  > .vc_controls > .vc_controls-bl {
+    .vc_control-btn-append {
+      left: 15px;
+      top: 24px;
+    }
+  }
+}
+.vc_vc_tta_section {
+  > .vc_controls > .vc_controls-bl {
+    z-index: 1;
+  }
 }

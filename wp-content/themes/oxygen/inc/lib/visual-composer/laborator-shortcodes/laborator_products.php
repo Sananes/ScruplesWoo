@@ -13,6 +13,10 @@ class WPBakeryShortCode_laborator_products extends  WPBakeryShortCode
 	{
 		global $parsed_from_vc, $quickview_enabled, $row_clear, $quickview_wp_query;
 
+		if( function_exists( 'vc_map_get_attributes' ) ) {
+			$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+		}
+		
 		extract(shortcode_atts(array(
 			'products_query' => '',
 			'product_types_to_show' => '',

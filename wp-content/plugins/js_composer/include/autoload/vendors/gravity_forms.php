@@ -5,8 +5,16 @@
  *
  * Used to add gravity forms shortcode into visual composer
  */
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); // Require plugin.php to use is_plugin_active() below
-if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+add_action( 'plugins_loaded', 'vc_init_vendor_gravity_forms' );
+function vc_init_vendor_gravity_forms() {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); // Require plugin.php to use is_plugin_active() below
+	if ( is_plugin_active( 'gravityforms/gravityforms.php' ) || class_exists( 'RGForms' ) || class_exists( 'RGFormsModel' ) ) {
+		// Call on map
+		add_action( 'vc_after_set_mode', 'vc_vendor_gravityforms_load' );
+	} // if gravityforms active
+}
+
+function vc_vendor_gravityforms_load() {
 	$gravity_forms_array[ __( 'No Gravity forms found.', 'js_composer' ) ] = '';
 	if ( class_exists( 'RGFormsModel' ) ) {
 		$gravity_forms = RGFormsModel::get_forms( 1, 'title' );
@@ -41,7 +49,10 @@ if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
 					__( 'Yes', 'js_composer' ) => 'true'
 				),
 				'description' => __( 'Would you like to display the forms title?', 'js_composer' ),
-				'dependency' => array( 'element' => 'id', 'not_empty' => true )
+				'dependency' => array(
+					'element' => 'id',
+					'not_empty' => true
+				)
 			),
 			array(
 				'type' => 'dropdown',
@@ -52,7 +63,10 @@ if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
 					__( 'Yes', 'js_composer' ) => 'true'
 				),
 				'description' => __( 'Would you like to display the forms description?', 'js_composer' ),
-				'dependency' => array( 'element' => 'id', 'not_empty' => true )
+				'dependency' => array(
+					'element' => 'id',
+					'not_empty' => true
+				)
 			),
 			array(
 				'type' => 'dropdown',
@@ -63,15 +77,22 @@ if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
 					__( 'Yes', 'js_composer' ) => 'true'
 				),
 				'description' => __( 'Enable AJAX submission?', 'js_composer' ),
-				'dependency' => array( 'element' => 'id', 'not_empty' => true )
+				'dependency' => array(
+					'element' => 'id',
+					'not_empty' => true
+				)
 			),
 			array(
 				'type' => 'textfield',
 				'heading' => __( 'Tab Index', 'js_composer' ),
 				'param_name' => 'tabindex',
-				'description' => __( '(Optional) Specify the starting tab index for the fields of this form. Leave blank if you\'re not sure what this is.', 'js_composer' ),
-				'dependency' => array( 'element' => 'id', 'not_empty' => true )
+				'description' => __( '(Optional) Specify the starting tab index for the fields of this form. Leave blank if you\'re not sure what this is.',
+					'js_composer' ),
+				'dependency' => array(
+					'element' => 'id',
+					'not_empty' => true
+				)
 			)
 		)
 	) );
-} // if gravityforms active
+}

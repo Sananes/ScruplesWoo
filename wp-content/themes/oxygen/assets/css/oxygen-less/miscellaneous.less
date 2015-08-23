@@ -585,3 +585,69 @@ body.right-sidebar .block-pad h1 {
 		margin-left: 0px;
 	}
 }
+
+
+#yith-wcwl-form {
+	
+	.show-title-form {
+		display: inline-block;
+		background-color: fade(@border-default, 50%);
+		margin-top: @base-padding + 5;
+		padding: @base-padding @base-padding + 5;
+		text-transform: uppercase;
+		
+		i {
+			display: inline-block;
+			margin-right: @base-padding/2;
+			text-transform: uppercase;
+		}
+		
+		&:hover {
+			background-color: @border-default;
+			.transall;
+		}
+	}
+	
+	.hidden-title-form {
+		
+		&.is-visible {
+			display: block;
+		}
+		
+		.form-control {
+			.border-radius(0px);
+			border-color: @border-default;
+			background-color: #fff;
+		}
+		
+		.button {
+			padding: @base-padding  @base-padding + 5;
+			line-height: 1;
+			.border-radius(0px);
+			
+			i {
+				margin-right: @base-padding - 2;
+			}
+			
+			+ .button {
+				margin-left: @base-padding/2;
+			}
+		}
+		
+		.hide-title-form {
+			background-color: fade( @border-default, 50% );
+			
+			&:hover {
+				background-color: @border-default;
+			}
+		}
+	}
+}
+
+.laborator-woocommerce .product-single .woocommerce-tabs .tabs > li a:focus {
+	text-decoration: none !important;
+}
+
+.laborator-woocommerce .checkout-finish .customer_details tr td {
+	padding-left: 15px !important;
+}

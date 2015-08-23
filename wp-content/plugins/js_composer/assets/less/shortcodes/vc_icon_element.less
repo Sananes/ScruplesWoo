@@ -3,13 +3,13 @@
 @icon-element-rounded-radius: 5px;
 @icon-element-font-size-base: 14px;
 
-@icon-element-icon-size-xm: 1.20em; // 17px
+@icon-element-icon-size-xs: 1.20em; // 17px
 @icon-element-icon-size-sm: 1.6em; // 22px
 @icon-element-icon-size-md: 2.15em; // 30px default
 @icon-element-icon-size-lg: 2.85em; // 40px
 @icon-element-icon-size-xl: 5em; // 70px
 
-@icon-element-box-size-xm: 2.5em; // 35px
+@icon-element-box-size-xs: 2.5em; // 35px
 @icon-element-box-size-sm: 3.15em; // 45px
 @icon-element-box-size-md: 4em; // 56px default
 @icon-element-box-size-lg: 5em; // 70px
@@ -49,10 +49,13 @@
                 line-height: 1 !important;
                 font-size-adjust: none;
                 font-stretch: normal;
-                font-feature-settings: normal;
-                font-language-override: normal;
-                font-kerning: auto;
-                font-synthesis: weight style;
+				-webkit-font-feature-settings: normal;
+				font-feature-settings: normal;
+				-webkit-font-language-override: normal;
+				font-language-override: normal;
+				-webkit-font-kerning: auto;
+				font-kerning: auto;
+				font-synthesis: weight style;
                 font-variant: normal;
                 text-rendering: auto;
 
@@ -61,7 +64,8 @@
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%);
+
+                .translate(-50%, -50%);
 
                 &:before {
                     font-style: normal;
@@ -102,7 +106,7 @@
                     }
                 }
             }
-            .size-(~"xs", @icon-element-box-size-xm, @icon-element-icon-size-xm);
+            .size-(~"xs", @icon-element-box-size-xs, @icon-element-icon-size-xs);
             .size-(~"sm", @icon-element-box-size-sm, @icon-element-icon-size-sm);
             .size-(~"md", @icon-element-box-size-md, @icon-element-icon-size-md);
             .size-(~"lg", @icon-element-box-size-lg, @icon-element-icon-size-lg);

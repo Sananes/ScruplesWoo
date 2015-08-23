@@ -12,9 +12,7 @@ if ( ! function_exists( 'vc_manager' ) ) {
 	 * @return Vc_Manager
 	 */
 	function vc_manager() {
-		global $vc_manager;
-
-		return $vc_manager;
+		return Vc_Manager::getInstance();
 	}
 }
 if ( ! function_exists( 'visual_composer' ) ) {
@@ -171,7 +169,7 @@ if ( ! function_exists( 'vc_get_param' ) ) {
 	/**
 	 * Get param value from $_GET if exists.
 	 *
-	 * @param $param
+	 * @param string $param
 	 * @param $default
 	 *
 	 * @since 4.2
@@ -239,7 +237,7 @@ if ( ! function_exists( 'vc_is_inline' ) ) {
 	function vc_is_inline() {
 		global $vc_is_inline;
 		if ( is_null( $vc_is_inline ) ) {
-			$vc_is_inline = vc_action() === 'vc_inline' || !is_null(vc_request_param('vc_inline')) || vc_request_param('vc_editable') === 'true';
+			$vc_is_inline = vc_action() === 'vc_inline' || ! is_null( vc_request_param( 'vc_inline' ) ) || vc_request_param( 'vc_editable' ) === 'true';
 		}
 
 		return $vc_is_inline;
@@ -357,4 +355,34 @@ function vc_shortcode_custom_css_class( $param_value, $prefix = '' ) {
  */
 function vc_plugin_name() {
 	return vc_manager()->pluginName();
+}
+
+/**
+ * @since 4.4.3 used in vc_base when getting an custom css output
+ *
+ * @param $filename
+ *
+ * @return bool|mixed|string
+ */
+function vc_file_get_contents( $filename ) {
+	global $wp_filesystem;
+	if ( empty( $wp_filesystem ) ) {
+		require_once( ABSPATH . '/wp-admin/includes/file.php' );
+		WP_Filesystem();
+	}
+	/** @var $wp_filesystem WP_Filesystem_Base */
+	if ( ! is_object( $wp_filesystem ) || ! $output = $wp_filesystem->get_contents( $filename ) ) {
+		/*if ( is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->get_error_code() ) {
+
+		} elseif ( ! $wp_filesystem->connect() ) {
+
+		} elseif ( ! $wp_filesystem->is_writable( $filename ) ) {
+
+		} else {
+
+		}*/
+		$output = file_get_contents( $filename );
+	}
+
+	return $output;
 }

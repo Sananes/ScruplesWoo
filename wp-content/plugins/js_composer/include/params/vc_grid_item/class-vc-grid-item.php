@@ -36,6 +36,7 @@ class Vc_Grid_Item {
 			$this,
 			'addVcCustomHeadingShortcodesTemplates'
 		) );
+		add_filter( 'vc_shortcode_set_template_vc_btn', array( $this, 'addVcBtnShortcodesTemplates' ) );
 
 		return $this->shortcodes;
 	}
@@ -89,7 +90,8 @@ class Vc_Grid_Item {
 	}
 
 	/**
-	 * Used by filter vc_shortcode_set_template_vc_custom_heading to set custom template for vc_custom_heading shortcode.
+	 * Used by filter vc_shortcode_set_template_vc_custom_heading to set custom template for vc_custom_heading
+	 * shortcode.
 	 *
 	 * @param $template
 	 *
@@ -105,10 +107,30 @@ class Vc_Grid_Item {
 	}
 
 	/**
+	 * Used by filter vc_shortcode_set_template_vc_button2 to set custom template for vc_button2 shortcode.
+	 *
+	 * @param $template
+	 *
+	 * @return string
+	 */
+	public function addVcBtnShortcodesTemplates( $template ) {
+		$file = vc_path_dir( 'TEMPLATES_DIR', 'params/vc_grid_item/shortcodes/vc_btn.php' );
+		if ( is_file( $file ) ) {
+			return $file;
+		}
+
+		return $template;
+	}
+
+	/**
 	 * Map shortcodes for vc_grid_item param type.
 	 */
 	public function mapShortcodes() {
-		foreach ( $this->shortcodes() as $shortcode_settings ) {
+		// @kludge
+		// @todo refactor with with new way of roles for shortcodes.
+		// NEW ROLES like post_type for shortcode and access policies.
+		$shortcodes = $this->shortcodes();
+		foreach ( $shortcodes as $shortcode_settings ) {
 			vc_map( $shortcode_settings );
 		}
 	}
@@ -120,7 +142,8 @@ class Vc_Grid_Item {
 	 */
 	public static function predefinedTemplates() {
 		if ( false === self::$predefined_templates ) {
-			self::$predefined_templates = include vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/templates.php' );
+			self::$predefined_templates = apply_filters( 'vc_grid_item_predefined_templates',
+				include vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/templates.php' ) );
 		}
 
 		return self::$predefined_templates;
@@ -173,7 +196,7 @@ class Vc_Grid_Item {
 	 * @param $template_id
 	 */
 	public function setTemplate( $template, $template_id ) {
-		$this->template    = $template;
+		$this->template = $template;
 		$this->template_id = $template_id;
 		$this->parseTemplate( $template );
 	}
@@ -215,8 +238,8 @@ class Vc_Grid_Item {
 	public function parseTemplate( $template ) {
 		// $this->setShortcodes();
 		$this->mapShortcodes();
-		$attr     = ' width="' . $this->gridAttribute( 'element_width', 12 ) . '"'
-		            . ' is_end="' . ( $this->isEnd() === 'true' ? 'true' : '' ) . '"';
+		$attr = ' width="' . $this->gridAttribute( 'element_width', 12 ) . '"'
+		        . ' is_end="' . ( $this->isEnd() === 'true' ? 'true' : '' ) . '"';
 		$template = preg_replace( '/(\[(\[?)vc_gitem\b)/', '$1' . $attr, $template );
 		$this->html_template .= do_shortcode( $template );
 	}
@@ -250,15 +273,15 @@ class Vc_Grid_Item {
 	 * @return mixed
 	 */
 	function renderItem( WP_Post $post ) {
-		$pattern     = array();
+		$pattern = array();
 		$replacement = array();
 		$this->addAttributesFilters();
 		foreach ( $this->getTemplateVariables() as $var ) {
-			$pattern[]     = '/' . preg_quote( $var[0], '/' ) . '/';
-			$replacement[] = $this->attribute( $var[1], $post, isset( $var[3] ) ? trim( $var[3] ) : '' );
+			$pattern[] = '/' . preg_quote( $var[0], '/' ) . '/';
+			$replacement[] = preg_replace( '/\\$/', '\\\$', $this->attribute( $var[1], $post, isset( $var[3] ) ? trim( $var[3] ) : '' ) );
 		}
 
-		return preg_replace( $pattern, $replacement, $this->html_template );
+		return preg_replace( $pattern, $replacement, do_shortcode( $this->html_template ) );
 	}
 
 	/**
@@ -331,5 +354,5 @@ class Vc_Grid_Item {
 			add_shortcode( $tag, array( $this, vc_camel_case( $tag . '_shortcode' ) ) );
 		}
 	}
-// }}
+	// }}
 }

@@ -64,6 +64,7 @@ Class Vc_Vendor_Jwplayer implements Vc_Vendor_Interface {
 	public function renderPlaceholder() {
 		return '<div class="vc_placeholder-jwplayer"></div>';
 	}
+
 	/**
 	 * @param $output
 	 *

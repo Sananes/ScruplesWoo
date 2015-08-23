@@ -1,17 +1,26 @@
 <?php
-$output = $title = $interval = $el_class = '';
-extract( shortcode_atts( array(
-	'title' => '',
-	'interval' => 0,
-	'el_class' => ''
-), $atts ) );
+/**
+ * Shortcode attributes
+ * @var $atts
+ * @var $title
+ * @var $interval
+ * @var $el_class
+ * @var $content - shortcode content
+ * Shortcode class
+ * @var $this WPBakeryShortCode_VC_Tabs
+ */
+$output = '';
+$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+extract( $atts );
 
 wp_enqueue_script( 'jquery-ui-tabs' );
 
 $el_class = $this->getExtraClass( $el_class );
 
 $element = 'wpb_tabs';
-if ( 'vc_tour' == $this->shortcode ) $element = 'wpb_tour';
+if ( 'vc_tour' === $this->shortcode ) {
+	$element = 'wpb_tour';
+}
 
 // Extract tab titles
 preg_match_all( '/vc_tab([^\]]+)/i', $content, $matches, PREG_OFFSET_CAPTURE );
@@ -26,8 +35,8 @@ if ( isset( $matches[1] ) ) {
 $tabs_nav = '';
 $tabs_nav .= '<ul class="wpb_tabs_nav ui-tabs-nav vc_clearfix">';
 foreach ( $tab_titles as $tab ) {
-	$tab_atts = shortcode_parse_atts($tab[0]);
-	if(isset($tab_atts['title'])) {
+	$tab_atts = shortcode_parse_atts( $tab[0] );
+	if ( isset( $tab_atts['title'] ) ) {
 		$tabs_nav .= '<li><a href="#tab-' . ( isset( $tab_atts['tab_id'] ) ? $tab_atts['tab_id'] : sanitize_title( $tab_atts['title'] ) ) . '">' . $tab_atts['title'] . '</a></li>';
 	}
 }
@@ -40,10 +49,10 @@ $output .= "\n\t\t" . '<div class="wpb_wrapper wpb_tour_tabs_wrapper ui-tabs vc_
 $output .= wpb_widget_title( array( 'title' => $title, 'extraclass' => $element . '_heading' ) );
 $output .= "\n\t\t\t" . $tabs_nav;
 $output .= "\n\t\t\t" . wpb_js_remove_wpautop( $content );
-if ( 'vc_tour' == $this->shortcode ) {
+if ( 'vc_tour' === $this->shortcode ) {
 	$output .= "\n\t\t\t" . '<div class="wpb_tour_next_prev_nav vc_clearfix"> <span class="wpb_prev_slide"><a href="#prev" title="' . __( 'Previous tab', 'js_composer' ) . '">' . __( 'Previous tab', 'js_composer' ) . '</a></span> <span class="wpb_next_slide"><a href="#next" title="' . __( 'Next tab', 'js_composer' ) . '">' . __( 'Next tab', 'js_composer' ) . '</a></span></div>';
 }
 $output .= "\n\t\t" . '</div> ' . $this->endBlockComment( '.wpb_wrapper' );
-$output .= "\n\t" . '</div> ' . $this->endBlockComment( $element );
+$output .= "\n\t" . '</div> ' . $this->endBlockComment( $this->getShortcode() );
 
 echo $output;

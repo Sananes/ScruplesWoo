@@ -1,8 +1,9 @@
 <?php
-require_once vc_path_dir('SHORTCODES_DIR', 'vc-tab.php');
+require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-tab.php' );
+
 class WPBakeryShortCode_VC_Accordion_tab extends WPBakeryShortCode_VC_Tab {
 	protected $controls_css_settings = 'tc vc_control-container';
-	protected $controls_list = array('add', 'edit', 'clone', 'delete');
+	protected $controls_list = array( 'add', 'edit', 'clone', 'delete' );
 	protected $predefined_atts = array(
 		'el_class' => '',
 		'width' => '',
@@ -44,7 +45,7 @@ class WPBakeryShortCode_VC_Accordion_tab extends WPBakeryShortCode_VC_Tab {
 			$output .= '<div class="group wpb_sortable">';
 			$output .= '<h3><span class="tab-label"><%= params.title %></span></h3>';
 			$output .= '<div ' . $this->mainHtmlBlockParams( $width, $i ) . '>';
-			$output .= str_replace( "%column_size%", wpb_translateColumnWidthToFractional( $width[$i] ), $column_controls );
+			$output .= str_replace( "%column_size%", wpb_translateColumnWidthToFractional( $width[ $i ] ), $column_controls );
 			$output .= '<div class="wpb_element_wrapper">';
 			$output .= '<div ' . $this->containerHtmlBlockParams( $width, $i ) . '>';
 			$output .= do_shortcode( shortcode_unautop( $content ) );
@@ -57,17 +58,18 @@ class WPBakeryShortCode_VC_Accordion_tab extends WPBakeryShortCode_VC_Tab {
 						// Get first element from the array
 						reset( $param_value );
 						$first_key = key( $param_value );
-						$param_value = $param_value[$first_key];
+						$param_value = $param_value[ $first_key ];
 					}
 					$inner .= $this->singleParamHtmlHolder( $param, $param_value );
 				}
 				$output .= $inner;
 			}
 			$output .= '</div>';
-			$output .= str_replace( "%column_size%", wpb_translateColumnWidthToFractional( $width[$i] ), $column_controls_bottom );
+			$output .= str_replace( "%column_size%", wpb_translateColumnWidthToFractional( $width[ $i ] ), $column_controls_bottom );
 			$output .= '</div>';
 			$output .= '</div>';
 		}
+
 		return $output;
 	}
 
@@ -102,7 +104,7 @@ class WPBakeryShortCode_VC_Accordion_tab extends WPBakeryShortCode_VC_Tab {
 						// Get first element from the array
 						reset( $param_value );
 						$first_key = key( $param_value );
-						$param_value = $param_value[$first_key];
+						$param_value = $param_value[ $first_key ];
 					}
 					$inner .= $this->singleParamHtmlHolder( $param, $param_value );
 				}

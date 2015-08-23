@@ -75,7 +75,8 @@ class WpbakeryShortcodeParams {
 	 * @since 4.2
 	 *
 	 * @param $name - attribute name
-	 * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode param list
+	 * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode
+	 *     param list
 	 * @param $script_url - javascript file url which will be attached at the end of settings form.
 	 *
 	 * @return bool - return true if attribute type created
@@ -153,7 +154,8 @@ class WpbakeryShortcodeParams {
  * Helper function to register new shortcode attribute hook.
  *
  * @param $name - attribute name
- * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode param list
+ * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode
+ *     param list
  * @param $script_url - javascript file url which will be attached at the end of settings form.
  *
  * @since 4.4
@@ -167,7 +169,8 @@ function vc_add_shortcode_param( $name, $form_field_callback, $script_url = null
  * Helper function to register new shortcode attribute hook.
  *
  * @param $name - attribute name
- * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode param list
+ * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode
+ *     param list
  * @param $script_url - javascript file url which will be attached at the end of settings form.
  *
  * @since 4.2

@@ -47,26 +47,28 @@ function vc_dropdown_form_field( $settings, $value ) {
 	if ( is_array( $value ) ) {
 		$value = isset( $value['value'] ) ? $value['value'] : array_shift( $value );
 	}
-	foreach ( $settings['value'] as $index => $data ) {
-		if ( is_numeric( $index ) && ( is_string( $data ) || is_numeric( $data ) ) ) {
-			$option_label = $data;
-			$option_value = $data;
-		} elseif ( is_numeric( $index ) && is_array( $data ) ) {
-			$option_label = isset( $data['label'] ) ? $data['label'] : array_pop( $data );
-			$option_value = isset( $data['value'] ) ? $data['value'] : array_pop( $data );
-		} else {
-			$option_value = $data;
-			$option_label = $index;
+	if ( ! empty( $settings['value'] ) ) {
+		foreach ( $settings['value'] as $index => $data ) {
+			if ( is_numeric( $index ) && ( is_string( $data ) || is_numeric( $data ) ) ) {
+				$option_label = $data;
+				$option_value = $data;
+			} elseif ( is_numeric( $index ) && is_array( $data ) ) {
+				$option_label = isset( $data['label'] ) ? $data['label'] : array_pop( $data );
+				$option_value = isset( $data['value'] ) ? $data['value'] : array_pop( $data );
+			} else {
+				$option_value = $data;
+				$option_label = $index;
+			}
+			$option_label = __( $option_label, "js_composer" );
+			//$val = strtolower(str_replace(array(" "), array("_"), $val));
+			//$val = strtolower(str_replace(array(" "), array("_"), $val)); //issue #464 github
+			$selected = '';
+			if ( $value !== '' && (string) $option_value === (string) $value ) {
+				$selected = ' selected="selected"';
+			}
+			$output .= '<option class="' . $option_value . '" value="' . $option_value . '"' . $selected . '>'
+			           . htmlspecialchars( $option_label ) . '</option>';
 		}
-		$option_label = __( $option_label, "js_composer" );
-		//$val = strtolower(str_replace(array(" "), array("_"), $val));
-		//$val = strtolower(str_replace(array(" "), array("_"), $val)); //issue #464 github
-		$selected = '';
-		if ( $value !== '' && (string) $option_value === (string) $value ) {
-			$selected = ' selected="selected"';
-		}
-		$output .= '<option class="' . $option_value . '" value="' . $option_value . '"' . $selected . '>'
-		           . htmlspecialchars( $option_label ) . '</option>';
 	}
 	$output .= '</select>';
 
@@ -88,15 +90,17 @@ function vc_checkbox_form_field( $settings, $value ) {
 		$value = ''; // fix #1239
 	}
 	$current_value = strlen( $value ) > 0 ? explode( ",", $value ) : array();
-	$values = is_array( $settings['value'] ) ? $settings['value'] : array();
-	foreach ( $values as $label => $v ) {
-		$checked = count( $current_value ) > 0 && in_array( $v, $current_value ) ? ' checked="checked"' : '';
-		$output .= ' <label class="vc_checkbox-label"><input id="'
-		           . $settings['param_name'] . '-' . $v . '" value="'
-		           . $v . '" class="wpb_vc_param_value '
-		           . $settings['param_name'] . ' ' . $settings['type'] . '" type="checkbox" name="'
-		           . $settings['param_name'] . '"'
-		           . $checked . '> ' . __( $label, "js_composer" ) . '</label>';
+	$values = isset( $settings['value'] ) && is_array( $settings['value'] ) ? $settings['value'] : array( __( 'Yes' ) => 'true' );
+	if ( ! empty( $values ) ) {
+		foreach ( $values as $label => $v ) {
+			$checked = count( $current_value ) > 0 && in_array( $v, $current_value ) ? ' checked="checked"' : '';
+			$output .= ' <label class="vc_checkbox-label"><input id="'
+			           . $settings['param_name'] . '-' . $v . '" value="'
+			           . $v . '" class="wpb_vc_param_value '
+			           . $settings['param_name'] . ' ' . $settings['type'] . '" type="checkbox" name="'
+			           . $settings['param_name'] . '"'
+			           . $checked . '> ' . __( $label, "js_composer" ) . '</label>';
+		}
 	}
 
 	return $output;

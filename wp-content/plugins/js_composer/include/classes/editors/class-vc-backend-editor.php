@@ -28,6 +28,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 	 * @var bool|string $post - stores data about post.
 	 */
 	public $post = false;
+
 	/**
 	 * This method is called by Vc_Manager to register required action hooks for VC backend editor.
 	 *
@@ -40,7 +41,6 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 		if ( function_exists( 'add_theme_support' ) ) {
 			add_theme_support( 'post-thumbnails' );
 		}
-		add_post_type_support( 'page', 'excerpt' );
 		add_action( 'admin_init', array( &$this, 'render' ), 5 );
 		add_action( 'admin_print_scripts-post.php', array( &$this, 'printScriptsMessages' ) );
 		add_action( 'admin_print_scripts-post-new.php', array( &$this, 'printScriptsMessages' ) );
@@ -63,9 +63,9 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 		$post_types = vc_editor_post_types();
 		foreach ( $post_types as $type ) {
 			add_meta_box( 'wpb_visual_composer', __( 'Visual Composer', "js_composer" ), Array(
-					&$this,
-					'renderEditor'
-				), $type, 'normal', 'high' );
+				&$this,
+				'renderEditor'
+			), $type, 'normal', 'high' );
 		}
 	}
 
@@ -74,12 +74,15 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 	 *
 	 * @param null|Wp_Post $post
 	 *
-	 * @return mixed|void
+	 * @return bool
 	 */
 	public function renderEditor( $post = null ) {
 		/**
 		 * @todo setter/getter for $post
 		 */
+		if ( ! is_object( $post ) || 'WP_Post' !== get_class( $post ) || ! isset( $post->ID ) ) {
+			return false;
+		}
 		$this->post = $post;
 		$this->post_custom_css = get_post_meta( $post->ID, '_wpb_post_custom_css', true );
 		vc_include_template( 'editors/backend_editor.tpl.php', array(
@@ -88,6 +91,8 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 		) );
 		add_action( 'admin_footer', array( &$this, 'renderEditorFooter' ) );
 		do_action( 'vc_backend_editor_render' );
+
+		return true;
 	}
 
 	/**
@@ -102,6 +107,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 		) );
 		do_action( 'vc_backend_editor_footer_render' );
 	}
+
 	/**
 	 * Check is post type is valid for rendering VC backend editor.
 	 *
@@ -110,6 +116,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 	public function isValidPostType() {
 		return in_array( get_post_type(), vc_editor_post_types() );
 	}
+
 	/**
 	 * Enqueue required javascript libraries and css files.
 	 *
@@ -119,7 +126,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 	 * @access public
 	 */
 	public function printScriptsMessages() {
-		if ($this->isValidPostType()) {
+		if ( $this->isValidPostType() ) {
 			vc_license()->setupReminder();
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'wp-color-picker' );
@@ -130,6 +137,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 			wp_enqueue_style( 'font-awesome' );
 			wp_enqueue_style( 'js_composer' );
 			wp_enqueue_style( 'wpb_jscomposer_autosuggest' );
+			wp_enqueue_style( 'js_composer_settings', vc_asset_url( 'css/js_composer_settings.css' ), array(), WPB_VC_VERSION, false );
 			WPBakeryShortCodeFishBones::enqueueCss();
 
 			wp_enqueue_script( 'jquery-ui-tabs' );
@@ -140,12 +148,24 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'farbtastic' );
 			wp_enqueue_script( 'isotope' );
-			wp_enqueue_script( 'vc_bootstrap_js', vc_asset_url( 'lib/bootstrap3/dist/js/bootstrap.min.js' ), array( 'jquery' ), '3.0.2', true );
+			$bootstrap_version = '3.0.2';
+			wp_enqueue_script( 'vc_bootstrap_js_1', vc_asset_url( 'lib/bower/bootstrap3/js/modal.js' ), array( 'jquery' ), $bootstrap_version, true );
+			wp_enqueue_script( 'vc_bootstrap_js_2', vc_asset_url( 'lib/bower/bootstrap3/js/dropdown.js' ), array( 'jquery' ), $bootstrap_version, true );
+			wp_enqueue_script( 'vc_bootstrap_js_11', vc_asset_url( 'lib/bower/bootstrap3/js/transition.js' ), array( 'jquery' ), $bootstrap_version, true );
+			// wp_enqueue_script( 'vc_bootstrap_js', vc_asset_url( 'lib/bower/bootstrap3/dist/js/bootstrap.min.js' ), array( 'jquery' ), '3.0.2', true );
+
+			// wp_enqueue_script( 'vc_bootstrap_js_3', vc_asset_url( 'lib/bower/bootstrap3/js/tooltip.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_4', vc_asset_url( 'lib/bower/bootstrap3/js/alert.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_5', vc_asset_url( 'lib/bower/bootstrap3/js/button.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_6', vc_asset_url( 'lib/bower/bootstrap3/js/carousel.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_7', vc_asset_url( 'lib/bower/bootstrap3/js/collapse.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_8', vc_asset_url( 'lib/bower/bootstrap3/js/popover.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_9', vc_asset_url( 'lib/bower/bootstrap3/js/scrollspy.js' ), array( 'jquery' ), '3.0.2', true );
+			// wp_enqueue_script( 'vc_bootstrap_js_10', vc_asset_url( 'lib/bower/bootstrap3/js/tab.js' ), array( 'jquery' ), '3.0.2', true );
 			wp_enqueue_script( 'wpb_scrollTo_js' );
 			wp_enqueue_script( 'wpb_php_js' );
 			wp_enqueue_script( 'wpb_js_composer_js_sortable' );
 			wp_enqueue_script( 'wpb_json-js' );
-			wp_enqueue_style( 'js_composer_settings', vc_asset_url( 'css/js_composer_settings.css' ), array(), WPB_VC_VERSION, false );
 			wp_enqueue_script( 'ace-editor' );
 			wp_enqueue_script( 'webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js' ); // Google Web Font CDN
 			wp_enqueue_script( 'wpb_js_composer_js_tools' );
@@ -231,6 +251,7 @@ class Vc_Backend_Editor implements Vc_Editor_Interface {
 		/** @var $settings - get use group access rules */
 		$settings = vc_settings()->get( 'groups_access_rules' );
 		$role = is_object( $current_user ) && isset( $current_user->roles[0] ) ? $current_user->roles[0] : '';
+
 		return isset( $settings[ $role ]['show'] ) ? $settings[ $role ]['show'] : '';
 	}
 }

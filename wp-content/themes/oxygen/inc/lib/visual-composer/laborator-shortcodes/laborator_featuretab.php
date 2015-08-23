@@ -10,6 +10,10 @@ class WPBakeryShortCode_laborator_featuretab extends  WPBakeryShortCode
 {
 	public function content($atts, $content = null)
 	{
+		if( function_exists( 'vc_map_get_attributes' ) ) {
+			$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+		}
+		
 		extract(shortcode_atts(array(
 			'title' => '',
 			'type' => '',

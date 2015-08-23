@@ -36,7 +36,7 @@
                 padding: 3px 10px;
                 line-height: @line-height-base;
                 text-decoration: none;
-                opacity: 0.5;
+                .opacity(0.5);
                 margin-left: -1px;
                 font-size: 10px;
             }
@@ -49,7 +49,7 @@
             &:hover,
             &:focus {
                 a, span {
-                    opacity: 1.0;
+                    .opacity(1.0);
                 }
             }
         }
@@ -99,7 +99,7 @@
             &:hover,
             &:focus {
                 z-index: 2;
-                opacity: 1.0;
+                .opacity(1.0);
                 cursor: default;
             }
         }
@@ -112,7 +112,7 @@
             > a:hover,
             > a:focus {
                 //cursor: not-allowed;
-                //opacity: 0.3;
+                //.opacity(0.3);
                 display: none;
             }
         }

@@ -1,23 +1,11 @@
 <?php
 $wrapper_css_class = 'vc_button-2-wrapper';
-extract( shortcode_atts( array(
-	'link' => '',
-	'title' => __( 'Text on the button', "js_composer" ),
-	'color' => '',
-	'icon' => '',
-	'size' => '',
-	'style' => '',
-	'el_class' => '',
-	'align' => ''
-), $atts ) );
+/** @var $this WPBakeryShortCode_VC_Button2 */
+$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+extract( $atts );
 
 $class = 'vc_btn';
 //parse link
-$link = ( $link == '||' ) ? '' : $link;
-$link = vc_build_link( $link );
-$a_href = $link['url'];
-$a_title = $link['title'];
-$a_target = $link['target'];
 
 $class .= ( $color != '' ) ? ( ' vc_btn_' . $color . ' vc_btn-' . $color ) : '';
 $class .= ( $size != '' ) ? ( ' vc_btn_' . $size . ' vc_btn-' . $size ) : '';
@@ -31,11 +19,11 @@ $target = '';
 if ( isset( $atts['link'] ) ) {
 	$css_class .= ' vc_gitem-link';
 	if ( 'custom' === $atts['link'] && ! empty( $atts['url'] ) ) {
-		$link = vc_build_link( $atts['url'] );
-		if ( strlen( $link['target'] ) ) {
-			$target = ' target="' . esc_attr( $link['target'] ) . '"';
+		$vc_link = vc_build_link( $atts['url'] );
+		if ( strlen( $vc_link['target'] ) ) {
+			$target = ' target="' . esc_attr( $vc_link['target'] ) . '"';
 		}
-		$link = 'href="' . esc_attr( $link['url'] ) . '" class="' . esc_attr( $css_class ) . '"';
+		$link = 'href="' . esc_attr( $vc_link['url'] ) . '" class="' . esc_attr( $css_class ) . '"';
 	} elseif ( 'post_link' === $atts['link'] ) {
 		$link = 'href="{{ post_link_url }}" class="' . esc_attr( $css_class ) . '"';
 	} elseif ( 'image' === $atts['link'] ) {
@@ -45,20 +33,17 @@ if ( isset( $atts['link'] ) ) {
 	}
 }
 
-$link = apply_filters( 'vc_gitem_post_data_get_link_link', $link )
-        . apply_filters( 'vc_gitem_post_data_get_link_target', $target );
+$link = apply_filters( 'vc_gitem_post_data_get_link_link', 'a ' . $link, $atts, $css_class )
+        . apply_filters( 'vc_gitem_post_data_get_link_target', $target, $atts );
 
 if ( $align ) {
 	$wrapper_css_class .= ' vc_button-2-align-' . $align;
 }
 ?>
 	<div class="<?php echo esc_attr( $wrapper_css_class ) ?>">
-		<a <?php echo $link ?>
-			<?php if ( empty( $atts['link'] ) || $atts['link'] !== 'image_lightbox' ): ?>
-				title="<?php echo esc_attr( $a_title ); ?>"
-			<?php endif; ?>
-			<?php $target ?>>
-			<?php echo $title; ?>
+		<<?php echo $link ?>
+		<?php $target ?>>
+		<?php echo $title; ?>
 		</a>
 	</div>
 <?php echo $this->endBlockComment( 'vc_button' ) . "\n";

@@ -14,6 +14,10 @@ class WPBakeryShortCode_laborator_lookbook_carousel extends WPBakeryShortCode
 	{
 		global $parsed_from_vc, $quickview_enabled, $row_clear, $is_lookbook_carousel, $quickview_wp_query;
 		
+		if( function_exists( 'vc_map_get_attributes' ) ) {
+			$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+		}
+		
 		extract(shortcode_atts(array(
 			'title' => '',
 			'full_width' => '',

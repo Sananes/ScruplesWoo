@@ -288,18 +288,30 @@ remove_filter('the_title', 'wc_page_endpoint_title');
 
 
 # Visual Composer Update
-add_action( 'admin_init', 'vc_updater_drop' );
+add_action( 'init', 'vc_tgm_update_active' );
+add_action( 'wp', 'vc_tgm_update_active' );
 
-function vc_updater_drop() {
+function vc_tgm_update_active() {
 	
-	if( isset( $_GET['page'] ) && $_GET['page'] != 'tgmpa-install-plugins' ) {
-		return false;
+	global $wp_filter;
+	
+	if( ! empty( $wp_filter[ 'upgrader_pre_download' ] ) && is_array( $wp_filter[ 'upgrader_pre_download' ] ) && count( $wp_filter[ 'upgrader_pre_download' ] ) ) {
+		foreach( $wp_filter[ 'upgrader_pre_download' ] as $priority => $priority_filters ) {
+			foreach( $priority_filters as $filter_hashname => $fn ) {
+				if( strpos( $filter_hashname, 'upgradeFilterFromEnvato' ) ) {
+					unset( $wp_filter['upgrader_pre_download'][$priority][$filter_hashname] );
+				}
+			}
+		}
 	}
 	
-	if( ! isset( $_GET['plugin'] ) || $_GET['plugin'] != 'js_composer' ) {
-		return false;
+	if( ! empty( $wp_filter[ 'upgrader_process_complete' ] ) && is_array( $wp_filter[ 'upgrader_process_complete' ] ) && count( $wp_filter[ 'upgrader_process_complete' ] ) ) {
+		foreach( $wp_filter[ 'upgrader_process_complete' ] as $priority => $priority_filters ) {
+			foreach( $priority_filters as $filter_hashname => $fn ) {
+				if( strpos( $filter_hashname, 'removeTemporaryDir' ) ) {
+					unset( $wp_filter['upgrader_process_complete'][$priority][$filter_hashname] );
+				}
+			}
+		}
 	}
-	
-	remove_all_actions( 'upgrader_pre_download' );
-	remove_all_actions( 'upgrader_process_complete' );
 }

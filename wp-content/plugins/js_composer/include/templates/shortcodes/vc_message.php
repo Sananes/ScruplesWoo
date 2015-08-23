@@ -1,36 +1,24 @@
 <?php
 /**
+ * Shortcode attributes
+ * @var $atts
+ * @var $el_class
+ * @var $message_box_style
+ * @var $style
+ * @var $color
+ * @var $message_box_color
+ * @var $css_animation
+ * @var $icon_type
+ * @var $icon_fontawesome
+ * // Todo add $icon_... defaults
+ * @var $content - shortcode content
+ * Shortcode class
  * @var $this WPBakeryShortCode_VC_Message
- * @var array $atts
- *
- * @var string $el_class
- * @var string $style
- * @var string $shape
- * @var string $type
- * @var string $color
- * @var string $css_animation
- * @var string $message_box_type
- * @var string $message_box_style
- * @var string $message_box_shape
- * @var string $message_box_color
- * @var string $icon_type
  */
-$defaultFont = 'fontawesome';
-$defaultIconClass = 'fa fa-info-circle';
-//$this->convert..
-$atts = $this->convertAttributesToMessageBox2( $atts );
-$defaults = array(
-	'el_class' => '',
-	'message_box_style' => 'classic',
-	'style' => 'rounded', // dye to backward compatibility message_box_shape
-	'color' => '', //message_box_type due to backward compatibility
-	'message_box_color' => 'alert-info',
-	'css_animation' => '',
-	'icon_type' => $defaultFont,
-	'icon_fontawesome' => $defaultIconClass,
-);
+// Todo add $icon_typicons and etc
 
-$atts = vc_shortcode_attribute_parse( $defaults, $atts );
+$atts = $this->convertAttributesToMessageBox2( $atts );
+$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
 $elementClass = array(
@@ -84,11 +72,11 @@ switch ( $color ) {
 }
 
 // Enqueue needed font for icon element
-if ( 'pixelicons' != $icon_type ) {
+if ( 'pixelicons' !== $icon_type ) {
 	vc_icon_element_fonts_enqueue( $icon_type );
 }
 ?>
 <div class="<?php echo esc_attr( $elementClass ); ?>">
 	<div class="vc_message_box-icon"><i class="<?php echo esc_attr( $iconClass ); ?>"></i>
 	</div><?php echo wpb_js_remove_wpautop( $content, true );
-	?></div>
+?></div><?php echo $this->endBlockComment( $this->getShortcode() ); ?>

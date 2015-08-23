@@ -181,7 +181,8 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 	 * @since 4.3
 	 */
 	public function enqueueJsBackend() {
-		if($this->isValidPostType()) {
+
+		if ( $this->isValidPostType() || apply_filters( 'vc_vendor_qtranslate_enqueue_js_backend', false ) ) {
 
 			wp_enqueue_script( 'vc_vendor_qtranslate_backend',
 				vc_asset_url( 'js/vendors/qtranslate_backend.js' ),
@@ -193,7 +194,7 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 	 * @since 4.3
 	 */
 	public function enqueueJsFrontend() {
-		if($this->isValidPostType()) {
+		if ( $this->isValidPostType() ) {
 
 			wp_enqueue_script( 'vc_vendor_qtranslate_frontend',
 				vc_asset_url( 'js/vendors/qtranslate_frontend.js' ),
@@ -221,7 +222,7 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 	public function generateSelect() {
 		$output = '';
 		if ( is_array( $this->languages ) && ! empty( $this->languages ) ) {
-			$output .= '<select id="vc_vendor_qtranslate_langs" class="vc_select vc_select-navbar" style="display:none">';
+			$output .= '<select id="vc_vendor_qtranslate_langs" class="vc_select vc_select-navbar" style="display:none;">';
 			$inline_url = vc_frontend_editor()->getInlineUrl();
 			foreach ( $this->languages as $lang ) {
 				$output .= '<option value="' . $lang . '" link="' . add_query_arg( array( 'qlang' => $lang ), $inline_url ) . '">' .
@@ -260,12 +261,13 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 	 * @return array
 	 */
 	public function vcNavControls( $list ) {
-		if($this->isValidPostType()) {
+		if ( $this->isValidPostType() ) {
 
 			if ( is_array( $list ) ) {
 				$list[] = array( 'qtranslate', $this->getControlSelectDropdown() );
 			}
 		}
+
 		return $list;
 	}
 
@@ -277,7 +279,7 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 	 * @return array
 	 */
 	public function vcNavControlsFrontend( $list ) {
-		if($this->isValidPostType()) {
+		if ( $this->isValidPostType() ) {
 
 			if ( is_array( $list ) ) {
 				$list[] = array(
@@ -286,6 +288,7 @@ Class Vc_Vendor_Qtranslate implements Vc_Vendor_Interface {
 				);
 			}
 		}
+
 		return $list;
 	}
 
