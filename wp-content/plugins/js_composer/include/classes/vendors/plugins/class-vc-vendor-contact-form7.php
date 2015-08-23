@@ -17,7 +17,7 @@ Class Vc_Vendor_ContactForm7 implements Vc_Vendor_Interface {
 		/**
 		 * Add Shortcode To Visual Composer
 		 */
-		$cf7 = get_posts( 'post_type="wpcf7_contact_form"' );
+		$cf7 = get_posts( 'post_type="wpcf7_contact_form"&numberposts=-1' );
 
 		$contact_forms = array();
 		if ( $cf7 ) {

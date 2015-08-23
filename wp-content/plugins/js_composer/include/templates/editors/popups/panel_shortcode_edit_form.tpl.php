@@ -14,6 +14,6 @@
 		<button type="button" class="vc_btn vc_panel-btn-close vc_close vc_btn-default"
 		        data-dismiss="panel"><?php _e( 'Close', 'js_composer' ) ?></button>
 		<button type="button" class="vc_btn vc_panel-btn-save vc_btn-primary"
-		        data-save="true"><?php _e( 'Save changes', 'js_composer' ) ?></button>
+		        data-save="true"><?php _e( 'Save Changes', 'js_composer' ) ?></button>
 	</div>
 </div>

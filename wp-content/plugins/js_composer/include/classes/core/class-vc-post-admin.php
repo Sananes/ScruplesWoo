@@ -77,7 +77,8 @@ Class Vc_Post_Admin {
 	 *
 	 * It is possible to add any data to post settings by adding filter with tag 'vc_hooks_vc_post_settings'.
 	 * @since 4.4
-	 * vc_filter: vc_hooks_vc_post_settings - hook to override post meta settings for visual composer (used in grid for example)
+	 * vc_filter: vc_hooks_vc_post_settings - hook to override post meta settings for visual composer (used in grid for
+	 *     example)
 	 *
 	 * @param $post_id
 	 */

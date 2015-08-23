@@ -26,6 +26,15 @@ function lab_1cl_demo_installer_get_packs()
 			'options'        => 'demo-content/main-demo/options.json',
 			'revslider'      => 'demo-content/main-demo/revslider.zip',
 			'custom_css'     => '',
+			'widgets'     	 => 'demo-content/main-demo/widgets.wie',
+			
+			'frontpage'		 => 897,
+			'postspage'		 => 600,
+			'menus'			 => array( 
+				'main-menu'     => 'Main Menu',
+				'top-menu'      => 'Top Links',
+				'footer-menu'   => 'Footer Menu',
+			),
 		),
 		
 		array(
@@ -38,7 +47,16 @@ function lab_1cl_demo_installer_get_packs()
 			'file'           => 'demo-content/minimal-demo/content.xml',
 			'options'        => 'demo-content/minimal-demo/options.json',
 			'revslider'      => 'demo-content/minimal-demo/revslider.zip',
-			'custom_css'     => 'demo-content/minimal-demo/css.json'
+			'custom_css'     => 'demo-content/minimal-demo/css.json',
+			'widgets'     	 => 'demo-content/minimal-demo/widgets.wie',
+			
+			'frontpage'		 => 897,
+			'postspage'		 => 600,
+			'menus'			 => array(
+				'main-menu'     => 'Main Menu',
+				'top-menu'      => 'Top Links',
+				'footer-menu'   => 'Footer Menu',
+			),
 		),
 	);
 }
@@ -94,7 +112,7 @@ add_action('admin_init', 'lab_1cl_demo_installer_admin_init');
 
 function lab_1cl_demo_installer_admin_init()
 {
-	if(get('page') == 'laborator_demo_content_installer' && ($pack_name = get('install-pack')))
+	if(lab_get('page') == 'laborator_demo_content_installer' && ($pack_name = lab_get('install-pack')))
 	{
 		$pack = lab_1cl_demo_installer_get_pack($pack_name);
 
@@ -138,7 +156,7 @@ function lab_1cl_demo_installer_pack_content_types($pack)
 	# WP Content
 	if(isset($pack['file']) && $pack['file'])
 	{
-		$xml_file_size = '';//filesize($full_path . $pack['file']);
+		$xml_file_size = '';
 		
 		$file_content_pack = array(
 			'type'           => 'xml-wp-content',
@@ -179,15 +197,51 @@ function lab_1cl_demo_installer_pack_content_types($pack)
 		}
 	}
 	
+	# Widgets
+	if(isset($pack['widgets']) && $pack['widgets'])
+	{	
+		$content_packs[] = array(
+			'type'           => 'widgets',
+			'title'          => 'Widgets',
+			'description'    => 'This will import default widgets presented in demo site of this content package.',
+			'checked'		 => isset($pack['widgets_checked']) ? $pack['widgets_checked'] : true,
+			'disabled'		 => false,
+			'requires'		 => array(),
+			'size'           => 0
+		);
+	}
+	
+	# WooCommerce Products
+	if(isset($pack['products']) && $pack['products'])
+	{
+		$products_content_pack = array(
+			'type'           => 'xml-products',
+			'title'          => 'WooCommerce Products',
+			'description'    => 'This will import default WooCommerce shop products and categories.',
+			'checked'		 => isset($pack['products_checked']) ? $pack['products_checked'] : false,
+			'requires'		 => array(),
+			'size'           => ''
+		);
+		
+		if( ! in_array('woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option('active_plugins'))) )
+		{
+			$products_content_pack['disabled'] = true;
+			$products_content_pack['checked'] = false;
+			$products_content_pack['requires']['woocommerce'] = 'This content pack includes shop products which requires WooCommerce plugin, to install it go to <a href="'.esc_url(admin_url("themes.php?page=tgmpa-install-plugins")).'" target="_blank">Appearance &raquo; Install Plugins</a> and then refresh this page.';
+		}
+		
+		$content_packs[] = $products_content_pack;
+	}
+	
 	# Theme Options
 	if(isset($pack['options']) && $pack['options'])
 	{
-		$theme_options_size = filesize($full_path . $pack['options']);
+		$theme_options_size = '';
 		
 		$content_packs[] = array(
 			'type'           => 'theme-options',
 			'title'          => 'Theme Options',
-			'description'    => 'This will import theme options and will rewrite all existing settings in Appearance &raquo; Theme Options.',
+			'description'    => 'This will import theme options and will rewrite all current settings in Appearance &raquo; Theme Options.',
 			'checked'		 => isset($pack['options_checked']) ? $pack['options_checked'] : true,
 			'requires'		 => array(),
 			'size'           => size_format($theme_options_size, 2)
@@ -197,7 +251,7 @@ function lab_1cl_demo_installer_pack_content_types($pack)
 	# Custom CSS
 	if(isset($pack['custom_css']) && $pack['custom_css'])
 	{
-		$custom_css_size = filesize($full_path . $pack['custom_css']);
+		$custom_css_size = '';
 		
 		$content_packs[] = array(
 			'type'           => 'custom-css',
@@ -212,7 +266,7 @@ function lab_1cl_demo_installer_pack_content_types($pack)
 	# Revolution Slider
 	if(isset($pack['revslider']) && $pack['revslider'])
 	{
-		$revslider_size = filesize($full_path . $pack['revslider']);
+		$revslider_size = '';
 		$revslider_activated = in_array('revslider/revslider.php', $active_plugins);
 		
 		$content_packs[] = array(
@@ -231,7 +285,7 @@ function lab_1cl_demo_installer_pack_content_types($pack)
 	# Layer Slider
 	if(isset($pack['layerslider']) && $pack['layerslider'])
 	{
-		$layerslider_size = filesize($full_path . $pack['layerslider']);
+		$layerslider_size = '';
 		$layerslider_activated = in_array('LayerSlider/layerslider.php', $active_plugins);
 		
 		$content_packs[] = array(
@@ -268,8 +322,9 @@ function lab_1cl_demo_install_package_content()
 	
 	# Content Source Install by Type
 	switch($source_details['type'])
-	{
+	{		
 		case "xml-wp-content":
+		case "xml-products":
 		
 			# Run wordpress importer independently
 			if( ! defined("WP_LOAD_IMPORTERS"))
@@ -279,15 +334,24 @@ function lab_1cl_demo_install_package_content()
 			}
 			
 			# Demo Content File (XML)
-			$xml_file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $pack['file'];
+			if( $source_details['type'] == 'xml-products' ) {
+				$xml_file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $pack['products'];
+			} else {
+				$xml_file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $pack['file'];
+			}
 
 			try {			
-				set_time_limit(0);
+				@set_time_limit(0);
 	
 				$wp_importer = new WP_Import();
 				
 				$wp_importer->fetch_attachments = isset($source_details['downloadMedia']) && $source_details['downloadMedia'];
 				$wp_importer->id = sanitize_title($pack['name']);
+				
+				# Download Shop Attachments by Default
+				if( $source_details['type'] == 'xml-products' ) {
+					$wp_importer->fetch_attachments = true;
+				}
 				
 				ob_start();
 				$wp_importer->import($xml_file);
@@ -295,6 +359,51 @@ function lab_1cl_demo_install_package_content()
 				
 				$resp['imp'] = $wp_importer;
 				$resp['success'] = true;
+				
+				# Small but important stuff to setup
+				if( $source_details['type'] == 'xml-wp-content' ) {
+					
+					# Set Frontpage and Posts page
+					if( isset( $pack['frontpage'] ) || isset( $pack['postspage'] ) ) {
+						update_option( 'show_on_front', 'page' );
+						
+						if( isset( $pack['frontpage'] ) ) {
+							update_option( 'page_on_front', $pack['frontpage'] );
+						}
+						
+						if( isset( $pack['postspage'] ) ) {
+							update_option( 'page_for_posts', $pack['postspage'] );
+						}
+					}
+				
+					# Menus
+					if( isset( $pack['menus'] ) && is_array( $pack['menus'] ) ) {
+						$nav_menus = wp_get_nav_menus();
+						
+						foreach( $pack['menus'] as $menu_location => $menu_name ) {
+						
+							if( is_array( $nav_menus ) ) {
+		
+								foreach( $nav_menus as $term ) {
+									
+									if( strtolower( $menu_name ) == strtolower( $term->name ) ) {
+										$nav_menu_locations = get_theme_mod( 'nav_menu_locations' );
+										
+										if( ! is_array( $nav_menu_locations ) ) {
+											$nav_menu_locations = array();
+										}
+										
+										$nav_menu_locations[$menu_location] = $term->term_id;
+										set_theme_mod( 'nav_menu_locations', $nav_menu_locations );
+									}
+								}
+							}
+						}
+					}
+					
+					# Flush rewrite rules
+					flush_rewrite_rules();
+				}
 			}
 			catch(Exception $e)
 			{
@@ -308,11 +417,19 @@ function lab_1cl_demo_install_package_content()
 			$theme_options = dirname(__FILE__) . DIRECTORY_SEPARATOR . $pack['options'];
 			
 			try
-			{	
+			{
 				if($theme_options = file_get_contents($theme_options))
 				{
 					$smof_data = unserialize(base64_decode($theme_options));
-					of_save_options($smof_data);
+					
+					# Backup Nav Locations
+					$nav_menu_locations = get_theme_mod( 'nav_menu_locations' );
+					
+					# Save Theme Options
+					of_save_options( apply_filters( 'of_options_before_save', $smof_data ) );
+					
+					# Restore Nav Locations
+					set_theme_mod( 'nav_menu_locations', $nav_menu_locations );
 					
 					$resp['success'] = true;
 				}
@@ -351,6 +468,26 @@ function lab_1cl_demo_install_package_content()
 				{
 					$resp['errorMsg'] = $e;
 				}
+			}
+			
+			break;
+		
+		case "widgets":
+			
+			$widgets = dirname(__FILE__) . DIRECTORY_SEPARATOR . $pack['widgets'];
+			
+			if( ! class_exists( 'Widget_Importer_Exporter' ) ) {
+				require dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'widget-importer-exporter/widget-importer-exporter.php';
+			}
+			
+			try
+			{
+				wie_process_import_file( $widgets );
+				$resp['success'] = true;
+			}
+			catch(Exception $e)
+			{
+				$resp['errorMsg'] = $e;
 			}
 			
 			break;

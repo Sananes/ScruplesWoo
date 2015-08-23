@@ -18,6 +18,10 @@ class WPBakeryShortCode_laborator_testimonials extends  WPBakeryShortCode
 			'css' => '',
 		), $atts));
 		
+		if( function_exists( 'vc_map_get_attributes' ) ) {
+			$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+		}
+		
 		list($args, $testimonials_query) = vc_build_loop_query($testimonials_query);
 		
 		$css_class = apply_filters(VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG,'lab_wpb_testimonials wpb_content_element '.$el_class.vc_shortcode_custom_css_class($css, ' '), $this->settings['base']);

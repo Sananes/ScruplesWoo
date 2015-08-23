@@ -124,8 +124,8 @@ if ( ! class_exists( 'WPBakeryVisualComposerCssEditor' ) ) {
 		 */
 		function getBackgroundImageControl() {
 			return apply_filters( 'vc_css_editor_background_image_control', '<ul class="vc_image">'
-			       . '</ul>'
-			       . '<a href="#" class="vc_add-image">' . __( 'Add image', 'js_composer' ) . '</a>');
+			                                                                . '</ul>'
+			                                                                . '<a href="#" class="vc_add-image">' . __( 'Add image', 'js_composer' ) . '</a>' );
 		}
 
 		/**
@@ -164,7 +164,7 @@ if ( ! class_exists( 'WPBakeryVisualComposerCssEditor' ) ) {
 				__( 'Contain', 'js_composer' ) => 'contain',
 				__( 'No Repeat', 'js_composer' ) => 'no-repeat',
 				__( 'Repeat', 'js_composer' ) => 'repeat'
-			));
+			) );
 			foreach ( $styles as $name => $style ) {
 				$output .= '<option value="' . $style . '">' . $name . '</option>';
 			}
@@ -201,7 +201,7 @@ if ( ! class_exists( 'WPBakeryVisualComposerCssEditor' ) ) {
 				$output .= '<input type="text" name="' . $name . '_' . $pos . ( $prefix != '' ? '_' . $prefix : '' ) . '" data-name="' . $name . ( $prefix != '' ? '-' . $prefix : '' ) . '-' . $pos . '" class="vc_' . $pos . '" placeholder="-" data-attribute="' . $name . '" value="">';
 			}
 
-			return apply_filters( 'vc_css_editor_layer_controls', $output);
+			return apply_filters( 'vc_css_editor_layer_controls', $output );
 		}
 	}
 }

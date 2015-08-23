@@ -41,7 +41,7 @@ class Vc_Shortcode_Edit_Form implements Vc_Render {
 	 * @since 4.4
 	 */
 	public function renderFields() {
-		$params = stripslashes_deep( vc_post_param( 'params' ) );
+		$params = array_map( 'htmlspecialchars_decode', (array) stripslashes_deep( vc_post_param( 'params' ) ) );
 		$tag = stripslashes( vc_post_param( 'tag' ) );
 		require_once vc_path_dir( 'EDITORS_DIR', 'class-vc-edit-form-fields.php' );
 		$fields = new Vc_Edit_Form_Fields( $tag, $params );

@@ -9,6 +9,8 @@
  * @version 2.3.10
  */
 
+/* Note: This file has been altered by Laborator */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }

@@ -8,9 +8,14 @@
 
 
 # GET/POST getter
-function get($var)
+function lab_get($var)
 {
 	return isset($_GET[$var]) ? $_GET[$var] : (isset($_REQUEST[$var]) ? $_REQUEST[$var] : '');
+}
+
+function get($var)
+{
+	return lab_get( $var );
 }
 
 function post($var)
@@ -206,20 +211,20 @@ function dimox_breadcrumbs($echo = true, $force_use = false)
 	#	return;
 
 	/* === OPTIONS === */
-	$text['home']		 = 'Home';
-	$text['category'] = 'Category: "%s"';
-	$text['search']	 = 'Search Results for "%s" Query';
-	$text['tag']			= 'Tag: "%s"';
-	$text['author']	 = 'Author: %s';
-	$text['404']			= 'Error 404';
+	$text['home']      = __( 'Home', 'oxygen' );
+	$text['category']  = __( 'Category: "%s"', 'oxygen' );
+	$text['search']    = __( 'Search Results for "%s" Query', 'oxygen' );
+	$text['tag']       = __( 'Tag: "%s"', 'oxygen' );
+	$text['author']    = __( 'Author: %s', 'oxygen' );
+	$text['404']       = __( 'Error 404', 'oxygen' );
 
-	$show_current	 = 1;
-	$show_on_home	 = 1;
-	$show_home_link = 1;
-	$show_title		 = 1;
-	$delimiter			= ' ';
-	$before				 = '<a class="active">';
-	$after					= '</a>';
+	$show_current      = 1;
+	$show_on_home      = 1;
+	$show_home_link    = 1;
+	$show_title        = 1;
+	$delimiter         = ' ';
+	$before            = '<a class="active">';
+	$after             = '</a>';
 	/* === END OF OPTIONS === */
 
 	global $post;
@@ -501,23 +506,6 @@ function share_story_network_link($network, $id, $simptips = true)
 function fontello_icon_list()
 {
 	return array('plus', 'minus', 'info', 'left-thin', 'up-thin', 'right-thin', 'down-thin', 'level-up', 'level-down', 'switch', 'infinity', 'plus-squared', 'minus-squared', 'home', 'keyboard', 'erase', 'pause', 'fast-forward', 'fast-backward', 'to-end', 'to-start', 'hourglass', 'stop', 'up-dir', 'play', 'right-dir', 'down-dir', 'left-dir', 'adjust', 'cloud', 'star', 'star-empty', 'cup', 'menu', 'moon', 'heart-empty', 'heart', 'note', 'note-beamed', 'layout', 'flag', 'tools', 'cog', 'attention', 'flash', 'record', 'cloud-thunder', 'tape', 'flight', 'mail', 'pencil', 'feather', 'check', 'cancel', 'cancel-circled', 'cancel-squared', 'help', 'quote', 'plus-circled', 'minus-circled', 'right', 'direction', 'forward', 'ccw', 'cw', 'left', 'up', 'down', 'list-add', 'list', 'left-bold', 'right-bold', 'up-bold', 'down-bold', 'user-add', 'help-circled', 'info-circled', 'eye', 'tag', 'upload-cloud', 'reply', 'reply-all', 'code', 'export', 'print', 'retweet', 'comment', 'chat', 'vcard', 'address', 'location', 'map', 'compass', 'trash', 'doc', 'doc-text-inv', 'docs', 'doc-landscape', 'archive', 'rss', 'share', 'basket', 'shareable', 'login', 'logout', 'volume', 'resize-full', 'resize-small', 'popup', 'publish', 'window', 'arrow-combo', 'chart-pie', 'language', 'air', 'database', 'drive', 'bucket', 'thermometer', 'down-circled', 'left-circled', 'right-circled', 'up-circled', 'down-open', 'left-open', 'right-open', 'up-open', 'down-open-mini', 'left-open-mini', 'right-open-mini', 'up-open-mini', 'down-open-big', 'left-open-big', 'right-open-big', 'up-open-big', 'progress-0', 'progress-1', 'progress-2', 'progress-3', 'back-in-time', 'network', 'inbox', 'install', 'lifebuoy', 'mouse', 'dot', 'dot-2', 'dot-3', 'suitcase', 'flow-cascade', 'flow-branch', 'flow-tree', 'flow-line', 'flow-parallel', 'brush', 'paper-plane', 'magnet', 'gauge', 'traffic-cone', 'cc', 'cc-by', 'cc-nc', 'cc-nc-eu', 'cc-nc-jp', 'cc-sa', 'cc-nd', 'cc-pd', 'cc-zero', 'cc-share', 'cc-remix', 'github', 'github-circled', 'flickr', 'flickr-circled', 'vimeo', 'vimeo-circled', 'twitter', 'twitter-circled', 'facebook', 'facebook-circled', 'facebook-squared', 'gplus', 'gplus-circled', 'pinterest', 'pinterest-circled', 'tumblr', 'tumblr-circled', 'linkedin', 'linkedin-circled', 'dribbble', 'dribbble-circled', 'stumbleupon', 'stumbleupon-circled', 'lastfm', 'lastfm-circled', 'rdio', 'rdio-circled', 'spotify', 'spotify-circled', 'qq', 'instagram', 'dropbox', 'evernote', 'flattr', 'skype', 'skype-circled', 'renren', 'sina-weibo', 'paypal', 'picasa', 'soundcloud', 'mixi', 'behance', 'google-circles', 'vkontakte', 'smashing', 'db-shape', 'sweden', 'logo-db', 'picture', 'globe', 'leaf', 'graduation-cap', 'mic', 'palette', 'ticket', 'video', 'target', 'music', 'trophy', 'thumbs-up', 'thumbs-down', 'bag', 'user', 'users', 'lamp', 'alert', 'water', 'droplet', 'credit-card', 'monitor', 'briefcase', 'floppy', 'cd', 'folder', 'doc-text', 'calendar', 'chart-line', 'chart-bar', 'clipboard', 'attach', 'bookmarks', 'book', 'book-open', 'phone', 'megaphone', 'upload', 'download', 'box', 'newspaper', 'mobile', 'signal', 'camera', 'shuffle', 'loop', 'arrows-ccw', 'light-down', 'light-up', 'mute', 'sound', 'battery', 'search', 'key', 'lock', 'lock-open', 'bell', 'bookmark', 'link', 'back', 'flashlight', 'chart-area', 'clock', 'rocket', 'block');
-}
-
-
-
-# Hex to RGB
-function Hex2RGB($color)
-{
-	$color = str_replace('#', '', $color);
-
-	if (strlen($color) != 6){ return array(0,0,0); }
-
-	$rgb = array();
-	for ($x=0;$x<3;$x++)
-	{
-		$rgb[$x] = hexdec(substr($color,(2*$x),2));
-	}
-	return $rgb;
 }
 
 

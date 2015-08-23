@@ -1,13 +1,14 @@
 <?php
+
 /**
  * WPBakery Visual Composer shortcodes
  *
  * @package WPBakeryVisualComposer
  *
  */
-
 class WPBakeryShortCode_VC_Accordion extends WPBakeryShortCode {
 	protected $controls_css_settings = 'out-tc vc_controls-content-widget';
+
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 	}
@@ -19,11 +20,11 @@ class WPBakeryShortCode_VC_Accordion extends WPBakeryShortCode {
 		foreach ( $this->settings['params'] as $param ) {
 			if ( $param['param_name'] != 'content' ) {
 				if ( isset( $param['value'] ) && is_string( $param['value'] ) ) {
-					$shortcode_attributes[$param['param_name']] = __( $param['value'], "js_composer" );
+					$shortcode_attributes[ $param['param_name'] ] = __( $param['value'], "js_composer" );
 				} elseif ( isset( $param['value'] ) ) {
-					$shortcode_attributes[$param['param_name']] = $param['value'];
+					$shortcode_attributes[ $param['param_name'] ] = $param['value'];
 				}
-			} else if ( $param['param_name'] == 'content' && $content == NULL ) {
+			} else if ( $param['param_name'] == 'content' && $content == null ) {
 				$content = __( $param['value'], "js_composer" );
 			}
 		}
@@ -43,7 +44,7 @@ class WPBakeryShortCode_VC_Accordion extends WPBakeryShortCode {
 				// Get first element from the array
 				reset( $param_value );
 				$first_key = key( $param_value );
-				$param_value = $param_value[$first_key];
+				$param_value = $param_value[ $first_key ];
 			}
 			$inner .= $this->singleParamHtmlHolder( $param, $param_value );
 		}

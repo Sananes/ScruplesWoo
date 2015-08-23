@@ -52,9 +52,6 @@
             &.vc_autocomplete-input {
                 // width: 170px;
                 padding: 0 3px;
-                -webkit-box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -ms-box-sizing: border-box;
                 box-sizing: border-box;
                 input {
                     width: 100%;
@@ -91,12 +88,18 @@
 
 .vc_autocomplete-inline {
     > li.vc_data.vc_autocomplete-label {
-        display: inline-block;
+        display: block;
         padding: 0 20px 0 8px;
+        width: auto;
+        float: left;
     }
 
     > .vc_autocomplete-input {
-        display: inline-block;
+        display: block;
+        float: none;
+        overflow: hidden;
+        min-width: 200px;
+        width: auto;
     }
 
 }

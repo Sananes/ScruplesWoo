@@ -51,7 +51,8 @@ function wpb_getImageBySize(
 				'full'
 			) ) )
 	) {
-		$thumbnail = wp_get_attachment_image( $attach_id, $thumb_size, false, array( 'class' => $thumb_class . 'attachment-' . $thumb_size ) );
+		$attributes = array( 'class' => $thumb_class . 'attachment-' . $thumb_size );
+		$thumbnail = wp_get_attachment_image( $attach_id, $thumb_size, false, $attributes );
 	} elseif ( $attach_id ) {
 		if ( is_string( $thumb_size ) ) {
 			preg_match_all( '/\d+/', $thumb_size, $thumb_matches );
@@ -73,7 +74,7 @@ function wpb_getImageBySize(
 			$p_img = wpb_resize( $attach_id, null, $thumb_size[0], $thumb_size[1], true );
 			$alt = trim( strip_tags( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) ) );
 			$attachment = get_post( $attach_id );
-			if(!empty($attachment)) {
+			if ( ! empty( $attachment ) ) {
 				$title = trim( strip_tags( $attachment->post_title ) );
 
 				if ( empty( $alt ) ) {
@@ -83,9 +84,16 @@ function wpb_getImageBySize(
 					$alt = $title;
 				} // Finally, use the title
 				if ( $p_img ) {
-					$img_class = '';
-					//if ( $grid_layout == 'thumbnail' ) $img_class = ' no_bottom_margin'; class="'.$img_class.'"
-					$thumbnail = '<img class="' . esc_attr( $thumb_class ) . '" src="' . esc_attr( $p_img['url'] ) . '" width="' . esc_attr( $p_img['width'] ) . '" height="' . esc_attr( $p_img['height'] ) . '" alt="' . esc_attr( $alt ) . '" title="' . esc_attr( $title ) . '" />';
+
+					$attributes = array(
+						'class' => $thumb_class,
+						'src' => $p_img['url'],
+						'width' => $p_img['width'],
+						'height' => $p_img['height'],
+						'alt' => $alt,
+						'title' => $title,
+					);
+					$thumbnail = '<img ' . vc_array_to_attr_string( $attributes ) . '" />';
 				}
 			}
 		}
@@ -102,12 +110,16 @@ function wpb_getImageBySize(
 /**
  * @param $width
  *
+ * @deprecated since 4.5
  * @since 4.2
  * @return string
  */
 function wpb_getColumnControls( $width ) {
 	switch ( $width ) {
 		case "vc_col-md-2" :
+			$w = "1/6";
+			break;
+		case "vc_col-sm-2" :
 			$w = "1/6";
 			break;
 		case "vc_col-sm-3" :
@@ -169,46 +181,10 @@ function wpb_translateColumnWidthToFractional( $width ) {
 			break;
 
 		default :
-			$w = $width;
+			$w = is_string( $width ) ? $width : '1/1';
 	}
 
 	return $w;
-}
-
-/* Convert 2 to
----------------------------------------------------------- */
-/**
- * @param $grid_columns_count
- *
- * @since 4.2
- * @return string
- */
-function wpb_translateColumnsCountToSpanClass( $grid_columns_count ) {
-	$teaser_width = '';
-	switch ( $grid_columns_count ) {
-		case '1' :
-			$teaser_width = 'vc_col-sm-12';
-			break;
-		case '2' :
-			$teaser_width = 'vc_col-sm-6';
-			break;
-		case '3' :
-			$teaser_width = 'vc_col-sm-4';
-			break;
-		case '4' :
-			$teaser_width = 'vc_col-sm-3';
-			break;
-		case '5':
-			$teaser_width = 'vc_col-sm-10';
-			break;
-		case '6' :
-			$teaser_width = 'vc_col-sm-2';
-			break;
-	}
-	//return $teaser_width;
-	$custom = get_custom_column_class( $teaser_width );
-
-	return $custom ? $custom : $teaser_width;
 }
 
 /**
@@ -219,42 +195,20 @@ function wpb_translateColumnsCountToSpanClass( $grid_columns_count ) {
  * @return bool|string
  */
 function wpb_translateColumnWidthToSpan( $width, $front = true ) {
-	if ( preg_match( '/^(\d{1,2})\/12$/', $width, $match ) ) {
-		$w = 'vc_col-sm-' . $match[1];
-	} else {
-		$w = 'vc_col-sm-';
-		switch ( $width ) {
-			case "1/6" :
-				$w .= '2';
-				break;
-			case "1/4" :
-				$w .= '3';
-				break;
-			case "1/3" :
-				$w .= '4';
-				break;
-			case "1/2" :
-				$w .= '6';
-				break;
-			case "2/3" :
-				$w .= '8';
-				break;
-			case "3/4" :
-				$w .= '9';
-				break;
-			case "5/6" :
-				$w .= '10';
-				break;
-			case "1/1" :
-				$w .= '12';
-				break;
-			default :
-				$w = $width;
+	preg_match( '/(\d+)\/(\d+)/', $width, $matches );
+	$w = $width;
+	if ( ! empty( $matches ) ) {
+		$part_x = (int) $matches[1];
+		$part_y = (int) $matches[2];
+		if ( $part_x > 0 && $part_y > 0 ) {
+			$value = ceil( $part_x / $part_y * 12 );
+			if ( $value > 0 && $value <= 12 ) {
+				$w = 'vc_col-sm-' . $value;
+			}
 		}
 	}
-	$custom = $front ? get_custom_column_class( $w ) : false;
 
-	return $custom ? $custom : $w;
+	return $w;
 }
 
 /**
@@ -414,15 +368,15 @@ if ( ! function_exists( 'wpb_resize' ) ) {
 			// this is not an attachment, let's use the image url
 		} else if ( $img_url ) {
 			$file_path = parse_url( $img_url );
-			$actual_file_path = $_SERVER['DOCUMENT_ROOT'] . $file_path['path'];
-			$actual_file_path = ltrim( $file_path['path'], '/' );
+			//			$actual_file_path = $_SERVER['DOCUMENT_ROOT'] . $file_path['path'];
+			//			$actual_file_path = ltrim( $file_path['path'], '/' );
 			$actual_file_path = rtrim( ABSPATH, '/' ) . $file_path['path'];
 			$orig_size = getimagesize( $actual_file_path );
 			$image_src[0] = $img_url;
 			$image_src[1] = $orig_size[0];
 			$image_src[2] = $orig_size[1];
 		}
-		if(!empty($actual_file_path)) {
+		if ( ! empty( $actual_file_path ) ) {
 			$file_info = pathinfo( $actual_file_path );
 			$extension = '.' . $file_info['extension'];
 
@@ -517,6 +471,7 @@ if ( ! function_exists( 'wpb_resize' ) ) {
 
 			return $vt_image;
 		}
+
 		return false;
 	}
 }
@@ -529,7 +484,7 @@ if ( ! function_exists( 'wpb_debug' ) ) {
 	 * @return bool
 	 */
 	function wpb_debug() {
-		if ( isset( $_GET['wpb_debug'] ) && $_GET['wpb_debug'] == 'true' ) {
+		if ( ( isset( $_GET['wpb_debug'] ) && $_GET['wpb_debug'] == 'true' ) || ( isset( $_GET['vc_debug'] ) && $_GET['vc_debug'] == 'true' ) ) {
 			return true;
 		} else {
 			return false;
@@ -752,12 +707,10 @@ function wpb_vc_get_column_width_indent( $width ) {
 		$identy = '13';
 	} elseif ( $width == 'vc_col-sm-8' ) {
 		$identy = '23';
-	} elseif ( $width == 'vc_col-sm-2' ) {
-		$identy = '16';
 	} elseif ( $width == 'vc_col-sm-9' ) {
 		$identy = '34';
 	} elseif ( $width == 'vc_col-sm-2' ) {
-		$identy = '16';
+		$identy = '16'; // TODO: check why there is no "vc_col-sm-1, -5, -6, -7, -11, -12.
 	} elseif ( $width == 'vc_col-sm-10' ) {
 		$identy = '56';
 	}
@@ -766,6 +719,7 @@ function wpb_vc_get_column_width_indent( $width ) {
 }
 
 /**
+ * @deprecated and will be removed. it not used
  * @since 4.2
  * @return mixed|string|void
  */
@@ -773,18 +727,6 @@ function get_row_css_class() {
 	$custom = vc_settings()->get( 'row_css_class' );
 
 	return ! empty( $custom ) ? $custom : 'vc_row-fluid';
-}
-
-/**
- * @param $class
- *
- * @since 4.2
- * @return string
- */
-function get_custom_column_class( $class ) {
-	$custom_array = (array) vc_settings()->get( 'column_css_classes' );
-
-	return ! empty( $custom_array[ $class ] ) ? $custom_array[ $class ] : '';
 }
 
 /* Make any HEX color lighter or darker
@@ -831,9 +773,7 @@ function vc_colorCreator( $colour, $per ) {
  * @return array|bool
  */
 function vc_hex2rgb( $color ) {
-	if ( ! empty( $color ) && $color[0] == '#' ) {
-		$color = substr( $color, 1 );
-	}
+	$color = str_replace( '#', '', $color );
 
 	if ( strlen( $color ) == 6 ) {
 		list( $r, $g, $b ) = array(
@@ -866,10 +806,12 @@ function vc_hex2rgb( $color ) {
 function vc_parse_multi_attribute( $value, $default = array() ) {
 	$result = $default;
 	$params_pairs = explode( '|', $value );
-	foreach ( $params_pairs as $pair ) {
-		$param = preg_split( '/\:/', $pair );
-		if ( ! empty( $param[0] ) && isset( $param[1] ) ) {
-			$result[ $param[0] ] = rawurldecode( $param[1] );
+	if ( ! empty( $params_pairs ) ) {
+		foreach ( $params_pairs as $pair ) {
+			$param = preg_split( '/\:/', $pair );
+			if ( ! empty( $param[0] ) && isset( $param[1] ) ) {
+				$result[ $param[0] ] = rawurldecode( $param[1] );
+			}
 		}
 	}
 
@@ -908,9 +850,11 @@ function vc_param_options_parse_values( $v ) {
  * @return bool
  */
 function vc_param_options_get_settings( $name, $settings ) {
-	foreach ( $settings as $params ) {
-		if ( isset( $params['name'] ) && $params['name'] === $name && isset( $params['type'] ) ) {
-			return $params;
+	if ( is_array( $settings ) ) {
+		foreach ( $settings as $params ) {
+			if ( isset( $params['name'] ) && $params['name'] === $name && isset( $params['type'] ) ) {
+				return $params;
+			}
 		}
 	}
 
@@ -1061,7 +1005,7 @@ if ( function_exists( 'lcfirst' ) === false ) {
 	 * @return mixed
 	 */
 	function lcfirst( $str ) {
-		$str[0] = mb_strtolower( $str[0] );
+		$str[0] = function_exists( 'mb_strtolower' ) ? mb_strtolower( $str[0] ) : strtolower( $str[0] );
 
 		return $str;
 	}
@@ -1138,9 +1082,137 @@ function vc_icon_element_fonts_enqueue( $font ) {
  * @param array $attributes
  *
  * @return array - merged attributes
+ *
+ * @see vc_map_get_attributes
  */
 function vc_shortcode_attribute_parse( $defaults = array(), $attributes = array() ) {
 	$atts = $attributes + shortcode_atts( $defaults, $attributes );
 
 	return $atts;
+}
+
+function vc_get_shortcode_regex( $tagregexp = '' ) {
+	if ( 0 === strlen( $tagregexp ) ) {
+		return get_shortcode_regex();
+	}
+
+	return
+		'\\['                              // Opening bracket
+		. '(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
+		. "($tagregexp)"                     // 2: Shortcode name
+		. '(?![\\w-])'                       // Not followed by word character or hyphen
+		. '('                                // 3: Unroll the loop: Inside the opening shortcode tag
+		. '[^\\]\\/]*'                   // Not a closing bracket or forward slash
+		. '(?:'
+		. '\\/(?!\\])'               // A forward slash not followed by a closing bracket
+		. '[^\\]\\/]*'               // Not a closing bracket or forward slash
+		. ')*?'
+		. ')'
+		. '(?:'
+		. '(\\/)'                        // 4: Self closing tag ...
+		. '\\]'                          // ... and closing bracket
+		. '|'
+		. '\\]'                          // Closing bracket
+		. '(?:'
+		. '('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
+		. '[^\\[]*+'             // Not an opening bracket
+		. '(?:'
+		. '\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
+		. '[^\\[]*+'         // Not an opening bracket
+		. ')*+'
+		. ')'
+		. '\\[\\/\\2\\]'             // Closing shortcode tag
+		. ')?'
+		. ')'
+		. '(\\]?)';
+}
+
+/**
+ * Used to send warning message
+ *
+ * @since 4.5
+ *
+ * @param $message
+ *
+ * @return string
+ */
+function vc_message_warning( $message ) {
+	return '<div class="vc_message_box vc_message_box-standard vc_message_box-rounded vc_color-warning">
+	<div class="vc_message_box-icon"><i class="fa fa-exclamation-triangle"></i>
+	</div><p>' . $message . '</p>
+</div>';
+}
+
+/**
+ * Extract video ID from youtube url
+ *
+ * @param string $url Youtube url
+ *
+ * @return string
+ */
+function vc_extract_youtube_id( $url ) {
+	parse_str( parse_url( $url, PHP_URL_QUERY ), $vars );
+
+	if ( ! isset( $vars['v'] ) ) {
+		return '';
+	}
+
+	return $vars['v'];
+}
+
+global $vc_taxonomies_types;
+function vc_taxonomies_types() {
+	global $vc_taxonomies_types;
+	if ( is_null( $vc_taxonomies_types ) ) {
+		$vc_taxonomies_types = get_taxonomies( array( 'public' => true ), 'objects' );
+	}
+
+	return $vc_taxonomies_types;
+}
+
+/**
+ * Since
+ *
+ * @since 4.5.3
+ *
+ * @param $term
+ *
+ * @return array
+ */
+function vc_get_term_object( $term ) {
+	$vc_taxonomies_types = vc_taxonomies_types();
+
+	return array(
+		'label' => $term->name,
+		'value' => $term->term_id,
+		'group_id' => $term->taxonomy,
+		'group' =>
+			isset( $vc_taxonomies_types[ $term->taxonomy ], $vc_taxonomies_types[ $term->taxonomy ]->labels, $vc_taxonomies_types[ $term->taxonomy ]->labels->name )
+				? $vc_taxonomies_types[ $term->taxonomy ]->labels->name
+				: __( 'Taxonomies', 'js_composer' )
+	);
+}
+
+function vc_is_responsive_disabled() {
+	$disable_responsive = vc_settings()->get( 'not_responsive_css' );
+
+	return '1' === $disable_responsive;
+}
+
+/**
+ * Build attributes string for html tag from associative array of data.
+ *
+ * @since 4.6
+ *
+ * @param array $atts
+ *
+ * @return string
+ */
+function vc_array_to_attr_string( array $atts ) {
+	$output = array();
+	foreach ( $atts as $key => $value ) {
+		$output[] = $key . '="' . esc_attr( $value ) . '"';
+	}
+
+	return implode( ' ', $output );
 }

@@ -1,5 +1,5 @@
 <?php
-require_once vc_path_dir('EDITORS_DIR', 'popups/class-vc-add-element-box.php');
+require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-add-element-box.php' );
 $add_element_box = new Vc_Add_Element_Box();
 $add_element_box->render();
 
@@ -12,18 +12,21 @@ visual_composer()->templatesPanelEditor()->render();
 //visual_composer()->templatesEditor()->render();
 
 // Post settings
-require_once vc_path_dir('EDITORS_DIR', 'popups/class-vc-post-settings.php');
-$post_settings = new Vc_Post_Settings($editor);
+require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-post-settings.php' );
+$post_settings = new Vc_Post_Settings( $editor );
 $post_settings->render();
-require_once vc_path_dir('EDITORS_DIR', 'popups/class-vc-edit-layout.php');
+require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-edit-layout.php' );
 $edit_layout = new Vc_Edit_Layout();
 $edit_layout->render();
+global $current_user;
+get_currentuserinfo();
 ?>
 <script type="text/javascript">
 	var vc_user_mapper = <?php echo json_encode(WPBMap::getUserShortCodes()) ?>,
-	  vc_mapper = <?php echo json_encode(WPBMap::getShortCodes()) ?>,
-	  vc_frontend_enabled = <?php echo vc_enabled_frontend() ? 'true' : 'false' ?>,
-	  vc_mode = '<?php echo vc_mode() ?>';
+		vc_mapper = <?php echo json_encode(WPBMap::getShortCodes()) ?>,
+		vc_roles = <?php echo json_encode( array_merge( array( 'current_user' => $current_user->roles ), (array) vc_settings()->get( 'groups_access_rules' ) ) ); ?>,
+		vc_frontend_enabled = <?php echo vc_enabled_frontend() ? 'true' : 'false' ?>,
+		vc_mode = '<?php echo vc_mode() ?>';
 </script>
 
 <script type="text/html" id="vc_settings-image-block">
@@ -35,11 +38,11 @@ $edit_layout->render();
 	</li>
 </script>
 <?php foreach ( WPBMap::getShortCodes() as $sc_base => $el ): ?>
-<script type="text/html" id="vc_shortcode-template-<?php echo $sc_base ?>">
-	<?php
-	echo visual_composer()->getShortCode( $sc_base )->template();
-	?>
-</script>
+	<script type="text/html" id="vc_shortcode-template-<?php echo $sc_base ?>">
+		<?php
+		echo visual_composer()->getShortCode( $sc_base )->template();
+		?>
+	</script>
 <?php endforeach; ?>
 <script type="text/html" id="vc_row-inner-element-template">
 	<?php

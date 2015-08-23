@@ -65,7 +65,7 @@ require 'inc/lib/laborator/laborator_gallerybox.php';
 require 'inc/lib/laborator/laborator_custom_css.php'; # New in v2.6
 require 'inc/lib/laborator/laborator-demo-content-importer/laborator_demo_content_importer.php'; # New in v2.6
 
-if(in_array('js_composer/js_composer.php', apply_filters('active_plugins', get_option('active_plugins'))))
+if(in_array('js_composer/js_composer.php', apply_filters('active_plugins', get_option('active_plugins'))) && function_exists('vc_add_params'))
 {
 	require 'inc/lib/visual-composer/config.php';
 	#require 'inc/lib/visual-composer/vc-modify.php';

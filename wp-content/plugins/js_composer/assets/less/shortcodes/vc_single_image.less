@@ -11,6 +11,7 @@
 
 .wpb_single_image {
     img {
+        vertical-align: top;
         height: auto;
         max-width: 100%;
         &.vc_img-placeholder {
@@ -19,6 +20,7 @@
     }
     .vc_single_image-wrapper {
         display: inline-block; // causes bug for placeholder size
+        max-width: 100%;
         &.vc_box_ {
             &rounded, &rounded img {
                 border-radius: 4px;
@@ -70,10 +72,8 @@
                 img {
                     border-radius: 0;
                     .box-shadow(none);
-                    margin-bottom: 15px;
                 }
             }
-            //
             &circle,
             &outline_circle,
             &border_circle,
@@ -117,20 +117,25 @@
         &:before {
             content: "";
             position: absolute;
-            box-shadow: 0 15px 10px rgba(0, 0, 0, 0.5);
-            left: 10px;
-            bottom: 8%; //20px;
-            width: 40%;
-            height: 20%;
-            max-height: 100px;
-            max-width: 300px;
+            .box-shadow(0 15px 10px rgba(0, 0, 0, 0.6));
+            left: 5px;
+            right: 50%;
+            bottom: 8px;
+            height: 30%;
             z-index: -1;
-            .rotate(-6deg);
-        }
+            border-radius: inherit;
+            .transform-origin(0 0);
+			-webkit-transform: skewY(-6deg);
+			-ms-transform: skewY(-6deg);
+			transform: skewY(-6deg);
+		}
         &:after {
-            left: auto;
-            right: 10px;
-            .rotate(6deg);
+            left: 50%;
+            right: 5px;
+			-webkit-transform: skewY(6deg);
+			-ms-transform: skewY(6deg);
+			transform: skewY(6deg);
+			.transform-origin(100% 0);
         }
     }
 

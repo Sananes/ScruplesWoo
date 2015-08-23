@@ -11,10 +11,12 @@ function vc_loop_form_field( $settings, $value ) {
 	$query_builder = new VcLoopSettings( $value );
 	$params = $query_builder->getContent();
 	$loop_info = '';
-	foreach ( $params as $key => $param ) {
-		$param_value = vc_loop_get_value( $param );
-		if ( ! empty( $param_value ) ) {
-			$loop_info .= ' <b>' . $query_builder->getLabel( $key ) . '</b>: ' . $param_value . ';';
+	if ( is_array( $params ) ) {
+		foreach ( $params as $key => $param ) {
+			$param_value = vc_loop_get_value( $param );
+			if ( ! empty( $param_value ) ) {
+				$loop_info .= ' <b>' . $query_builder->getLabel( $key ) . '</b>: ' . $param_value . ';';
+			}
 		}
 	}
 
@@ -863,6 +865,7 @@ function vc_get_loop_settings_json() {
 	$loop_settings->render();
 	die();
 }
+
 add_action( 'wp_ajax_wpb_get_loop_suggestion', 'vc_get_loop_suggestion' );
 add_action( 'wp_ajax_wpb_get_loop_settings', 'vc_get_loop_settings_json' );
 
@@ -872,6 +875,7 @@ add_action( 'wp_ajax_wpb_get_loop_settings', 'vc_get_loop_settings_json' );
 function vc_loop_include_templates() {
 	require_once vc_path_dir( 'TEMPLATES_DIR', 'params/loop/templates.html' );
 }
+
 add_action( 'admin_footer', 'vc_loop_include_templates' );
 
 /**

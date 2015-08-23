@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'WP_LOAD_IMPORTERS' ) )
 	return;
 
@@ -69,12 +68,12 @@ class WP_Import extends WP_Importer {
 				$this->greet();
 				break;
 			case 1:
-				check_admin_referer( 'import-upload' );
+				#check_admin_referer( 'import-upload' );
 				if ( $this->handle_upload() )
 					$this->import_options();
 				break;
 			case 2:
-				check_admin_referer( 'import-wordpress' );
+				#check_admin_referer( 'import-wordpress' );
 				$this->fetch_attachments = ( ! empty( $_POST['fetch_attachments'] ) && $this->allow_fetch_attachments() );
 				$this->id = (int) $_POST['import_id'];
 				$file = get_attached_file( $this->id );
@@ -1110,8 +1109,6 @@ class WP_Import extends WP_Importer {
 } // class_exists( 'WP_Importer' )
 
 function wordpress_importer_init() {
-	load_plugin_textdomain( 'wordpress-importer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
 	/**
 	 * WordPress Importer object for registering the import callback
 	 * @global WP_Import $wp_import

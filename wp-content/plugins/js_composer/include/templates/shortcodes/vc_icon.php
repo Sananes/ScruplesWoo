@@ -1,29 +1,27 @@
 <?php
-/** @var $this WPBakeryShortCode_VC_Icon_Element */
-$icon = $color = $size = $align = $el_class = $custom_color = $link = $background_style = $background_color =
-$type = $icon_fontawesome = $icon_openiconic = $icon_typicons = $icon_entypoicons = $icon_linecons = '';
-
-$defaults = array(
-	'type' => 'fontawesome',
-	'icon_fontawesome' => 'fa fa-adjust',
-	'icon_openiconic' => '',
-	'icon_typicons' => '',
-	'icon_entypoicons' => '',
-	'icon_linecons' => '',
-	'icon_entypo' => '',
-	'color' => '',
-	'custom_color' => '',
-	'background_style' => '',
-	'background_color' => '',
-	'size' => 'md',
-	'align' => 'center',
-	'el_class' => '',
-	'link' => '',
-	'css_animation' => '',
-
-);
-/** @var array $atts - shortcode attributes */
-$atts = vc_shortcode_attribute_parse( $defaults, $atts );
+/**
+ * Shortcode attributes
+ * @var $atts
+ * @var $type
+ * @var $icon_fontawesome
+ * @var $icon_openiconic
+ * @var $icon_typicons
+ * @var $icon_entypo
+ * @var $icon_linecons
+ * @var $color
+ * @var $custom_color
+ * @var $background_style
+ * @var $background_color
+ * @var $custom_background_color
+ * @var $size
+ * @var $align
+ * @var $el_class
+ * @var $link
+ * @var $css_animation
+ * Shortcode class
+ * @var $this WPBakeryShortCode_VC_Icon
+ */
+$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
 $class = $this->getExtraClass( $el_class );
@@ -42,11 +40,27 @@ if ( strlen( $background_style ) > 0 ) {
 		$background_style .= ' vc_icon_element-background';
 	}
 }
-?><div
-	class="vc_icon_element vc_icon_element-outer<?php echo esc_attr( $css_class ); ?>  vc_icon_element-align-<?php echo esc_attr( $align ); ?> <?php if( $has_style ): echo 'vc_icon_element-have-style'; endif; ?>"><div
-		class="vc_icon_element-inner vc_icon_element-color-<?php echo esc_attr( $color ); ?> <?php if( $has_style ): echo 'vc_icon_element-have-style-inner'; endif; ?> vc_icon_element-size-<?php echo esc_attr( $size ); ?>  vc_icon_element-style-<?php echo esc_attr( $background_style ); ?> vc_icon_element-background-color-<?php echo esc_attr( $background_color ); ?>"><span
-			class="vc_icon_element-icon <?php echo esc_attr( ${"icon_" . $type} ); ?>" <?php echo( $color === 'custom' ? 'style="color:' . esc_attr( $custom_color ) . ' !important"' : '' ); ?>></span><?php
+
+$iconClass = isset( ${"icon_" . $type} ) ? esc_attr( ${"icon_" . $type} ) : 'fa fa-adjust';
+
+$style = '';
+if ( 'custom' === $background_color ) {
+	if ( false !== strpos( $background_style, 'outline' ) ) {
+		$style = 'border-color:' . $custom_background_color;
+	} else {
+		$style = 'background-color:' . $custom_background_color;
+	}
+}
+$style = $style ? ' style="' . esc_attr( $style ) . '"' : '';
+
+?>
+<div
+	class="vc_icon_element vc_icon_element-outer<?php echo strlen( $css_class ) > 0 ? ' ' . trim( esc_attr( $css_class ) ) : ''; ?> vc_icon_element-align-<?php echo esc_attr( $align ); ?><?php if ( $has_style ): echo ' vc_icon_element-have-style'; endif; ?>">
+	<div
+		class="vc_icon_element-inner vc_icon_element-color-<?php echo esc_attr( $color ); ?><?php if ( $has_style ): echo ' vc_icon_element-have-style-inner'; endif; ?> vc_icon_element-size-<?php echo esc_attr( $size ); ?> vc_icon_element-style-<?php echo esc_attr( $background_style ); ?> vc_icon_element-background-color-<?php echo esc_attr( $background_color ); ?>"<?php echo $style ?>><span
+			class="vc_icon_element-icon <?php echo $iconClass; ?>" <?php echo( $color === 'custom' ? 'style="color:' . esc_attr( $custom_color ) . ' !important"' : '' ); ?>></span><?php
 		if ( strlen( $link ) > 0 && strlen( $url['url'] ) > 0 ) {
 			echo '<a class="vc_icon_element-link" href="' . esc_attr( $url['url'] ) . '" title="' . esc_attr( $url['title'] ) . '" target="' . ( strlen( $url['target'] ) > 0 ? esc_attr( $url['target'] ) : '_self' ) . '"></a>';
 		}
-		?></div></div><?php echo $this->endBlockComment( '.vc_icon_element' ); ?>
+		?></div>
+</div><?php echo $this->endBlockComment( $this->getShortcode() ); ?>

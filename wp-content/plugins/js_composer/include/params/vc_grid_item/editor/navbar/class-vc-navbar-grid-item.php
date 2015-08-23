@@ -15,7 +15,7 @@ Class Vc_Navbar_Grid_Item extends Vc_Navbar {
 	);
 
 	public function getControlFrontend() {
-		if ( !vc_enabled_frontend() ) {
+		if ( ! vc_enabled_frontend() ) {
 			return '';
 		}
 
@@ -25,7 +25,7 @@ Class Vc_Navbar_Grid_Item extends Vc_Navbar {
 	}
 
 	public function getControlPreviewTemplate() {
-		if ( !vc_enabled_frontend() ) {
+		if ( ! vc_enabled_frontend() ) {
 			return '';
 		}
 
@@ -61,20 +61,23 @@ Class Vc_Navbar_Grid_Item extends Vc_Navbar {
 			           . __( $i . '/12 width', 'js_composer' ) . '</option>';
 		}
 		$output .= '</select></li>';
+
 		return $output;
 	}
+
 	public function getControlAnimationList() {
 		$output = '';
 		require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-gitem-animated-block.php' );
 		$animations = WPBakeryShortCode_VC_Gitem_Animated_Block::animations();
 		if ( is_array( $animations ) ) {
 			$output .= '<li class="vc_pull-right vc_gitem-navbar-dropdown">'
-			          . '<select data-vc-navbar-control="animation">';
+			           . '<select data-vc-navbar-control="animation">';
 			foreach ( $animations as $value => $key ) {
 				$output .= '<option value="' . esc_attr( $key ) . '">' . esc_html( $value ) . '</option>';
 			}
 			$output .= '</select></li>';
 		}
+
 		return $output;
 	}
 }

@@ -31,7 +31,7 @@
     top: 74px;
     left: 50%;
     height: auto !important;
-    min-height: 200px;
+    min-height: 150px;
     .panel-body {
         padding: 0;
     }
@@ -58,6 +58,7 @@
 }
 .vc_panel-footer {
     .panel-footer;
+    box-sizing: border-box;
     .vc_btn-default {
         &:hover {
             border-color: #CCC;
@@ -123,7 +124,7 @@
             padding: 0;
             white-space: nowrap;
             font-weight: normal;
-            transition: background-color 0.5s ease-out;
+            .transition(background-color 0.5s ease-out);
             color: #949494;
             .vc_edit-form-link {
                 color: #949494;
@@ -134,9 +135,7 @@
                 cursor: pointer;
                 font-size: 12px;
                 &:focus {
-                    -webkit-box-shadow: none;
-                    -moz-box-shadow: none;
-                    box-shadow: none;
+                    .box-shadow(none);
                 }
             }
             &.vc_active {
@@ -188,7 +187,7 @@
             padding: 0;
             white-space: nowrap;
             font-weight: normal;
-            transition: background-color 0.5s ease-out;
+            .transition(background-color 0.5s ease-out);
             color: #949494;
             .vc_panel-tabs-link {
                 color: #949494;
@@ -199,9 +198,7 @@
                 cursor: pointer;
                 font-size: 12px;
                 &:focus {
-                    -webkit-box-shadow: none;
-                    -moz-box-shadow: none;
-                    box-shadow: none;
+                    .box-shadow(none);
                 }
             }
             &.vc_active {
@@ -231,9 +228,15 @@
 
 .vc_panel-opacity {
 //.opacity(0.2);
-    height: 40px !important;
+    height: 38px !important;
     overflow: hidden !important;
     min-height: 0; // fixes min-height problem in frontend
+    &.vc_shortcode-edit-form {
+      padding-bottom: 0;
+    }
+   .vc_panel-footer, .vc_panel-body {
+     display: none;
+   }
 }
 .vc_description {
     color: #999999;

@@ -24,7 +24,7 @@ $supported_payments = get_supported_payments();
 		?>
 		<footer class="footer-container">
 
-			<div class="footer_main">
+			<div class="footer_main row">
 
 				<div class="col-md-12 hidden-sm hidden-xs">
 					<hr class="divider" />

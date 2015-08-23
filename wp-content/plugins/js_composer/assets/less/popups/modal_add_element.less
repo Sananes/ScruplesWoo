@@ -36,6 +36,25 @@
                         }
                     }
                 }
+                .vc_modal-add-elements-list-deprecated {
+                    display: none;
+                    .vc_message_box {
+                        margin: 0;
+                        padding: 0 1em 1em 4em;
+                    }
+                }
+            }
+            &[data-vc_filter="deprecated"] {
+                .wpb-content-layouts-container {
+                  .vc_modal-add-elements-list-deprecated {
+                    display: list-item;
+                  }
+                }
+            }
+            &.vc_filter-all {
+                .wpb-layout-element-button.vc_element-deprecated {
+                    display: none;
+                }
             }
         }
     }
@@ -72,7 +91,7 @@
             vertical-align: middle;
             white-space: normal;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             .vc_element-description {
                 display: block;
                 position: relative;

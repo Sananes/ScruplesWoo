@@ -78,7 +78,7 @@ function laborator_after_setup_theme()
 
 
 	# Theme Textdomain
-	load_theme_textdomain(TD, get_template_directory() . '/languages');
+	load_theme_textdomain( 'oxygen', get_template_directory() . '/languages' );
 
 
 	# Register Menus
@@ -556,29 +556,27 @@ function oxygen_register_required_plugins()
 			'slug'                   => 'revslider',
 			'source'                 => THEMEDIR . 'inc/thirdparty-plugins/revslider.zip',
 			'required'               => false,
-			'version'                => '4.6.93',
+			'version'                => '5.0.3',
 			'force_activation'       => false,
 			'force_deactivation'     => false,
 		),
 
 		array(
-			'name'                   => 'WP Bakery Visual Composer',
+			'name'                   => 'Visual Composer',
 			'slug'                   => 'js_composer',
 			'source'                 => THEMEDIR . 'inc/thirdparty-plugins/js_composer.zip',
 			'required'               => true,
-			'version'                => '4.5.2',
+			'version'                => '4.6.2',
 			'force_activation'       => false,
 			'force_deactivation'     => false,
 		),
 
 		array(
-			'name'                   => 'Envato WordPress Toolkit',
-			'slug'                   => 'envato-wordpress-toolkit',
-			'source'                 => THEMEDIR . 'inc/thirdparty-plugins/envato-wordpress-toolkit.zip',
-			'required'               => false,
-			'version'                => '',
-			'force_activation'       => false,
-			'force_deactivation'     => false,
+			'name'               => 'Envato WordPress Toolkit',
+			'slug'               => 'envato-wordpress-toolkit',
+			'source'    		 => 'https://github.com/envato/envato-wordpress-toolkit/archive/master.zip',
+			'required'           => false,
+			'version'            => '1.7.3',
 		),
 	);
 
@@ -599,8 +597,7 @@ function oxygen_register_required_plugins()
 	$config = array(
 		'domain'                              => $theme_text_domain,
 		'default_path'                        => '',
-		'parent_menu_slug'                    => 'themes.php',
-		'parent_url_slug'                     => 'themes.php',
+		'parent_slug'                    	  => 'themes.php',
 		'menu'                                => 'install-required-plugins',
 		'has_notices'                         => true,
 		'is_automatic'                        => false,
@@ -896,6 +893,13 @@ function modify_admin_bar($wp_admin_bar)
 	
 	$wp_admin_bar->add_menu(array(
 		'parent'  => 'laborator-options',
+		'id'      => 'laborator-supported-payments',
+		'title'   => 'Supported Payments',
+		'href'    => admin_url('admin.php?page=laborator_supported_payments')
+	));
+	
+	$wp_admin_bar->add_menu(array(
+		'parent'  => 'laborator-options',
 		'id'      => 'laborator-help',
 		'title'   => 'Theme Help',
 		'href'    => admin_url('admin.php?page=laborator_docs')
@@ -957,7 +961,9 @@ function mab_admin_print_styles()
 
 
 # Revolution Slider set as Theme
-define( 'REV_SLIDER_AS_THEME', true );
+if( ! defined( 'REV_SLIDER_AS_THEME' ) ) {
+	define( 'REV_SLIDER_AS_THEME', true );
+}
 
 if( function_exists( 'set_revslider_as_theme' ) )
 {

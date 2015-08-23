@@ -89,7 +89,7 @@ $content_packs = lab_1cl_demo_installer_pack_content_types($pack);
 		<div class="smiley"></div>
 		
 		<h2>Hooray! All Done.</h2>
-		<a href="<?php echo esc_attr(admin_url("")); ?>" target="_parent">&laquo; Get back to Dashboard.</a>
+		<a href="<?php echo esc_attr(home_url("")); ?>" target="_blank">View <strong><?php echo $pack['name']; ?></strong> Demo Content &raquo;</a>
 		
 		<div class="errors-container">
 			<span>However few errors appeared during the import process:</span>

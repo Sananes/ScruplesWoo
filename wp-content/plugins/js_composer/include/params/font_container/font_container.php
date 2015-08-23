@@ -175,7 +175,7 @@ class Vc_Font_Container {
 				}
 				$data['font_style'] .= '</div>';
 			}
-
+			$data = apply_filters( 'vc_font_container_output_data', $data, $fields, $values, $settings );
 			// combine all in output, make sure you follow ordering
 			foreach ( $fields as $key => $field ) {
 				if ( isset( $data[ $key ] ) ) {

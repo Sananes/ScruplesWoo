@@ -21,7 +21,7 @@ $colors_arr = array(
 
 // Used in "Button" and "Call to Action" blocks
 $size_arr = array(
-	__( 'Regular size', 'js_composer' ) => 'wpb_regularsize',
+	__( 'Regular', 'js_composer' ) => 'wpb_regularsize',
 	__( 'Large', 'js_composer' ) => 'btn-large',
 	__( 'Small', 'js_composer' ) => 'btn-small',
 	__( 'Mini', 'js_composer' ) => "btn-mini"
@@ -29,7 +29,7 @@ $size_arr = array(
 
 $target_arr = array(
 	__( 'Same window', 'js_composer' ) => '_self',
-	__( 'New window', 'js_composer' ) => "_blank"
+	__( 'New window', 'js_composer' ) => '_blank'
 );
 global $vc_add_css_animation;
 $vc_add_css_animation = array(
@@ -43,9 +43,9 @@ $vc_add_css_animation = array(
 		__( 'Bottom to top', 'js_composer' ) => 'bottom-to-top',
 		__( 'Left to right', 'js_composer' ) => 'left-to-right',
 		__( 'Right to left', 'js_composer' ) => 'right-to-left',
-		__( 'Appear from center', 'js_composer' ) => "appear"
+		__( 'Appear from center', 'js_composer' ) => 'appear'
 	),
-	'description' => __( 'Select type of animation if you want this element to be animated when it enters into the browsers viewport. Note: Works only in modern browsers.', 'js_composer' )
+	'description' => __( 'Select type of animation for element to be animated when it "enters" the browsers viewport (Note: works only in modern browsers).', 'js_composer' )
 );
 
 vc_map( array(
@@ -62,12 +62,91 @@ vc_map( array(
 			'heading' => __( 'Row stretch', 'js_composer' ),
 			'param_name' => 'full_width',
 			'value' => array(
-				__('Default','js_composer') => '',
-				__('Stretch row','js_composer') => 'stretch_row',
-				__('Stretch row and content','js_composer') => 'stretch_row_content',
-				__('Stretch row and content without spaces','js_composer') => 'stretch_row_content_no_spaces',
+				__( 'Default', 'js_composer' ) => '',
+				__( 'Stretch row', 'js_composer' ) => 'stretch_row',
+				__( 'Stretch row and content', 'js_composer' ) => 'stretch_row_content',
+				__( 'Stretch row and content (no paddings)', 'js_composer' ) => 'stretch_row_content_no_spaces',
 			),
-			'description' => __( 'Select stretching options for row and content. Stretched row overlay sidebar and may not work if parent container has overflow: hidden css property.', 'js_composer' )
+			'description' => __( 'Select stretching options for row and content (Note: stretched may not work properly if parent container has "overflow: hidden" CSS property).', 'js_composer' )
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Full height row?', 'js_composer' ),
+			'param_name' => 'full_height',
+			'description' => __( 'If checked row will be set to full height.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Content position', 'js_composer' ),
+			'param_name' => 'content_placement',
+			'value' => array(
+				__( 'Middle', 'js_composer' ) => 'middle',
+				__( 'Top', 'js_composer' ) => 'top',
+			),
+			'description' => __( 'Select content position within row.', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'full_height',
+				'not_empty' => true,
+			),
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Use video background?', 'js_composer' ),
+			'param_name' => 'video_bg',
+			'description' => __( 'If checked, video will be used as row background.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'YouTube link', 'js_composer' ),
+			'param_name' => 'video_bg_url',
+			'description' => __( 'Add YouTube link.', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'video_bg',
+				'not_empty' => true,
+			),
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Parallax', 'js_composer' ),
+			'param_name' => 'video_bg_parallax',
+			'value' => array(
+				__( 'None', 'js_composer' ) => '',
+				__( 'Simple', 'js_composer' ) => 'content-moving',
+				__( 'With fade', 'js_composer' ) => 'content-moving-fade',
+			),
+			'description' => __( 'Add parallax type background for row.', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'video_bg',
+				'not_empty' => true,
+			),
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Parallax', 'js_composer' ),
+			'param_name' => 'parallax',
+			'value' => array(
+				__( 'None', 'js_composer' ) => '',
+				__( 'Simple', 'js_composer' ) => 'content-moving',
+				__( 'With fade', 'js_composer' ) => 'content-moving-fade',
+			),
+			'description' => __( 'Add parallax type background for row (Note: If no image is specified, parallax will use background image from Design Options).', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'video_bg',
+				'is_empty' => true,
+			),
+		),
+		array(
+			'type' => 'attach_image',
+			'heading' => __( 'Image', 'js_composer' ),
+			'param_name' => 'parallax_image',
+			'value' => '',
+			'description' => __( 'Select image from media library.', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'parallax',
+				'not_empty' => true,
+			),
 		),
 		/*
    array(
@@ -112,18 +191,24 @@ vc_map( array(
   ),
   */
 		array(
+			'type' => 'el_id',
+			'heading' => __( 'Row ID', 'js_composer' ),
+			'param_name' => 'el_id',
+			'description' => sprintf( __( 'Enter row ID (Note: make sure it is unique and valid according to <a href="%s" target="_blank">w3c specification</a>).', 'js_composer' ), 'http://www.w3schools.com/tags/att_global_id.asp' ),
+		),
+		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
-		)
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
+		),
 	),
 	'js_view' => 'VcRowView'
 ) );
@@ -139,50 +224,62 @@ vc_map( array(
 	'description' => __( 'Place content elements inside the row', 'js_composer' ),
 	'params' => array(
 		array(
+			'type' => 'el_id',
+			'heading' => __( 'Row ID', 'js_composer' ),
+			'param_name' => 'el_id',
+			'description' => sprintf( __( 'Enter optional row ID. Make sure it is unique, and it is valid as w3c specification: %s (Must not have spaces)', 'js_composer' ), '<a target="_blank" href="http://www.w3schools.com/tags/att_global_id.asp">' . __( 'link', 'js_composer' ) . '</a>' ),
+		),
+		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
-		)
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
+		),
 	),
 	'js_view' => 'VcRowView'
 ) );
 global $vc_column_width_list;
 $vc_column_width_list = array(
-	__('1 column - 1/12', 'js_composer') => '1/12',
-	__('2 columns - 1/6', 'js_composer') => '1/6',
-	__('3 columns - 1/4', 'js_composer') => '1/4',
-	__('4 columns - 1/3', 'js_composer') => '1/3',
-	__('5 columns - 5/12', 'js_composer') => '5/12',
-	__('6 columns - 1/2', 'js_composer') => '1/2',
-	__('7 columns - 7/12', 'js_composer') => '7/12',
-	__('8 columns - 2/3', 'js_composer') => '2/3',
-	__('9 columns - 3/4', 'js_composer') => '3/4',
-	__('10 columns - 5/6', 'js_composer') => '5/6',
-	__('11 columns - 11/12', 'js_composer') => '11/12',
-	__('12 columns - 1/1', 'js_composer') => '1/1'
+	__( '1 column - 1/12', 'js_composer' ) => '1/12',
+	__( '2 columns - 1/6', 'js_composer' ) => '1/6',
+	__( '3 columns - 1/4', 'js_composer' ) => '1/4',
+	__( '4 columns - 1/3', 'js_composer' ) => '1/3',
+	__( '5 columns - 5/12', 'js_composer' ) => '5/12',
+	__( '6 columns - 1/2', 'js_composer' ) => '1/2',
+	__( '7 columns - 7/12', 'js_composer' ) => '7/12',
+	__( '8 columns - 2/3', 'js_composer' ) => '2/3',
+	__( '9 columns - 3/4', 'js_composer' ) => '3/4',
+	__( '10 columns - 5/6', 'js_composer' ) => '5/6',
+	__( '11 columns - 11/12', 'js_composer' ) => '11/12',
+	__( '12 columns - 1/1', 'js_composer' ) => '1/1'
 );
 
 /**
- * @shortcode vc_column WPBakeryShortCode_VC_Column wp-content/plugins/js_composer/include/classes/shortcodes/vc-column.php/WPBakeryShortCode_VC_Column
+ * @shortcode vc_column WPBakeryShortCode_VC_Column
+ *     wp-content/plugins/js_composer/include/classes/shortcodes/vc-column.php/WPBakeryShortCode_VC_Column
  *
  * @param font_color wp-content/plugins/js_composer/include/params/colorpicker/colorpicker.php/vc_colorpicker_form_field -
  *  - colorpicker - defines font color for text
  * @param el_class - extra shortcode wrapper class
- * @param css_editor WPBakeryVisualComposerCssEditor wp-content/plugins/js_composer/include/params/css_editor/css_editor.php/ -
+ * @param css_editor WPBakeryVisualComposerCssEditor wp-content/plugins/js_composer/include/params/css_editor/css_editor.php/
+ *     -
  *  - css editor design options margin/padding/border and etc for shortcode wrapper
- * @param width wp-content/plugins/js_composer/include/params/default_params.php/vc_dropdown_form_field - array of columns width's
- * @param offset Vc_Column_Offset wp-content/plugins/js_composer/include/params/column_offset/column_offset.php/Vc_Column_Offset -
+ * @param width wp-content/plugins/js_composer/include/params/default_params.php/vc_dropdown_form_field - array of
+ *     columns width's
+ * @param offset Vc_Column_Offset wp-content/plugins/js_composer/include/params/column_offset/column_offset.php/Vc_Column_Offset
+ *     -
  *  - responsiveness offset properties for columns.
  *
- * @backend_view VcColumnView wp-content/plugins/js_composer/assets/js/backend/composer-custom-views.js/window.VcColumnView - custom backend shortcode view.
+ * @backend_view VcColumnView
+ *     wp-content/plugins/js_composer/assets/js/backend/composer-custom-views.js/window.VcColumnView - custom backend
+ *     shortcode view.
  */
 vc_map( array(
 	'name' => __( 'Column', 'js_composer' ),
@@ -194,21 +291,21 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Width', 'js_composer' ),
 			'param_name' => 'width',
 			'value' => $vc_column_width_list,
-			'group' => __( 'Width & Responsiveness', 'js_composer' ),
+			'group' => __( 'Responsive Options', 'js_composer' ),
 			'description' => __( 'Select column width.', 'js_composer' ),
 			'std' => '1/1'
 		),
@@ -216,7 +313,7 @@ vc_map( array(
 			'type' => 'column_offset',
 			'heading' => __( 'Responsiveness', 'js_composer' ),
 			'param_name' => 'offset',
-			'group' => __( 'Width & Responsiveness', 'js_composer' ),
+			'group' => __( 'Responsive Options', 'js_composer' ),
 			'description' => __( 'Adjust column for different screen sizes. Control width, offset and visibility settings.', 'js_composer' )
 		)
 	),
@@ -239,23 +336,30 @@ vc_map( array(
 			"heading" => __( "Extra class name", "js_composer" ),
 			"param_name" => "el_class",
 			"value" => "",
-			"description" => __( "If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "js_composer" )
+			"description" => __( "Style particular content element differently - add a class name and refer to it in custom CSS.", "js_composer" )
 		),
 		array(
 			"type" => "css_editor",
-			"heading" => __( 'Css', "js_composer" ),
+			"heading" => __( 'CSS box', "js_composer" ),
 			"param_name" => "css",
-			// "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "js_composer"),
-			"group" => __( 'Design options', 'js_composer' )
+			// "description" => __("Style particular content element differently - add a class name and refer to it in custom CSS.", "js_composer"),
+			"group" => __( 'Design Options', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Width', 'js_composer' ),
 			'param_name' => 'width',
 			'value' => $vc_column_width_list,
-			'group' => __( 'Width & Responsiveness', 'js_composer' ),
+			'group' => __( 'Responsive Options', 'js_composer' ),
 			'description' => __( 'Select column width.', 'js_composer' ),
 			'std' => '1/1'
+		),
+		array(
+			'type' => 'column_offset',
+			'heading' => __( 'Responsiveness', 'js_composer' ),
+			'param_name' => 'offset',
+			'group' => __( 'Responsive Options', 'js_composer' ),
+			'description' => __( 'Adjust column for different screen sizes. Control width, offset and visibility settings.', 'js_composer' )
 		)
 	),
 	"js_view" => 'VcColumnView'
@@ -282,14 +386,14 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
 		)
 	)
 ) );
@@ -306,7 +410,7 @@ vc_map( array(
         'type' => 'textfield',
         'heading' => __( 'Widget title', 'js_composer' ),
         'param_name' => 'title',
-        'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+        'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
   ),
   array(
         'type' => 'textfield',
@@ -327,10 +431,12 @@ vc_map( array(
         'type' => 'textfield',
         'heading' => __( 'Extra class name', 'js_composer' ),
         'param_name' => 'el_class',
-        'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+        'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
   )
 )
 ) );*/
+
+include_once "shortcode-vc-icon-element.php";
 
 /* Separator (Divider)
 ---------------------------------------------------------- */
@@ -340,7 +446,7 @@ vc_map( array(
 	'icon' => 'icon-wpb-ui-separator',
 	'show_settings_on_create' => true,
 	'category' => __( 'Content', 'js_composer' ),
-//"controls"	=> 'popup_delete',
+	//"controls"	=> 'popup_delete',
 	'description' => __( 'Horizontal separator line', 'js_composer' ),
 	'params' => array(
 		array(
@@ -349,12 +455,12 @@ vc_map( array(
 			'param_name' => 'color',
 			'value' => array_merge( getVcShared( 'colors' ), array( __( 'Custom color', 'js_composer' ) => 'custom' ) ),
 			'std' => 'grey',
-			'description' => __( 'Separator color.', 'js_composer' ),
+			'description' => __( 'Select color of separator.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Separator alignment', 'js_composer' ),
+			'heading' => __( 'Alignment', 'js_composer' ),
 			'param_name' => 'align',
 			'value' => array(
 				__( 'Center', 'js_composer' ) => 'align_center',
@@ -378,27 +484,27 @@ vc_map( array(
 			'heading' => __( 'Style', 'js_composer' ),
 			'param_name' => 'style',
 			'value' => getVcShared( 'separator styles' ),
-			'description' => __( 'Separator style.', 'js_composer' )
+			'description' => __( 'Separator display style.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Border width', 'js_composer' ),
 			'param_name' => 'border_width',
 			'value' => getVcShared( 'separator border widths' ),
-			'description' => __( 'Border width in pixels.', 'js_composer' )
+			'description' => __( 'Select border width (pixels).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Element width', 'js_composer' ),
 			'param_name' => 'el_width',
 			'value' => getVcShared( 'separator widths' ),
-			'description' => __( 'Separator element width in percents.', 'js_composer' )
+			'description' => __( 'Select separator width (percentage).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -418,16 +524,16 @@ vc_map( array(
 			'param_name' => 'title',
 			'holder' => 'div',
 			'value' => __( 'Title', 'js_composer' ),
-			'description' => __( 'Separator title.', 'js_composer' )
+			'description' => __( 'Add text to separator.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Title position', 'js_composer' ),
 			'param_name' => 'title_align',
 			'value' => array(
-				__( 'Align center', 'js_composer' ) => 'separator_align_center',
-				__( 'Align left', 'js_composer' ) => 'separator_align_left',
-				__( 'Align right', 'js_composer' ) => "separator_align_right"
+				__( 'Center', 'js_composer' ) => 'separator_align_center',
+				__( 'Left', 'js_composer' ) => 'separator_align_left',
+				__( 'Right', 'js_composer' ) => "separator_align_right"
 			),
 			'description' => __( 'Select title location.', 'js_composer' )
 		),
@@ -448,7 +554,7 @@ vc_map( array(
 			'param_name' => 'color',
 			'value' => array_merge( getVcShared( 'colors' ), array( __( 'Custom color', 'js_composer' ) => 'custom' ) ),
 			'std' => 'grey',
-			'description' => __( 'Separator color.', 'js_composer' ),
+			'description' => __( 'Select color of separator.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
 		array(
@@ -466,14 +572,14 @@ vc_map( array(
 			'heading' => __( 'Style', 'js_composer' ),
 			'param_name' => 'style',
 			'value' => getVcShared( 'separator styles' ),
-			'description' => __( 'Separator style.', 'js_composer' )
+			'description' => __( 'Separator display style.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Border width', 'js_composer' ),
 			'param_name' => 'border_width',
 			'value' => getVcShared( 'separator border widths' ),
-			'description' => __( 'Border width in pixels.', 'js_composer' )
+			'description' => __( 'Select border width (pixels).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -486,65 +592,20 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		),
+		array(
+			'type' => 'hidden',
+			'param_name' => 'layout',
+			'value' => 'separator_with_text',
 		)
 	),
 	'js_view' => 'VcTextSeparatorView'
 ) );
 
-/* Message box
-** @deprecated since 4.4
----------------------------------------------------------- */
-/*
-vc_map( array(
-	'name' => __( 'Message Box', 'js_composer' ),
-	'base' => 'vc_message',
-	'icon' => 'icon-wpb-information-white',
-	'wrapper_class' => 'alert',
-	'category' => __( 'Content', 'js_composer' ),
-	'description' => __( 'Notification box', 'js_composer' ),
-	'params' => array(
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Message box type', 'js_composer' ),
-			'param_name' => 'color',
-			'value' => array(
-				__( 'Informational', 'js_composer' ) => 'alert-info',
-				__( 'Warning', 'js_composer' ) => 'alert-warning',
-				__( 'Success', 'js_composer' ) => 'alert-success',
-				__( 'Error', 'js_composer' ) => "alert-danger"
-			),
-			'description' => __( 'Select message type.', 'js_composer' ),
-			'param_holder_class' => 'vc_message-type'
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Style', 'js_composer' ),
-			'param_name' => 'style',
-			'value' => getVcShared( 'alert styles' ),
-			'description' => __( 'Alert style.', 'js_composer' )
-		),
-		array(
-			'type' => 'textarea_html',
-			'holder' => 'div',
-			'class' => 'messagebox_text',
-			'heading' => __( 'Message text', 'js_composer' ),
-			'param_name' => 'content',
-			'value' => __( '<p>I am message box. Click edit button to change this text.</p>', 'js_composer' )
-		),
-		$vc_add_css_animation,
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Extra class name', 'js_composer' ),
-			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
-		)
-	),
-	'js_view' => 'VcMessageView'
-) );
-*/
 /* Message box 2
 ---------------------------------------------------------- */
+global $pixel_icons;
 $pixel_icons = array(
 	array( 'vc_pixel_icon vc_pixel_icon-alert' => __( 'Alert', 'js_composer' ) ),
 	array( 'vc_pixel_icon vc_pixel_icon-info' => __( 'Info', 'js_composer' ) ),
@@ -584,18 +645,18 @@ $pixel_icons = array(
 	array( 'vc_pixel_icon vc_pixel_icon-video' => __( 'Video', 'js_composer' ) ),
 );
 $custom_colors = array(
-    __( 'Informational', 'js_composer' ) => 'info',
-    __( 'Warning', 'js_composer' ) => 'warning',
-    __( 'Success', 'js_composer' ) => 'success',
-    __( 'Error', 'js_composer' ) => "danger",
-    __( 'Informational Classic', 'js_composer' ) => 'alert-info',
-    __( 'Warning Classic', 'js_composer' ) => 'alert-warning',
-    __( 'Success Classic', 'js_composer' ) => 'alert-success',
-    __( 'Error Classic', 'js_composer' ) => "alert-danger",
+	__( 'Informational', 'js_composer' ) => 'info',
+	__( 'Warning', 'js_composer' ) => 'warning',
+	__( 'Success', 'js_composer' ) => 'success',
+	__( 'Error', 'js_composer' ) => "danger",
+	__( 'Informational Classic', 'js_composer' ) => 'alert-info',
+	__( 'Warning Classic', 'js_composer' ) => 'alert-warning',
+	__( 'Success Classic', 'js_composer' ) => 'alert-success',
+	__( 'Error Classic', 'js_composer' ) => "alert-danger",
 );
-
+global $vc_add_css_animation_no_label;
 $vc_add_css_animation_no_label = $vc_add_css_animation;
-unset($vc_add_css_animation_no_label['admin_label']);
+unset( $vc_add_css_animation_no_label['admin_label'] );
 /**
  * @since 4.4
  * New message box shortcode (replaces old)
@@ -699,7 +760,7 @@ vc_map( array(
 			'heading' => __( 'Style', 'js_composer' ),
 			'param_name' => 'message_box_style',
 			'value' => getVcShared( 'message_box_styles' ),
-			'description' => __( 'Select message box style.', 'js_composer' )
+			'description' => __( 'Select message box design style.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -739,10 +800,10 @@ vc_map( array(
 			'type' => 'iconpicker',
 			'heading' => __( 'Icon', 'js_composer' ),
 			'param_name' => 'icon_fontawesome',
-            'value' => 'fa fa-info-circle',
+			'value' => 'fa fa-info-circle',
 			'settings' => array(
 				'emptyIcon' => false, // default true, display an "EMPTY" icon?
-				'iconsPerPage' => 200, // default 100, how many icons per/page to display
+				'iconsPerPage' => 4000, // default 100, how many icons per/page to display
 			),
 			'dependency' => array(
 				'element' => 'icon_type',
@@ -757,7 +818,7 @@ vc_map( array(
 			'settings' => array(
 				'emptyIcon' => false, // default true, display an "EMPTY" icon?
 				'type' => 'openiconic',
-				'iconsPerPage' => 200, // default 100, how many icons per/page to display
+				'iconsPerPage' => 4000, // default 100, how many icons per/page to display
 			),
 			'dependency' => array(
 				'element' => 'icon_type',
@@ -772,12 +833,12 @@ vc_map( array(
 			'settings' => array(
 				'emptyIcon' => false, // default true, display an "EMPTY" icon?
 				'type' => 'typicons',
-				'iconsPerPage' => 200, // default 100, how many icons per/page to display
+				'iconsPerPage' => 4000, // default 100, how many icons per/page to display
 			),
 			'dependency' => array(
-			'element' => 'icon_type',
-			'value' => 'typicons',
-		),
+				'element' => 'icon_type',
+				'value' => 'typicons',
+			),
 			'description' => __( 'Select icon from library.', 'js_composer' ),
 		),
 		array(
@@ -787,7 +848,7 @@ vc_map( array(
 			'settings' => array(
 				'emptyIcon' => false, // default true, display an "EMPTY" icon?
 				'type' => 'entypo',
-				'iconsPerPage' => 300, // default 100, how many icons per/page to display
+				'iconsPerPage' => 4000, // default 100, how many icons per/page to display
 			),
 			'dependency' => array(
 				'element' => 'icon_type',
@@ -801,7 +862,7 @@ vc_map( array(
 			'settings' => array(
 				'emptyIcon' => false, // default true, display an "EMPTY" icon?
 				'type' => 'linecons',
-				'iconsPerPage' => 200, // default 100, how many icons per/page to display
+				'iconsPerPage' => 4000, // default 100, how many icons per/page to display
 			),
 			'dependency' => array(
 				'element' => 'icon_type',
@@ -837,7 +898,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'js_view' => 'VcMessageView_Backend'
@@ -850,7 +911,7 @@ vc_map( array(
 	'base' => 'vc_facebook',
 	'icon' => 'icon-wpb-balloon-facebook-left',
 	'category' => __( 'Social', 'js_composer' ),
-	'description' => __( 'Facebook like button', 'js_composer' ),
+	'description' => __( 'Facebook "Like" button', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'dropdown',
@@ -858,9 +919,9 @@ vc_map( array(
 			'param_name' => 'type',
 			'admin_label' => true,
 			'value' => array(
-				__( 'Standard', 'js_composer' ) => 'standard',
-				__( 'Button count', 'js_composer' ) => 'button_count',
-				__( 'Box count', 'js_composer' ) => 'box_count'
+				__( 'Horizontal', 'js_composer' ) => 'standard',
+				__( 'Horizontal with count', 'js_composer' ) => 'button_count',
+				__( 'Vertical with count', 'js_composer' ) => 'box_count'
 			),
 			'description' => __( 'Select button type.', 'js_composer' )
 		)
@@ -875,7 +936,7 @@ vc_map( array(
 	'icon' => 'icon-wpb-tweetme',
 	'show_settings_on_create' => false,
 	'category' => __( 'Social', 'js_composer' ),
-	'description' => __( 'Share on twitter button', 'js_composer' ),
+	'description' => __( '"Tweet" button', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'dropdown',
@@ -883,9 +944,9 @@ vc_map( array(
 			'param_name' => 'type',
 			'admin_label' => true,
 			'value' => array(
-				__( 'Horizontal', 'js_composer' ) => 'horizontal',
-				__( 'Vertical', 'js_composer' ) => 'vertical',
-				__( 'None', 'js_composer' ) => 'none'
+				__( 'Horizontal with count', 'js_composer' ) => 'horizontal',
+				__( 'Vertical with count', 'js_composer' ) => 'vertical',
+				__( 'Horizontal', 'js_composer' ) => 'none'
 			),
 			'description' => __( 'Select button type.', 'js_composer' )
 		)
@@ -907,7 +968,7 @@ vc_map( array(
 			'param_name' => 'type',
 			'admin_label' => true,
 			'value' => array(
-				__( 'Standard', 'js_composer' ) => '',
+				__( 'Standard', 'js_composer' ) => 'standard',
 				__( 'Small', 'js_composer' ) => 'small',
 				__( 'Medium', 'js_composer' ) => 'medium',
 				__( 'Tall', 'js_composer' ) => 'tall'
@@ -920,12 +981,23 @@ vc_map( array(
 			'param_name' => 'annotation',
 			'admin_label' => true,
 			'value' => array(
+				__( 'Bubble', 'js_composer' ) => 'bubble',
 				__( 'Inline', 'js_composer' ) => 'inline',
-				__( 'Bubble', 'js_composer' ) => '',
-				__( 'None', 'js_composer' ) => 'none'
+				__( 'None', 'js_composer' ) => 'none',
 			),
-			'description' => __( 'Select type of annotation', 'js_composer' )
-		)
+			'std' => 'bubble',
+			'description' => __( 'Select type of annotation.', 'js_composer' )
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Width', 'js_composer' ),
+			'param_name' => 'widget_width',
+			'dependency' => array(
+				'element' => 'annotation',
+				'value' => array( 'inline' )
+			),
+			'description' => __( 'Minimum width of 120px to display. If annotation is set to "inline", this parameter sets the width in pixels to use for button and its inline annotation. Default width is 450px.', 'js_composer' )
+		),
 	)
 ) );
 
@@ -940,11 +1012,11 @@ vc_map( array(
 	"params" => array(
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Button layout', 'js_composer' ),
+			'heading' => __( 'Button type', 'js_composer' ),
 			'param_name' => 'type',
 			'admin_label' => true,
 			'value' => array(
-				__( 'Horizontal', 'js_composer' ) => '',
+				__( 'Horizontal', 'js_composer' ) => 'horizontal',
 				__( 'Vertical', 'js_composer' ) => 'vertical',
 				__( 'No count', 'js_composer' ) => 'none'
 			),
@@ -953,56 +1025,6 @@ vc_map( array(
 	)
 ) );
 
-/* Toggle (FAQ)
- * @deprecated since 4.4
----------------------------------------------------------- */
-/*
-vc_map( array(
-	'name' => __( 'FAQ', 'js_composer' ),
-	'base' => 'vc_toggle',
-	'icon' => 'icon-wpb-toggle-small-expand',
-	'category' => __( 'Content', 'js_composer' ),
-	'description' => __( 'Toggle element for Q&A block', 'js_composer' ),
-	'params' => array(
-		array(
-			'type' => 'textfield',
-			'holder' => 'h4',
-			'class' => 'toggle_title',
-			'heading' => __( 'Toggle title', 'js_composer' ),
-			'param_name' => 'title',
-			'value' => __( 'Toggle title', 'js_composer' ),
-			'description' => __( 'Toggle block title.', 'js_composer' )
-		),
-		array(
-			'type' => 'textarea_html',
-			'holder' => 'div',
-			'class' => 'toggle_content',
-			'heading' => __( 'Toggle content', 'js_composer' ),
-			'param_name' => 'content',
-			'value' => __( '<p>Toggle content goes here, click edit button to change this text.</p>', 'js_composer' ),
-			'description' => __( 'Toggle block content.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Default state', 'js_composer' ),
-			'param_name' => 'open',
-			'value' => array(
-				__( 'Closed', 'js_composer' ) => 'false',
-				__( 'Open', 'js_composer' ) => 'true'
-			),
-			'description' => __( 'Select "Open" if you want toggle to be open by default.', 'js_composer' )
-		),
-		$vc_add_css_animation,
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Extra class name', 'js_composer' ),
-			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
-		)
-	),
-	'js_view' => 'VcToggleView'
-) );
-*/
 /* Toggle 2
 ---------------------------------------------------------- */
 vc_map( array(
@@ -1019,7 +1041,7 @@ vc_map( array(
 			'heading' => __( 'Toggle title', 'js_composer' ),
 			'param_name' => 'title',
 			'value' => __( 'Toggle title', 'js_composer' ),
-			'description' => __( 'Toggle block title.', 'js_composer' )
+			'description' => __( 'Enter title of toggle block.', 'js_composer' )
 		),
 		array(
 			'type' => 'textarea_html',
@@ -1030,29 +1052,29 @@ vc_map( array(
 			'value' => __( '<p>Toggle content goes here, click edit button to change this text.</p>', 'js_composer' ),
 			'description' => __( 'Toggle block content.', 'js_composer' )
 		),
-        array(
-            'type' => 'dropdown',
-            'heading' => __( 'Style', 'js_composer' ),
-            'param_name' => 'style',
-            'value' => getVcShared( 'toggle styles' ),
-            'description' => __( 'Toggle style.', 'js_composer' )
-        ),
-        array(
-            'type' => 'dropdown',
-            'heading' => __( 'Color', 'js_composer' ),
-            'param_name' => 'color',
-            'value' => array(__( 'Default', 'js_composer' ), '') + getVcShared( 'colors' ),
-            'description' => __( 'Icon color.', 'js_composer' ),
-            'param_holder_class' => 'vc_colored-dropdown'
-        ),
-        array(
-            'type' => 'dropdown',
-            'heading' => __( 'Size', 'js_composer' ),
-            'param_name' => 'size',
-            'value' => array_diff_key(getVcShared( 'sizes' ), array('Mini'=>'')),
-            'std' => 'md',
-            'description' => __( 'Toggle size.', 'js_composer' )
-        ),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Style', 'js_composer' ),
+			'param_name' => 'style',
+			'value' => getVcShared( 'toggle styles' ),
+			'description' => __( 'Select toggle design style.', 'js_composer' )
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Icon color', 'js_composer' ),
+			'param_name' => 'color',
+			'value' => array( __( 'Default', 'js_composer' ) => 'default' ) + getVcShared( 'colors' ),
+			'description' => __( 'Select icon color.', 'js_composer' ),
+			'param_holder_class' => 'vc_colored-dropdown'
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Size', 'js_composer' ),
+			'param_name' => 'size',
+			'value' => array_diff_key( getVcShared( 'sizes' ), array( 'Mini' => '' ) ),
+			'std' => 'md',
+			'description' => __( 'Select toggle size', 'js_composer' )
+		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Default state', 'js_composer' ),
@@ -1065,11 +1087,20 @@ vc_map( array(
 		),
 		$vc_add_css_animation,
 		array(
+			'type' => 'el_id',
+			'heading' => __( 'Element ID', 'js_composer' ),
+			'param_name' => 'el_id',
+			'description' => sprintf( __( 'Enter optional ID. Make sure it is unique, and it is valid as w3c specification: %s (Must not have spaces)', 'js_composer' ), '<a target="_blank" href="http://www.w3schools.com/tags/att_global_id.asp">' . __( 'link', 'js_composer' ) . '</a>' ),
+			'settings' => array(
+				'auto_generate' => true,
+			),
+		),
+		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
-		)
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		),
 	),
 	'js_view' => 'VcToggleView'
 ) );
@@ -1086,7 +1117,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'attach_image',
@@ -1099,16 +1130,17 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Image size', 'js_composer' ),
 			'param_name' => 'img_size',
-			'description' => __( 'Enter image size. Example: "thumbnail", "medium", "large", "full" or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height). Leave empty to use "thumbnail" size.', 'js_composer' )
+			'value' => 'thumbnail',
+			'description' => __( 'Enter image size (Example: "thumbnail", "medium", "large", "full" or other sizes defined by theme). Alternatively enter size in pixels (Example: 200x100 (Width x Height)). Leave parameter empty to use "thumbnail" by default.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Image alignment', 'js_composer' ),
 			'param_name' => 'alignment',
 			'value' => array(
-				__( 'Align left', 'js_composer' ) => '',
-				__( 'Align right', 'js_composer' ) => 'right',
-				__( 'Align center', 'js_composer' ) => 'center'
+				__( 'Left', 'js_composer' ) => 'left',
+				__( 'Right', 'js_composer' ) => 'right',
+				__( 'Center', 'js_composer' ) => 'center'
 			),
 			'description' => __( 'Select image alignment.', 'js_composer' )
 		),
@@ -1117,7 +1149,7 @@ vc_map( array(
 			'heading' => __( 'Image style', 'js_composer' ),
 			'param_name' => 'style',
 			'value' => getVcShared( 'single image styles' ),
-			'description' => __( 'Select display style.', 'js_comopser' )
+			'description' => __( 'Select image display style.', 'js_comopser' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -1136,14 +1168,14 @@ vc_map( array(
 			'type' => 'checkbox',
 			'heading' => __( 'Link to large image?', 'js_composer' ),
 			'param_name' => 'img_link_large',
-			'description' => __( 'If selected, image will be linked to the larger image.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, image will link to the larger image.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'href',
 			'heading' => __( 'Image link', 'js_composer' ),
 			'param_name' => 'link',
-			'description' => __( 'Enter URL if you want this image to have a link.', 'js_composer' ),
+			'description' => __( 'Enter URL if you want this image to have a link (Note: parameters like "mailto:" are also accepted).', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'img_link_large',
 				'is_empty' => true,
@@ -1156,7 +1188,7 @@ vc_map( array(
 			'param_name' => 'img_link_target',
 			'value' => $target_arr,
 			'dependency' => array(
-				'element' => 'img_link',
+				'element' => 'link',
 				'not_empty' => true
 			)
 		),
@@ -1165,14 +1197,14 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
 		)
 	)
 ) );
@@ -1190,7 +1222,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -1206,7 +1238,7 @@ vc_map( array(
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Auto rotate slides', 'js_composer' ),
+			'heading' => __( 'Auto rotate', 'js_composer' ),
 			'param_name' => 'interval',
 			'value' => array( 3, 5, 10, 15, __( 'Disable', 'js_composer' ) => 0 ),
 			'description' => __( 'Auto rotate slides each X seconds.', 'js_composer' ),
@@ -1226,24 +1258,25 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Image size', 'js_composer' ),
 			'param_name' => 'img_size',
+			'value' => 'thumbnail',
 			'description' => __( 'Enter image size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height). Leave empty to use "thumbnail" size.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'On click', 'js_composer' ),
+			'heading' => __( 'On click action', 'js_composer' ),
 			'param_name' => 'onclick',
 			'value' => array(
 				__( 'Open prettyPhoto', 'js_composer' ) => 'link_image',
-				__( 'Do nothing', 'js_composer' ) => 'link_no',
-				__( 'Open custom link', 'js_composer' ) => 'custom_link'
+				__( 'None', 'js_composer' ) => 'link_no',
+				__( 'Open custom links', 'js_composer' ) => 'custom_link'
 			),
-			'description' => __( 'Define action for onclick event if needed.', 'js_composer' )
+			'description' => __( 'Select action for click action.', 'js_composer' )
 		),
 		array(
 			'type' => 'exploded_textarea',
 			'heading' => __( 'Custom links', 'js_composer' ),
 			'param_name' => 'custom_links',
-			'description' => __( 'Enter links for each slide here. Divide links with linebreaks (Enter) . ', 'js_composer' ),
+			'description' => __( 'Enter links for each slide (Note: divide links with linebreaks (Enter)).', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'onclick',
 				'value' => array( 'custom_link' )
@@ -1264,7 +1297,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -1282,7 +1315,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'attach_images',
@@ -1295,24 +1328,25 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Carousel size', 'js_composer' ),
 			'param_name' => 'img_size',
+			'value' => 'thumbnail',
 			'description' => __( 'Enter image size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height). Leave empty to use "thumbnail" size. If used slides per view, this will be used to define carousel wrapper size.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'On click', 'js_composer' ),
+			'heading' => __( 'On click action', 'js_composer' ),
 			'param_name' => 'onclick',
 			'value' => array(
 				__( 'Open prettyPhoto', 'js_composer' ) => 'link_image',
-				__( 'Do nothing', 'js_composer' ) => 'link_no',
-				__( 'Open custom link', 'js_composer' ) => 'custom_link'
+				__( 'None', 'js_composer' ) => 'link_no',
+				__( 'Open custom links', 'js_composer' ) => 'custom_link'
 			),
-			'description' => __( 'What to do when slide is clicked?', 'js_composer' )
+			'description' => __( 'Select action for click event.', 'js_composer' )
 		),
 		array(
 			'type' => 'exploded_textarea',
 			'heading' => __( 'Custom links', 'js_composer' ),
 			'param_name' => 'custom_links',
-			'description' => __( 'Enter links for each slide here. Divide links with linebreaks (Enter) . ', 'js_composer' ),
+			'description' => __( 'Enter links for each slide (Note: divide links with linebreaks (Enter)).', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'onclick',
 				'value' => array( 'custom_link' )
@@ -1322,7 +1356,7 @@ vc_map( array(
 			'type' => 'dropdown',
 			'heading' => __( 'Custom link target', 'js_composer' ),
 			'param_name' => 'custom_links_target',
-			'description' => __( 'Select where to open  custom links.', 'js_composer' ),
+			'description' => __( 'Select how to open custom links.', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'onclick',
 				'value' => array( 'custom_link' )
@@ -1331,76 +1365,84 @@ vc_map( array(
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Slider mode', 'js_composer' ),
+			'heading' => __( 'Slider orientation', 'js_composer' ),
 			'param_name' => 'mode',
 			'value' => array(
 				__( 'Horizontal', 'js_composer' ) => 'horizontal',
 				__( 'Vertical', 'js_composer' ) => 'vertical'
 			),
-			'description' => __( 'Slides will be positioned horizontally (for horizontal swipes) or vertically (for vertical swipes)', 'js_composer' )
+			'description' => __( 'Select slider position (Note: this affects swiping orientation).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Slider speed', 'js_composer' ),
 			'param_name' => 'speed',
 			'value' => '5000',
-			'description' => __( 'Duration of animation between slides (in ms)', 'js_composer' )
+			'description' => __( 'Duration of animation between slides (in ms).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Slides per view', 'js_composer' ),
 			'param_name' => 'slides_per_view',
 			'value' => '1',
-			'description' => __( 'Set numbers of slides you want to display at the same time on slider\'s container for carousel mode.', 'js_composer' )
+			'description' => __( 'Enter number of slides to display at the same time.', 'js_composer' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Slider autoplay', 'js_composer' ),
 			'param_name' => 'autoplay',
-			'description' => __( 'Enables autoplay mode.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'Enable autoplay mode.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Hide pagination control', 'js_composer' ),
 			'param_name' => 'hide_pagination_control',
-			'description' => __( 'If YES pagination control will be removed.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, pagination controls will be hidden.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Hide prev/next buttons', 'js_composer' ),
 			'param_name' => 'hide_prev_next_buttons',
-			'description' => __( 'If "YES" prev/next control will be removed.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, prev/next buttons will be hidden.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Partial view', 'js_composer' ),
 			'param_name' => 'partial_view',
-			'description' => __( 'If "YES" part of the next slide will be visible on the right side.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, part of the next slide will be visible.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Slider loop', 'js_composer' ),
 			'param_name' => 'wrap',
-			'description' => __( 'Enables loop mode.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'Enable slider loop mode.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
 
+/**
+ * @since 4.6 new TTA, tabs tours and accordions
+ */
+include_once "shortcode-vc-tta-tabs.php";
+include_once "shortcode-vc-tta-tour.php";
+include_once "shortcode-vc-tta-accordion.php";
+include_once "shortcode-vc-tta-section.php";
+
 /* Tabs
 ---------------------------------------------------------- */
-$tab_id_1 = 'def' . time() . '-1-' . rand( 0, 100 );
-$tab_id_2 = 'def' . time() . '-2-' . rand( 0, 100 );
+$tab_id_1 = ''; // 'def' . time() . '-1-' . rand( 0, 100 );
+$tab_id_2 = ''; // 'def' . time() . '-2-' . rand( 0, 100 );
 vc_map( array(
 	"name" => __( 'Tabs', 'js_composer' ),
 	'base' => 'vc_tabs',
@@ -1408,17 +1450,18 @@ vc_map( array(
 	'is_container' => true,
 	'icon' => 'icon-wpb-ui-tab-content',
 	'category' => __( 'Content', 'js_composer' ),
+	'deprecated' => '4.6',
 	'description' => __( 'Tabbed content', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Auto rotate tabs', 'js_composer' ),
+			'heading' => __( 'Auto rotate', 'js_composer' ),
 			'param_name' => 'interval',
 			'value' => array( __( 'Disable', 'js_composer' ) => 0, 3, 5, 10, 15 ),
 			'std' => 0,
@@ -1428,7 +1471,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'custom_markup' => '
@@ -1447,14 +1490,15 @@ vc_map( array(
 
 /* Tour section
 ---------------------------------------------------------- */
-$tab_id_1 = time() . '-1-' . rand( 0, 100 );
-$tab_id_2 = time() . '-2-' . rand( 0, 100 );
+$tab_id_1 = ''; // time() . '-1-' . rand( 0, 100 );
+$tab_id_2 = ''; // time() . '-2-' . rand( 0, 100 );
 vc_map( array(
 	'name' => __( 'Tour', 'js_composer' ),
 	'base' => 'vc_tour',
 	'show_settings_on_create' => false,
 	'is_container' => true,
 	'container_not_allowed' => true,
+	'deprecated' => '4.6',
 	'icon' => 'icon-wpb-ui-tab-content-vertical',
 	'category' => __( 'Content', 'js_composer' ),
 	'wrapper_class' => 'vc_clearfix',
@@ -1464,7 +1508,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -1478,7 +1522,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'custom_markup' => '
@@ -1501,12 +1545,13 @@ vc_map( array(
 	'allowed_container_element' => 'vc_row',
 	'is_container' => true,
 	'content_element' => false,
+	'deprecated' => '4.6',
 	'params' => array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Tab title.', 'js_composer' )
+			'description' => __( 'Enter title of tab.', 'js_composer' )
 		),
 		array(
 			'type' => 'tab_id',
@@ -1525,6 +1570,7 @@ vc_map( array(
 	'show_settings_on_create' => false,
 	'is_container' => true,
 	'icon' => 'icon-wpb-ui-accordion',
+	'deprecated' => '4.6',
 	'category' => __( 'Content', 'js_composer' ),
 	'description' => __( 'Collapsible content panels', 'js_composer' ),
 	'params' => array(
@@ -1532,33 +1578,34 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Active section', 'js_composer' ),
 			'param_name' => 'active_tab',
-			'description' => __( 'Enter section number to be active on load or enter false to collapse all sections.', 'js_composer' )
+			'value' => 1,
+			'description' => __( 'Enter section number to be active on load or enter "false" to collapse all sections.', 'js_composer' )
 		),
 		array(
 			'type' => 'checkbox',
-			'heading' => __( 'Allow collapsible all', 'js_composer' ),
+			'heading' => __( 'Allow collapse all sections?', 'js_composer' ),
 			'param_name' => 'collapsible',
-			'description' => __( 'Select checkbox to allow all sections to be collapsible.', 'js_composer' ),
-			'value' => array( __( 'Allow', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, it is allowed to collapse all sections.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
-			'heading' => __( 'Disable keyboard interactions', 'js_composer' ),
+			'heading' => __( 'Disable keyboard interactions?', 'js_composer' ),
 			'param_name' => 'disable_keyboard',
-			'description' => __( 'Disables keyboard arrows interactions LEFT/UP/RIGHT/DOWN/SPACES keys.', 'js_composer' ),
-			'value' => array( __( 'Disable', 'js_composer' ) => 'yes' )
+			'description' => __( 'If checked, disables keyboard arrow interactions (Keys: Left, Up, Right, Down, Space).', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'custom_markup' => '
@@ -1580,195 +1627,24 @@ vc_map( array(
 	'base' => 'vc_accordion_tab',
 	'allowed_container_element' => 'vc_row',
 	'is_container' => true,
+	'deprecated' => '4.6',
 	'content_element' => false,
 	'params' => array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Accordion section title.', 'js_composer' )
+			'value' => __( 'Section', 'js_composer' ),
+			'description' => __( 'Enter accordion section title.', 'js_composer' )
+		),
+		array(
+			'type' => 'el_id',
+			'heading' => __( 'Section ID', 'js_composer' ),
+			'param_name' => 'el_id',
+			'description' => sprintf( __( 'Enter optional row ID. Make sure it is unique, and it is valid as w3c specification: %s (Must not have spaces)', 'js_composer' ), '<a target="_blank" href="http://www.w3schools.com/tags/att_global_id.asp">' . __( 'link', 'js_composer' ) . '</a>' ),
 		),
 	),
 	'js_view' => 'VcAccordionTabView'
-) );
-
-/* Teaser grid
-* @deprecated please use vc_posts_grid
----------------------------------------------------------- */
-vc_map( array(
-	'name' => __( 'Teaser (posts) Grid', 'js_composer' ),
-	'base' => 'vc_teaser_grid',
-	'content_element' => false,
-	'icon' => 'icon-wpb-application-icon-large',
-	'category' => __( 'Content', 'js_composer' ),
-	'params' => array(
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Widget title', 'js_composer' ),
-			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Columns count', 'js_composer' ),
-			'param_name' => 'grid_columns_count',
-			'value' => array( 4, 3, 2, 1 ),
-			'admin_label' => true,
-			'description' => __( 'Select columns count.', 'js_composer' )
-		),
-		array(
-			'type' => 'posttypes',
-			'heading' => __( 'Post types', 'js_composer' ),
-			'param_name' => 'grid_posttypes',
-			'description' => __( 'Select post types to populate posts from.', 'js_composer' )
-		),
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Teasers count', 'js_composer' ),
-			'param_name' => 'grid_teasers_count',
-			'description' => __( 'How many teasers to show? Enter number or word "All".', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Content', 'js_composer' ),
-			'param_name' => 'grid_content',
-			'value' => array(
-				__( 'Teaser (Excerpt)', 'js_composer' ) => 'teaser',
-				__( 'Full Content', 'js_composer' ) => 'content'
-			),
-			'description' => __( 'Teaser layout template.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Layout', 'js_composer' ),
-			'param_name' => 'grid_layout',
-			'value' => array(
-				__( 'Title + Thumbnail + Text', 'js_composer' ) => 'title_thumbnail_text',
-				__( 'Thumbnail + Title + Text', 'js_composer' ) => 'thumbnail_title_text',
-				__( 'Thumbnail + Text', 'js_composer' ) => 'thumbnail_text',
-				__( 'Thumbnail + Title', 'js_composer' ) => 'thumbnail_title',
-				__( 'Thumbnail only', 'js_composer' ) => 'thumbnail',
-				__( 'Title + Text', 'js_composer' ) => 'title_text'
-			),
-			'description' => __( 'Teaser layout.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Link', 'js_composer' ),
-			'param_name' => 'grid_link',
-			'value' => array(
-				__( 'Link to post', 'js_composer' ) => 'link_post',
-				__( 'Link to bigger image', 'js_composer' ) => 'link_image',
-				__( 'Thumbnail to bigger image, title to post', 'js_composer' ) => 'link_image_post',
-				__( 'No link', 'js_composer' ) => 'link_no'
-			),
-			'description' => __( 'Link type.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Link target', 'js_composer' ),
-			'param_name' => 'grid_link_target',
-			'value' => $target_arr,
-			'dependency' => array(
-				'element' => 'grid_link',
-				'value' => array( 'link_post', 'link_image_post' )
-			)
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Teaser grid layout', 'js_composer' ),
-			'param_name' => 'grid_template',
-			'value' => array(
-				__( 'Grid', 'js_composer' ) => 'grid',
-				__( 'Grid with filter', 'js_composer' ) => 'filtered_grid',
-				__( 'Carousel', 'js_composer' ) => 'carousel'
-			),
-			'description' => __( 'Teaser layout template.', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Layout mode', 'js_composer' ),
-			'param_name' => 'grid_layout_mode',
-			'value' => array(
-				__( 'Fit rows', 'js_composer' ) => 'fitRows',
-				__( 'Masonry', 'js_composer' ) => 'masonry'
-			),
-			'dependency' => array(
-				'element' => 'grid_template',
-				'value' => array( 'filtered_grid', 'grid' )
-			),
-			'description' => __( 'Teaser layout template.', 'js_composer' )
-		),
-		array(
-			'type' => 'taxonomies',
-			'heading' => __( 'Taxonomies', 'js_composer' ),
-			'param_name' => 'grid_taxomonies',
-			'dependency' => array(
-				'element' => 'grid_template',
-				// 'not_empty' => true,
-				'value' => array( 'filtered_grid' ),
-				'callback' => 'wpb_grid_post_types_for_taxonomies_handler'
-			),
-			'description' => __( 'Select taxonomies.', 'js_composer' )
-		),
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Thumbnail size', 'js_composer' ),
-			'param_name' => 'grid_thumb_size',
-			'description' => __( 'Enter thumbnail size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height) . ', 'js_composer' )
-		),
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Post/Page IDs', 'js_composer' ),
-			'param_name' => 'posts_in',
-			'description' => __( 'Fill this field with page/posts IDs separated by commas (,) to retrieve only them. Use this in conjunction with "Post types" field.', 'js_composer' )
-		),
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Exclude Post/Page IDs', 'js_composer' ),
-			'param_name' => 'posts_not_in',
-			'description' => __( 'Fill this field with page/posts IDs separated by commas (,) to exclude them from query.', 'js_composer' )
-		),
-		array(
-			'type' => 'exploded_textarea',
-			'heading' => __( 'Categories', 'js_composer' ),
-			'param_name' => 'grid_categories',
-			'description' => __( 'If you want to narrow output, enter category names here. Note: Only listed categories will be included. Divide categories with linebreaks (Enter) . ', 'js_composer' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Order by', 'js_composer' ),
-			'param_name' => 'orderby',
-			'value' => array(
-				'',
-				__( 'Date', 'js_composer' ) => 'date',
-				__( 'ID', 'js_composer' ) => 'ID',
-				__( 'Author', 'js_composer' ) => 'author',
-				__( 'Title', 'js_composer' ) => 'title',
-				__( 'Modified', 'js_composer' ) => 'modified',
-				__( 'Random', 'js_composer' ) => 'rand',
-				__( 'Comment count', 'js_composer' ) => 'comment_count',
-				__( 'Menu order', 'js_composer' ) => 'menu_order'
-			),
-			'description' => sprintf( __( 'Select how to sort retrieved posts. More at %s.', 'js_composer' ), '<a href="http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" target="_blank">WordPress codex page</a>' )
-		),
-		array(
-			'type' => 'dropdown',
-			'heading' => __( 'Order way', 'js_composer' ),
-			'param_name' => 'order',
-			'value' => array(
-				__( 'Descending', 'js_composer' ) => 'DESC',
-				__( 'Ascending', 'js_composer' ) => 'ASC'
-			),
-			'description' => sprintf( __( 'Designates the ascending or descending order. More at %s.', 'js_composer' ), '<a href="http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" target="_blank">WordPress codex page</a>' )
-		),
-		array(
-			'type' => 'textfield',
-			'heading' => __( 'Extra class name', 'js_composer' ),
-			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
-		)
-	)
 ) );
 
 /* Posts Grid
@@ -1790,12 +1666,13 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'loop',
 			'heading' => __( 'Grids content', 'js_composer' ),
 			'param_name' => 'loop',
+			'value' => 'size:10|order_by:date',
 			'settings' => array(
 				'size' => array( 'hidden' => false, 'value' => 10 ),
 				'order_by' => array( 'value' => 'date' ),
@@ -1845,7 +1722,7 @@ vc_map( array(
 			'type' => 'checkbox',
 			'heading' => __( 'Show filter', 'js_composer' ),
 			'param_name' => 'filter',
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
 			'description' => __( 'Select to add animated category filter to your posts grid.', 'js_composer' )
 		),
 		array(
@@ -1862,22 +1739,23 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Thumbnail size', 'js_composer' ),
 			'param_name' => 'grid_thumb_size',
+			'value' => 'thumbnail',
 			'description' => __( 'Enter thumbnail size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height) . ', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
-// 'html_template' => dirname(__DIR__).'/composer/shortcodes_templates/vc_posts_grid.php'
+	// 'html_template' => dirname(__DIR__).'/composer/shortcodes_templates/vc_posts_grid.php'
 ) );
 
 /* Post Carousel
 ---------------------------------------------------------- */
 vc_map( array(
-	'name' => __( 'Post Carousel', 'vc_extend' ),
+	'name' => __( 'Post Carousel', 'js_composer' ),
 	'base' => 'vc_carousel',
 	'content_element' => false,
 	'deprecated' => '4.4',
@@ -1890,12 +1768,13 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'loop',
 			'heading' => __( 'Carousel content', 'js_composer' ),
 			'param_name' => 'posts_query',
+			'value' => 'size:10|order_by:date',
 			'settings' => array(
 				'size' => array( 'hidden' => false, 'value' => 10 ),
 				'order_by' => array( 'value' => 'date' )
@@ -1933,6 +1812,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Thumbnail size', 'js_composer' ),
 			'param_name' => 'thumb_size',
+			'value' => 'thumbnail',
 			'description' => __( 'Enter thumbnail size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height) . ', 'js_composer' )
 		),
 		array(
@@ -1940,65 +1820,65 @@ vc_map( array(
 			'heading' => __( 'Slider speed', 'js_composer' ),
 			'param_name' => 'speed',
 			'value' => '5000',
-			'description' => __( 'Duration of animation between slides (in ms)', 'js_composer' )
+			'description' => __( 'Duration of animation between slides (in ms).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Slider mode', 'js_composer' ),
+			'heading' => __( 'Slider orientation', 'js_composer' ),
 			'param_name' => 'mode',
 			'value' => array(
 				__( 'Horizontal', 'js_composer' ) => 'horizontal',
 				__( 'Vertical', 'js_composer' ) => 'vertical'
 			),
-			'description' => __( 'Slides will be positioned horizontally (for horizontal swipes) or vertically (for vertical swipes)', 'js_composer' )
+			'description' => __( 'Select slider position (Note: this affects swiping orientation).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Slides per view', 'js_composer' ),
 			'param_name' => 'slides_per_view',
 			'value' => '1',
-			'description' => __( 'Set numbers of slides you want to display at the same time on slider\'s container for carousel mode.', 'js_composer' )
+			'description' => __( 'Enter number of slides to display at the same time.', 'js_composer' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Slider autoplay', 'js_composer' ),
 			'param_name' => 'autoplay',
-			'description' => __( 'Enables autoplay mode.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'Enable autoplay mode.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Hide pagination control', 'js_composer' ),
 			'param_name' => 'hide_pagination_control',
 			'description' => __( 'If "YES" pagination control will be removed', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Hide prev/next buttons', 'js_composer' ),
 			'param_name' => 'hide_prev_next_buttons',
 			'description' => __( 'If "YES" prev/next control will be removed', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Partial view', 'js_composer' ),
 			'param_name' => 'partial_view',
 			'description' => __( 'If "YES" part of the next slide will be visible on the right side', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Slider loop', 'js_composer' ),
 			'param_name' => 'wrap',
-			'description' => __( 'Enables loop mode.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' )
+			'description' => __( 'Enable slider loop mode.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2016,7 +1896,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2032,13 +1912,14 @@ vc_map( array(
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Slides count', 'js_composer' ),
+			'heading' => __( 'Slider count', 'js_composer' ),
 			'param_name' => 'count',
-			'description' => __( 'How many slides to show? Enter number or word "All".', 'js_composer' )
+			'value' => 3,
+			'description' => __( 'Enter number of slides to display (Note: Enter "All" to display all slides).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Auto rotate slides', 'js_composer' ),
+			'heading' => __( 'Auto rotate', 'js_composer' ),
 			'param_name' => 'interval',
 			'value' => array( 3, 5, 10, 15, __( 'Disable', 'js_composer' ) => 0 ),
 			'description' => __( 'Auto rotate slides each X seconds.', 'js_composer' )
@@ -2047,7 +1928,7 @@ vc_map( array(
 			'type' => 'posttypes',
 			'heading' => __( 'Post types', 'js_composer' ),
 			'param_name' => 'posttypes',
-			'description' => __( 'Select post types to populate posts from.', 'js_composer' )
+			'description' => __( 'Select source for slider.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2057,7 +1938,7 @@ vc_map( array(
 				__( 'No description', 'js_composer' ) => '',
 				__( 'Teaser (Excerpt)', 'js_composer' ) => 'teaser'
 			),
-			'description' => __( 'Some sliders support description text, what content use for it?', 'js_composer' ),
+			'description' => __( 'Select source to use for description (Note: some sliders do not support it).', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'type',
 				'value' => array( 'flexslider_fade', 'flexslider_slide' )
@@ -2068,7 +1949,7 @@ vc_map( array(
 			'heading' => __( 'Output post title?', 'js_composer' ),
 			'param_name' => 'slides_title',
 			'description' => __( 'If selected, title will be printed before the teaser text.', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => true ),
+			'value' => array( __( 'Yes', 'js_composer' ) => true ),
 			'dependency' => array(
 				'element' => 'slides_content',
 				'value' => array( 'teaser' )
@@ -2081,7 +1962,7 @@ vc_map( array(
 			'value' => array(
 				__( 'Link to post', 'js_composer' ) => 'link_post',
 				__( 'Link to bigger image', 'js_composer' ) => 'link_image',
-				__( 'Open custom link', 'js_composer' ) => 'custom_link',
+				__( 'Open custom links', 'js_composer' ) => 'custom_link',
 				__( 'No link', 'js_composer' ) => 'link_no'
 			),
 			'description' => __( 'Link type.', 'js_composer' )
@@ -2090,6 +1971,7 @@ vc_map( array(
 			'type' => 'exploded_textarea',
 			'heading' => __( 'Custom links', 'js_composer' ),
 			'param_name' => 'custom_links',
+			'value' => site_url() . '/',
 			'dependency' => array( 'element' => 'link', 'value' => 'custom_link' ),
 			'description' => __( 'Enter links for each slide here. Divide links with linebreaks (Enter).', 'js_composer' )
 		),
@@ -2097,19 +1979,20 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Thumbnail size', 'js_composer' ),
 			'param_name' => 'thumb_size',
+			'value' => 'medium',
 			'description' => __( 'Enter thumbnail size. Example: thumbnail, medium, large, full or other sizes defined by current theme. Alternatively enter image size in pixels: 200x100 (Width x Height) . ', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Post/Page IDs', 'js_composer' ),
 			'param_name' => 'posts_in',
-			'description' => __( 'Fill this field with page/posts IDs separated by commas (,), to retrieve only them. Use this in conjunction with "Post types" field.', 'js_composer' )
+			'description' => __( 'Enter page/posts IDs to display only those records (Note: separate values by commas (,)). Use this field in conjunction with "Post types" field.', 'js_composer' )
 		),
 		array(
 			'type' => 'exploded_textarea',
 			'heading' => __( 'Categories', 'js_composer' ),
 			'param_name' => 'categories',
-			'description' => __( 'If you want to narrow output, enter category names here. Note: Only listed categories will be included. Divide categories with linebreaks (Enter) . ', 'js_composer' )
+			'description' => __( 'Enter categories by names to narrow output (Note: only listed categories will be displayed, divide categories with linebreak (Enter)).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2136,13 +2019,13 @@ vc_map( array(
 				__( 'Descending', 'js_composer' ) => 'DESC',
 				__( 'Ascending', 'js_composer' ) => 'ASC'
 			),
-			'description' => sprintf( __( 'Designates the ascending or descending order. More at %s.', 'js_composer' ), '<a href="http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" target="_blank">WordPress codex page</a>' )
+			'description' => sprintf( __( 'Select ascending or descending order. More at %s.', 'js_composer' ), '<a href="http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" target="_blank">WordPress codex page</a>' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2155,25 +2038,25 @@ vc_map( array(
 	'class' => 'wpb_widget_sidebar_widget',
 	'icon' => 'icon-wpb-layout_sidebar',
 	'category' => __( 'Structure', 'js_composer' ),
-	'description' => __( 'Place widgetised sidebar', 'js_composer' ),
+	'description' => __( 'WordPress widgetised sidebar', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'widgetised_sidebars',
 			'heading' => __( 'Sidebar', 'js_composer' ),
 			'param_name' => 'sidebar_id',
-			'description' => __( 'Select which widget area output.', 'js_composer' )
+			'description' => __( 'Select widget area to display.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2217,26 +2100,27 @@ $icons_arr = array(
 );
 
 vc_map( array(
-	'name' => __( 'Button', 'js_composer' ),
+	'name' => __( 'Button', 'js_composer' ) . " 1",
 	'base' => 'vc_button',
 	'icon' => 'icon-wpb-ui-button',
 	'category' => __( 'Content', 'js_composer' ),
+	'deprecated' => '4.5',
 	'description' => __( 'Eye catching button', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Text on the button', 'js_composer' ),
+			'heading' => __( 'Text', 'js_composer' ),
 			'holder' => 'button',
 			'class' => 'wpb_button',
 			'param_name' => 'title',
 			'value' => __( 'Text on the button', 'js_composer' ),
-			'description' => __( 'Text on the button.', 'js_composer' )
+			'description' => __( 'Enter text on the button.', 'js_composer' )
 		),
 		array(
 			'type' => 'href',
 			'heading' => __( 'URL (Link)', 'js_composer' ),
 			'param_name' => 'href',
-			'description' => __( 'Button link.', 'js_composer' )
+			'description' => __( 'Enter button link.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2254,7 +2138,7 @@ vc_map( array(
 			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'color',
 			'value' => $colors_arr,
-			'description' => __( 'Button color.', 'js_composer' ),
+			'description' => __( 'Select button color.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
 		array(
@@ -2262,20 +2146,20 @@ vc_map( array(
 			'heading' => __( 'Icon', 'js_composer' ),
 			'param_name' => 'icon',
 			'value' => $icons_arr,
-			'description' => __( 'Button icon.', 'js_composer' )
+			'description' => __( 'Select icon to display on button.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Size', 'js_composer' ),
 			'param_name' => 'size',
 			'value' => $size_arr,
-			'description' => __( 'Button size.', 'js_composer' )
+			'description' => __( 'Select button size.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'js_view' => 'VcButtonView'
@@ -2285,6 +2169,7 @@ vc_map( array(
 	'name' => __( 'Button', 'js_composer' ) . " 2",
 	'base' => 'vc_button2',
 	'icon' => 'icon-wpb-ui-button',
+	'deprecated' => '4.5',
 	'category' => array(
 		__( 'Content', 'js_composer' )
 	),
@@ -2294,20 +2179,20 @@ vc_map( array(
 			'type' => 'vc_link',
 			'heading' => __( 'URL (Link)', 'js_composer' ),
 			'param_name' => 'link',
-			'description' => __( 'Button link.', 'js_composer' )
+			'description' => __( 'Add link to button.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Text on the button', 'js_composer' ),
+			'heading' => __( 'Text', 'js_composer' ),
 			'holder' => 'button',
 			'class' => 'vc_btn',
 			'param_name' => 'title',
 			'value' => __( 'Text on the button', 'js_composer' ),
-			'description' => __( 'Text on the button.', 'js_composer' )
+			'description' => __( 'Enter text on the button.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Button alignment', 'js_composer' ),
+			'heading' => __( 'Alignment', 'js_composer' ),
 			'param_name' => 'align',
 			'value' => array(
 				__( 'Inline', 'js_composer' ) => "inline",
@@ -2319,17 +2204,17 @@ vc_map( array(
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Style', 'js_composer' ),
+			'heading' => __( 'Shape', 'js_composer' ),
 			'param_name' => 'style',
 			'value' => getVcShared( 'button styles' ),
-			'description' => __( 'Button style.', 'js_composer' )
+			'description' => __( 'Select button display style and shape.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'color',
 			'value' => getVcShared( 'colors' ),
-			'description' => __( 'Button color.', 'js_composer' ),
+			'description' => __( 'Select button color.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
 		/*array(
@@ -2345,13 +2230,13 @@ vc_map( array(
 			'param_name' => 'size',
 			'value' => getVcShared( 'sizes' ),
 			'std' => 'md',
-			'description' => __( 'Button size.', 'js_composer' )
+			'description' => __( 'Select button size.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'js_view' => 'VcButton2View'
@@ -2360,9 +2245,10 @@ vc_map( array(
 /* Call to Action Button
 ---------------------------------------------------------- */
 vc_map( array(
-	'name' => __( 'Call to Action Button', 'js_composer' ),
+	'name' => __( 'Call to Action', 'js_composer' ),
 	'base' => 'vc_cta_button',
 	'icon' => 'icon-wpb-call-to-action',
+	'deprecated' => '4.5',
 	'category' => __( 'Content', 'js_composer' ),
 	'description' => __( 'Catch visitors attention with CTA block', 'js_composer' ),
 	'params' => array(
@@ -2372,20 +2258,20 @@ vc_map( array(
 			'heading' => __( 'Text', 'js_composer' ),
 			'param_name' => 'call_text',
 			'value' => __( 'Click edit button to change this text.', 'js_composer' ),
-			'description' => __( 'Enter your content.', 'js_composer' )
+			'description' => __( 'Enter text content.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Text on the button', 'js_composer' ),
 			'param_name' => 'title',
 			'value' => __( 'Text on the button', 'js_composer' ),
-			'description' => __( 'Text on the button.', 'js_composer' )
+			'description' => __( 'Enter text on the button.', 'js_composer' )
 		),
 		array(
 			'type' => 'href',
 			'heading' => __( 'URL (Link)', 'js_composer' ),
 			'param_name' => 'href',
-			'description' => __( 'Button link.', 'js_composer' )
+			'description' => __( 'Enter button link.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2403,31 +2289,31 @@ vc_map( array(
 			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'color',
 			'value' => $colors_arr,
-			'description' => __( 'Button color.', 'js_composer' ),
+			'description' => __( 'Select button color.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Icon', 'js_composer' ),
+			'heading' => __( 'Button icon', 'js_composer' ),
 			'param_name' => 'icon',
 			'value' => $icons_arr,
-			'description' => __( 'Button icon.', 'js_composer' )
+			'description' => __( 'Select icon to display on button.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Size', 'js_composer' ),
 			'param_name' => 'size',
 			'value' => $size_arr,
-			'description' => __( 'Button size.', 'js_composer' )
+			'description' => __( 'Select button size.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Button position', 'js_composer' ),
 			'param_name' => 'position',
 			'value' => array(
-				__( 'Align right', 'js_composer' ) => 'cta_align_right',
-				__( 'Align left', 'js_composer' ) => 'cta_align_left',
-				__( 'Align bottom', 'js_composer' ) => 'cta_align_bottom'
+				__( 'Right', 'js_composer' ) => 'cta_align_right',
+				__( 'Left', 'js_composer' ) => 'cta_align_left',
+				__( 'Bottom', 'js_composer' ) => 'cta_align_bottom'
 			),
 			'description' => __( 'Select button alignment.', 'js_composer' )
 		),
@@ -2436,7 +2322,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	),
 	'js_view' => 'VcCallToActionView'
@@ -2446,59 +2332,60 @@ vc_map( array(
 	'name' => __( 'Call to Action Button', 'js_composer' ) . ' 2',
 	'base' => 'vc_cta_button2',
 	'icon' => 'icon-wpb-call-to-action',
+	'deprecated' => '4.5',
 	'category' => array( __( 'Content', 'js_composer' ) ),
 	'description' => __( 'Catch visitors attention with CTA block', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Heading first line', 'js_composer' ),
+			'heading' => __( 'Heading', 'js_composer' ),
 			'admin_label' => true,
 			//'holder' => 'h2',
 			'param_name' => 'h2',
 			'value' => __( 'Hey! I am first heading line feel free to change me', 'js_composer' ),
-			'description' => __( 'Text for the first heading line.', 'js_composer' )
+			'description' => __( 'Enter text for heading line.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Heading second line', 'js_composer' ),
+			'heading' => __( 'Subheading', 'js_composer' ),
 			//'holder' => 'h4',
 			//'admin_label' => true,
 			'param_name' => 'h4',
 			'value' => '',
-			'description' => __( 'Optional text for the second heading line.', 'js_composer' )
+			'description' => __( 'Enter text for subheading line.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'CTA style', 'js_composer' ),
+			'heading' => __( 'Shape', 'js_composer' ),
 			'param_name' => 'style',
 			'value' => getVcShared( 'cta styles' ),
-			'description' => __( 'Call to action style.', 'js_composer' )
+			'description' => __( 'Select display shape and style.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Element width', 'js_composer' ),
+			'heading' => __( 'Width', 'js_composer' ),
 			'param_name' => 'el_width',
 			'value' => getVcShared( 'cta widths' ),
-			'description' => __( 'Call to action element width in percents.', 'js_composer' )
+			'description' => __( 'Select element width (percentage).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Text align', 'js_composer' ),
+			'heading' => __( 'Text alignment', 'js_composer' ),
 			'param_name' => 'txt_align',
 			'value' => getVcShared( 'text align' ),
-			'description' => __( 'Text align in call to action block.', 'js_composer' )
+			'description' => __( 'Select text alignment in "Call to Action" block.', 'js_composer' )
 		),
 		array(
 			'type' => 'colorpicker',
-			'heading' => __( 'Custom Background Color', 'js_composer' ),
+			'heading' => __( 'Background color', 'js_composer' ),
 			'param_name' => 'accent_color',
-			'description' => __( 'Select background color for your element.', 'js_composer' )
+			'description' => __( 'Select background color.', 'js_composer' )
 		),
 		array(
 			'type' => 'textarea_html',
 			//holder' => 'div',
 			//'admin_label' => true,
-			'heading' => __( 'Promotional text', 'js_composer' ),
+			'heading' => __( 'Text', 'js_composer' ),
 			'param_name' => 'content',
 			'value' => __( 'I am promo text. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'js_composer' )
 		),
@@ -2506,7 +2393,7 @@ vc_map( array(
 			'type' => 'vc_link',
 			'heading' => __( 'URL (Link)', 'js_composer' ),
 			'param_name' => 'link',
-			'description' => __( 'Button link.', 'js_composer' )
+			'description' => __( 'Add link to button (Important: adding link automatically adds button).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
@@ -2515,46 +2402,39 @@ vc_map( array(
 			//'class' => 'wpb_button',
 			'param_name' => 'title',
 			'value' => __( 'Text on the button', 'js_composer' ),
-			'description' => __( 'Text on the button.', 'js_composer' )
+			'description' => __( 'Add text on the button.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Button style', 'js_composer' ),
+			'heading' => __( 'Shape', 'js_composer' ),
 			'param_name' => 'btn_style',
 			'value' => getVcShared( 'button styles' ),
-			'description' => __( 'Button style.', 'js_composer' )
+			'description' => __( 'Select button display style and shape.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'color',
 			'value' => getVcShared( 'colors' ),
-			'description' => __( 'Button color.', 'js_composer' ),
+			'description' => __( 'Select button color.', 'js_composer' ),
 			'param_holder_class' => 'vc_colored-dropdown'
 		),
-		/*array(
-        'type' => 'dropdown',
-        'heading' => __( 'Icon', 'js_composer' ),
-        'param_name' => 'icon',
-        'value' => getVcShared( 'icons' ),
-        'description' => __( 'Button icon.', 'js_composer' )
-  ),*/
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Size', 'js_composer' ),
 			'param_name' => 'size',
 			'value' => getVcShared( 'sizes' ),
 			'std' => 'md',
-			'description' => __( 'Button size.', 'js_composer' )
+			'description' => __( 'Select button size.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
 			'heading' => __( 'Button position', 'js_composer' ),
 			'param_name' => 'position',
 			'value' => array(
-				__( 'Align right', 'js_composer' ) => 'right',
-				__( 'Align left', 'js_composer' ) => 'left',
-				__( 'Align bottom', 'js_composer' ) => 'bottom'
+				__( 'Right', 'js_composer' ) => 'right',
+				__( 'Left', 'js_composer' ) => 'left',
+				__( 'Bottom', 'js_composer' ) => 'bottom'
 			),
 			'description' => __( 'Select button alignment.', 'js_composer' )
 		),
@@ -2563,7 +2443,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2581,27 +2461,28 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Video link', 'js_composer' ),
 			'param_name' => 'link',
+			'value' => 'http://vimeo.com/92033601',
 			'admin_label' => true,
-			'description' => sprintf( __( 'Link to the video. More about supported formats at %s.', 'js_composer' ), '<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">WordPress codex page</a>' )
+			'description' => sprintf( __( 'Enter link to video (Note: read more about available formats at WordPress <a href="%s" target="_blank">codex page</a>).', 'js_composer' ), 'http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
 		)
 	)
 ) );
@@ -2619,46 +2500,29 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'textarea_safe',
 			'heading' => __( 'Map embed iframe', 'js_composer' ),
 			'param_name' => 'link',
-			'description' => sprintf( __( 'Visit %s to create your map. 1) Find location 2) Click "Share" and make sure map is public on the web 3) Click folder icon to reveal "Embed on my site" link 4) Copy iframe code and paste it here.', 'js_composer' ), '<a href="https://mapsengine.google.com/" target="_blank">Google maps</a>' )
+			'value' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6304.829986131271!2d-122.4746968033092!3d37.80374752160443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808586e6302615a1%3A0x86bd130251757c00!2sStorey+Ave%2C+San+Francisco%2C+CA+94129!5e0!3m2!1sen!2sus!4v1435826432051" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>',
+			'description' => sprintf( __( 'Visit %s to create your map (Step by step: 1) Find location 2) Click the cog symbol in the lower right corner and select "Share or embed map" 3) On modal window select "Embed map" 4) Copy iframe code and paste it).' ),
+				'<a href="https://www.google.com/maps" target="_blank">' . __( 'Google maps', 'js_composer' ) . '</a>')
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Map height', 'js_composer' ),
 			'param_name' => 'size',
+			'value' => 'standard',
 			'admin_label' => true,
-			'description' => __( 'Enter map height in pixels. Example: 200 or leave it empty to make map responsive.', 'js_composer' )
+			'description' => __( 'Enter map height (in pixels or leave empty for responsive map).', 'js_composer' )
 		),
-		/*array(
-        'type' => 'dropdown',
-        'heading' => __( 'Map type', 'js_composer' ),
-        'param_name' => 'type',
-        'value' => array( __( 'Map', 'js_composer' ) => 'm', __( 'Satellite', 'js_composer' ) => 'k', __( 'Map + Terrain', 'js_composer' ) => "p" ),
-        'description' => __( 'Select map type.', 'js_composer' )
-  ),
-  array(
-        'type' => 'dropdown',
-        'heading' => __( 'Map Zoom', 'js_composer' ),
-        'param_name' => 'zoom',
-        'value' => array( __( '14 - Default', 'js_composer' ) => 14, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20)
-  ),
-  array(
-        'type' => 'checkbox',
-        'heading' => __( 'Remove info bubble', 'js_composer' ),
-        'param_name' => 'bubble',
-        'description' => __( 'If selected, information bubble will be hidden.', 'js_composer' ),
-        'value' => array( __( 'Yes, please', 'js_composer' ) => true),
-  ),*/
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2671,7 +2535,7 @@ vc_map( array(
 	'icon' => 'icon-wpb-raw-html',
 	'category' => __( 'Structure', 'js_composer' ),
 	'wrapper_class' => 'clearfix',
-	'description' => __( 'Output raw html code on your page', 'js_composer' ),
+	'description' => __( 'Output raw HTML code on your page', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textarea_raw_html',
@@ -2681,6 +2545,12 @@ vc_map( array(
 			'value' => base64_encode( '<p>I am raw html block.<br/>Click edit button to change this html</p>' ),
 			'description' => __( 'Enter your HTML content.', 'js_composer' )
 		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Extra class name', 'js_composer' ),
+			'param_name' => 'el_class',
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		)
 	)
 ) );
 
@@ -2692,16 +2562,22 @@ vc_map( array(
 	'icon' => 'icon-wpb-raw-javascript',
 	'category' => __( 'Structure', 'js_composer' ),
 	'wrapper_class' => 'clearfix',
-	'description' => __( 'Output raw javascript code on your page', 'js_composer' ),
+	'description' => __( 'Output raw JavaScript code on your page', 'js_composer' ),
 	'params' => array(
 		array(
 			'type' => 'textarea_raw_html',
 			'holder' => 'div',
-			'heading' => __( 'Raw js', 'js_composer' ),
+			'heading' => __( 'JavaScript Code', 'js_composer' ),
 			'param_name' => 'content',
 			'value' => __( base64_encode( '<script type="text/javascript"> alert("Enter your js here!" ); </script>' ), 'js_composer' ),
-			'description' => __( 'Enter your JS code.', 'js_composer' )
+			'description' => __( 'Enter your JavaScript code.', 'js_composer' )
 		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Extra class name', 'js_composer' ),
+			'param_name' => 'el_class',
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		)
 	)
 ) );
 
@@ -2712,18 +2588,19 @@ vc_map( array(
 	'name' => __( 'Flickr Widget', 'js_composer' ),
 	'icon' => 'icon-wpb-flickr',
 	'category' => __( 'Content', 'js_composer' ),
-	'description' => __( 'Image feed from your flickr account', 'js_composer' ),
+	'description' => __( 'Image feed from Flickr account', 'js_composer' ),
 	"params" => array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Flickr ID', 'js_composer' ),
 			'param_name' => 'flickr_id',
+			'value' => '95572727@N00',
 			'admin_label' => true,
 			'description' => sprintf( __( 'To find your flickID visit %s.', 'js_composer' ), '<a href="http://idgettr.com/" target="_blank">idGettr</a>' )
 		),
@@ -2732,7 +2609,7 @@ vc_map( array(
 			'heading' => __( 'Number of photos', 'js_composer' ),
 			'param_name' => 'count',
 			'value' => array( 9, 8, 7, 6, 5, 4, 3, 2, 1 ),
-			'description' => __( 'Number of photos.', 'js_composer' )
+			'description' => __( 'Select number of photos to display.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
@@ -2742,23 +2619,23 @@ vc_map( array(
 				__( 'User', 'js_composer' ) => 'user',
 				__( 'Group', 'js_composer' ) => 'group'
 			),
-			'description' => __( 'Photo stream type.', 'js_composer' )
+			'description' => __( 'Select photo stream type.', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Display', 'js_composer' ),
+			'heading' => __( 'Display order', 'js_composer' ),
 			'param_name' => 'display',
 			'value' => array(
-				__( 'Latest', 'js_composer' ) => 'latest',
+				__( 'Latest first', 'js_composer' ) => 'latest',
 				__( 'Random', 'js_composer' ) => 'random'
 			),
-			'description' => __( 'Photo order.', 'js_composer' )
+			'description' => __( 'Select photo display order.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2776,24 +2653,24 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' )
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' )
 		),
 		array(
 			'type' => 'exploded_textarea',
-			'heading' => __( 'Graphic values', 'js_composer' ),
+			'heading' => __( 'Values', 'js_composer' ),
 			'param_name' => 'values',
-			'description' => __( 'Input graph values, titles and color here. Divide values with linebreaks (Enter). Example: 90|Development|#e75956', 'js_composer' ),
-			'value' => "90|Development,80|Design,70|Marketing"
+			'description' => __( 'Enter values for graph - value, title and color. Divide value sets with linebreak "Enter" (Example: 90|Development|#e75956).', 'js_composer' ),
+			'value' => '90|Development,80|Design,70|Marketing'
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Units', 'js_composer' ),
 			'param_name' => 'units',
-			'description' => __( 'Enter measurement units (if needed) Eg. %, px, points, etc. Graph value and unit will be appended to the graph title.', 'js_composer' )
+			'description' => __( 'Enter measurement units (Example: %, px, points, etc. Note: graph value and units will be appended to graph title).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Bar color', 'js_composer' ),
+			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'bgcolor',
 			'value' => array(
 				__( 'Grey', 'js_composer' ) => 'bar_grey',
@@ -2820,15 +2697,15 @@ vc_map( array(
 			'heading' => __( 'Options', 'js_composer' ),
 			'param_name' => 'options',
 			'value' => array(
-				__( 'Add Stripes?', 'js_composer' ) => 'striped',
-				__( 'Add animation? Will be visible with striped bars.', 'js_composer' ) => 'animated'
+				__( 'Add stripes', 'js_composer' ) => 'striped',
+				__( 'Add animation (Note: visible only with striped bar).', 'js_composer' ) => 'animated'
 			)
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2837,7 +2714,7 @@ vc_map( array(
  * Pie chart
  */
 vc_map( array(
-	'name' => __( 'Pie Chart', 'vc_extend' ),
+	'name' => __( 'Pie Chart', 'js_composer' ),
 	'base' => 'vc_pie',
 	'class' => '',
 	'icon' => 'icon-wpb-vc_pie',
@@ -2848,33 +2725,33 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'Enter text which will be used as widget title. Leave blank if no title is needed.', 'js_composer' ),
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Pie value', 'js_composer' ),
+			'heading' => __( 'Value', 'js_composer' ),
 			'param_name' => 'value',
-			'description' => __( 'Input graph value here. Choose range between 0 and 100.', 'js_composer' ),
+			'description' => __( 'Enter value for graph (Note: choose range from 0 to 100).', 'js_composer' ),
 			'value' => '50',
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Pie label value', 'js_composer' ),
+			'heading' => __( 'Label value', 'js_composer' ),
 			'param_name' => 'label_value',
-			'description' => __( 'Input integer value for label. If empty "Pie value" will be used.', 'js_composer' ),
+			'description' => __( 'Enter label for pie chart (Note: leaving empty will set value from "Value" field).', 'js_composer' ),
 			'value' => ''
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Units', 'js_composer' ),
 			'param_name' => 'units',
-			'description' => __( 'Enter measurement units (if needed) Eg. %, px, points, etc. Graph value and unit will be appended to the graph title.', 'js_composer' )
+			'description' => __( 'Enter measurement units (Example: %, px, points, etc. Note: graph value and units will be appended to graph title).', 'js_composer' )
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Bar color', 'js_composer' ),
+			'heading' => __( 'Color', 'js_composer' ),
 			'param_name' => 'color',
 			'value' => $colors_arr, //$pie_colors,
 			'description' => __( 'Select pie chart color.', 'js_composer' ),
@@ -2885,7 +2762,301 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		),
+
+	)
+) );
+
+/**
+ * Round chart
+ */
+vc_map( array(
+	'name' => __( 'Round Chart', 'js_composer' ),
+	'base' => 'vc_round_chart',
+	'class' => '',
+	'icon' => 'icon-wpb-vc-round-chart',
+	'category' => __( 'Content', 'js_composer' ),
+	'description' => __( 'Pie and Doughnat charts', 'js_composer' ),
+	'params' => array(
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Widget title', 'js_composer' ),
+			'param_name' => 'title',
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' ),
+			'admin_label' => true
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Design', 'js_composer' ),
+			'param_name' => 'type',
+			'value' => array(
+				__( 'Pie', 'js_composer' ) => 'pie',
+				__( 'Doughnut', 'js_composer' ) => 'doughnut',
+			),
+			'description' => __( 'Select type of chart.', 'js_composer' )
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Style', 'js_composer' ),
+			'description' => __( 'Select chart color style.', 'js_composer' ),
+			'param_name' => 'style',
+			'value' => array(
+				__( 'Flat', 'js_composer' ) => 'flat',
+				__( 'Modern', 'js_composer' ) => 'modern',
+				__( 'Custom', 'js_composer' ) => 'custom',
+			),
+			'dependency' => array(
+				'callback' => 'vcChartCustomColorDependency',
+			)
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Gap', 'js_composer' ),
+			'param_name' => 'stroke_width',
+			'value' => array(
+				0 => 0,
+				1 => 1,
+				2 => 2,
+				5 => 5,
+			),
+			'description' => __( 'Select gap size.', 'js_composer' ),
+			'std' => 2
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Outline color', 'js_composer' ),
+			'param_name' => 'stroke_color',
+			'value' => getVcShared( 'colors-dashed' ) + array( __( 'Custom', 'js_composer' ) => 'custom' ),
+			'description' => __( 'Select outline color.', 'js_composer' ),
+			'param_holder_class' => 'vc_colored-dropdown',
+			'std' => 'white',
+			'dependency' => array(
+				'element' => 'stroke_width',
+				'value_not_equal_to' => '0'
+			),
+		),
+		array(
+			'type' => 'colorpicker',
+			'heading' => __( 'Custom outline color', 'js_composer' ),
+			'param_name' => 'custom_stroke_color',
+			'description' => __( 'Select custom outline color.', 'js_composer' ),
+			'dependency' => array(
+				'element' => 'stroke_color',
+				'value' => array( 'custom' )
+			),
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Show legend?', 'js_composer' ),
+			'param_name' => 'legend',
+			'description' => __( 'If checked, chart will have legend.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
+			'std' => 'yes'
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Show hover values?', 'js_composer' ),
+			'param_name' => 'tooltips',
+			'description' => __( 'If checked, chart will show values on hover.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
+			'std' => 'yes'
+		),
+		array(
+			'type' => 'param_group',
+			'heading' => __( 'Values', 'js_composer' ),
+			'param_name' => 'values',
+			'value' => urlencode( json_encode( array(
+				array(
+					'title' => __( 'One', 'js_composer' ),
+					'value' => '60',
+					'color' => 'blue'
+				),
+				array(
+					'title' => __( 'Two', 'js_composer' ),
+					'value' => '40',
+					'color' => 'pink'
+				)
+			) ) ),
+			'params' => array(
+				array(
+					'type' => 'textfield',
+					'heading' => __( 'Title', 'js_composer' ),
+					'param_name' => 'title',
+					'description' => __( 'Enter title for chart area.', 'js_composer' ),
+					'admin_label' => true
+				),
+				array(
+					'type' => 'textfield',
+					'heading' => __( 'Value', 'js_composer' ),
+					'param_name' => 'value',
+					'description' => __( 'Enter value for area.', 'js_composer' ),
+				),
+				array(
+					'type' => 'dropdown',
+					'heading' => __( 'Color', 'js_composer' ),
+					'param_name' => 'color',
+					'value' => getVcShared( 'colors-dashed' ),
+					'description' => __( 'Select area color.', 'js_composer' ),
+					'param_holder_class' => 'vc_colored-dropdown',
+				),
+				array(
+					'type' => 'colorpicker',
+					'heading' => __( 'Custom color', 'js_composer' ),
+					'param_name' => 'custom_color',
+					'description' => __( 'Select custom area color.', 'js_composer' ),
+				),
+			),
+			'callbacks' => array(
+				'after_add' => 'vcChartParamAfterAddCallback'
+			)
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Animation', 'js_composer' ),
+			'description' => __( 'Select animation style.', 'js_composer' ),
+			'param_name' => 'animation',
+			'value' => getVcShared( 'animation styles' ),
+			'std' => 'easeinOutCubic'
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Extra class name', 'js_composer' ),
+			'param_name' => 'el_class',
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
+		),
+
+	)
+) );
+
+/**
+ * Line chart
+ */
+vc_map( array(
+	'name' => __( 'Line Chart', 'js_composer' ),
+	'base' => 'vc_line_chart',
+	'class' => '',
+	'icon' => 'icon-wpb-vc-line-chart',
+	'category' => __( 'Content', 'js_composer' ),
+	'description' => __( 'Line and Bar charts', 'js_composer' ),
+	'params' => array(
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Widget title', 'js_composer' ),
+			'param_name' => 'title',
+			'description' => __( 'Enter text used as widget title (Note: located above content element).', 'js_composer' ),
+			'admin_label' => true
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Design', 'js_composer' ),
+			'param_name' => 'type',
+			'value' => array(
+				__( 'Line', 'js_composer' ) => 'line',
+				__( 'Bar', 'js_composer' ) => 'bar',
+			),
+			'std' => 'bar',
+			'description' => __( 'Select type of chart.', 'js_composer' )
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Style', 'js_composer' ),
+			'description' => __( 'Select chart color style.', 'js_composer' ),
+			'param_name' => 'style',
+			'value' => array(
+				__( 'Flat', 'js_composer' ) => 'flat',
+				__( 'Modern', 'js_composer' ) => 'modern',
+				__( 'Custom', 'js_composer' ) => 'custom',
+			),
+			'dependency' => array(
+				'callback' => 'vcChartCustomColorDependency',
+			)
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Show legend?', 'js_composer' ),
+			'param_name' => 'legend',
+			'description' => __( 'If checked, chart will have legend.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
+			'std' => 'yes'
+		),
+		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Show hover values?', 'js_composer' ),
+			'param_name' => 'tooltips',
+			'description' => __( 'If checked, chart will show values on hover.', 'js_composer' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
+			'std' => 'yes'
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'X-axis values', 'js_composer' ),
+			'param_name' => 'x_values',
+			'description' => __( 'Enter values for axis (Note: separate values with ";").', 'js_composer' ),
+			'value' => 'JAN; FEB; MAR; APR; MAY; JUN; JUL; AUG'
+		),
+		array(
+			'type' => 'param_group',
+			'heading' => __( 'Values', 'js_composer' ),
+			'param_name' => 'values',
+			'value' => urlencode( json_encode( array(
+				array(
+					'title' => __( 'One', 'js_composer' ),
+					'y_values' => '10; 15; 20; 25; 27; 25; 23; 25',
+					'color' => 'blue'
+				),
+				array(
+					'title' => __( 'Two', 'js_composer' ),
+					'y_values' => '25; 18; 16; 17; 20; 25; 30; 35',
+					'color' => 'pink'
+				)
+			) ) ),
+			'params' => array(
+				array(
+					'type' => 'textfield',
+					'heading' => __( 'Title', 'js_composer' ),
+					'param_name' => 'title',
+					'description' => __( 'Enter title for chart dataset.', 'js_composer' ),
+					'admin_label' => true
+				),
+				array(
+					'type' => 'textfield',
+					'heading' => __( 'Y-axis values', 'js_composer' ),
+					'param_name' => 'y_values',
+					'description' => __( 'Enter values for axis (Note: separate values with ";").', 'js_composer' ),
+				),
+				array(
+					'type' => 'dropdown',
+					'heading' => __( 'Color', 'js_composer' ),
+					'param_name' => 'color',
+					'value' => getVcShared( 'colors-dashed' ),
+					'description' => __( 'Select chart color.', 'js_composer' ),
+					'param_holder_class' => 'vc_colored-dropdown',
+				),
+				array(
+					'type' => 'colorpicker',
+					'heading' => __( 'Custom color', 'js_composer' ),
+					'param_name' => 'custom_color',
+					'description' => __( 'Select custom chart color.', 'js_composer' ),
+				),
+			),
+			'callbacks' => array(
+				'after_add' => 'vcChartParamAfterAddCallback'
+			)
+		),
+		array(
+			'type' => 'dropdown',
+			'heading' => __( 'Animation', 'js_composer' ),
+			'description' => __( 'Select animation style.', 'js_composer' ),
+			'param_name' => 'animation',
+			'value' => getVcShared( 'animation styles' ),
+			'std' => 'easeinOutCubic'
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => __( 'Extra class name', 'js_composer' ),
+			'param_name' => 'el_class',
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		),
 
 	)
@@ -2894,7 +3065,7 @@ vc_map( array(
 /* WordPress default Widgets (Appearance->Widgets)
 ---------------------------------------------------------- */
 vc_map( array(
-	'name' => 'WP ' . __( "Search" ),
+	'name' => 'WP ' . __( 'Search' ),
 	'base' => 'vc_wp_search',
 	'icon' => 'icon-wpb-wp',
 	'category' => __( 'WordPress Widgets', 'js_composer' ),
@@ -2912,7 +3083,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2930,13 +3101,14 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Meta' ),
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2954,19 +3126,22 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Recent Comments' ),
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Number of comments to show', 'js_composer' ),
+			'heading' => __( 'Number of comments', 'js_composer' ),
+			'description' => __( 'Enter number of comments to display.', 'js_composer' ),
 			'param_name' => 'number',
+			'value' => 5,
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -2990,7 +3165,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3008,42 +3183,47 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Pages' ),
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Sort by', 'js_composer' ),
+			'heading' => __( 'Order by', 'js_composer' ),
 			'param_name' => 'sortby',
 			'value' => array(
 				__( 'Page title', 'js_composer' ) => 'post_title',
 				__( 'Page order', 'js_composer' ) => 'menu_order',
 				__( 'Page ID', 'js_composer' ) => 'ID'
 			),
+			'description' => __( 'Select how to sort pages.', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Exclude', 'js_composer' ),
 			'param_name' => 'exclude',
-			'description' => __( 'Page IDs, separated by commas.', 'js_composer' ),
+			'description' => __( 'Enter page IDs to be excluded (Note: separate values by commas (,)).', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
 
 $tag_taxonomies = array();
-foreach ( get_taxonomies() as $taxonomy ) {
-	$tax = get_taxonomy( $taxonomy );
-	if ( ! $tax->show_tagcloud || empty( $tax->labels->name ) ) {
-		continue;
+$taxonomies = get_taxonomies();
+if ( is_array( $taxonomies ) && ! empty( $taxonomies ) ) {
+	foreach ( $taxonomies as $taxonomy ) {
+		$tax = get_taxonomy( $taxonomy );
+		if ( ( is_object( $tax ) && ( ! $tax->show_tagcloud || empty( $tax->labels->name ) ) ) || ! is_object( $tax ) ) {
+			continue;
+		}
+		$tag_taxonomies[ $tax->labels->name ] = esc_attr( $taxonomy );
 	}
-	$tag_taxonomies[ $tax->labels->name ] = esc_attr( $taxonomy );
 }
 vc_map( array(
 	'name' => 'WP ' . __( 'Tag Cloud' ),
@@ -3058,6 +3238,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
+			'value' => __( 'Tags', 'js_composer' ),
 			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
 		),
 		array(
@@ -3065,22 +3246,25 @@ vc_map( array(
 			'heading' => __( 'Taxonomy', 'js_composer' ),
 			'param_name' => 'taxonomy',
 			'value' => $tag_taxonomies,
+			'description' => __( 'Select source for tag cloud.', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
 
 $custom_menus = array();
 $menus = get_terms( 'nav_menu', array( 'hide_empty' => false ) );
-if ( is_array( $menus ) ) {
+if ( is_array( $menus ) && ! empty( $menus ) ) {
 	foreach ( $menus as $single_menu ) {
-		$custom_menus[ $single_menu->name ] = $single_menu->term_id;
+		if ( is_object( $single_menu ) && isset( $single_menu->name, $single_menu->term_id ) ) {
+			$custom_menus[ $single_menu->name ] = $single_menu->term_id;
+		}
 	}
 }
 vc_map( array(
@@ -3103,14 +3287,14 @@ vc_map( array(
 			'heading' => __( 'Menu', 'js_composer' ),
 			'param_name' => 'nav_menu',
 			'value' => $custom_menus,
-			'description' => empty( $custom_menus ) ? __( 'Custom menus not found. Please visit <b>Appearance > Menus</b> page to create new menu.', 'js_composer' ) : __( 'Select menu', 'js_composer' ),
+			'description' => empty( $custom_menus ) ? __( 'Custom menus not found. Please visit <b>Appearance > Menus</b> page to create new menu.', 'js_composer' ) : __( 'Select menu to display.', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3146,7 +3330,7 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3164,34 +3348,40 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Recent Posts' ),
 		),
 		array(
 			'type' => 'textfield',
-			'heading' => __( 'Number of posts to show', 'js_composer' ),
+			'heading' => __( 'Number of posts', 'js_composer' ),
+			'description' => __( 'Enter number of posts to display.', 'js_composer' ),
 			'param_name' => 'number',
+			'value' => 5,
 			'admin_label' => true
 		),
 		array(
 			'type' => 'checkbox',
 			'heading' => __( 'Display post date?', 'js_composer' ),
 			'param_name' => 'show_date',
-			'value' => array( __( 'Yes, please', 'js_composerp' ) => true )
+			'value' => array( __( 'Yes', 'js_composer' ) => true ),
+			'description' => __( 'If checked, date will be displayed.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
 
 $link_category = array( __( 'All Links', 'js_composer' ) => '' );
 $link_cats = get_terms( 'link_category' );
-if ( is_array( $link_cats ) ) {
+if ( is_array( $link_cats ) && ! empty( $link_cats ) ) {
 	foreach ( $link_cats as $link_cat ) {
-		$link_category[ $link_cat->name ] = $link_cat->term_id;
+		if ( is_object( $link_cat ) && isset( $link_cat->name, $link_cat->term_id ) ) {
+			$link_category[ $link_cat->name ] = $link_cat->term_id;
+		}
 	}
 }
 vc_map( array(
@@ -3213,7 +3403,7 @@ vc_map( array(
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Sort by', 'js_composer' ),
+			'heading' => __( 'Order by', 'js_composer' ),
 			'param_name' => 'orderby',
 			'value' => array(
 				__( 'Link title', 'js_composer' ) => 'name',
@@ -3236,13 +3426,14 @@ vc_map( array(
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Number of links to show', 'js_composer' ),
-			'param_name' => 'limit'
+			'param_name' => 'limit',
+			'value' => - 1,
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3260,23 +3451,25 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Categories' ),
 		),
 		array(
 			'type' => 'checkbox',
-			'heading' => __( 'Options', 'js_composer' ),
+			'heading' => __( 'Display options', 'js_composer' ),
 			'param_name' => 'options',
 			'value' => array(
-				__( 'Display as dropdown', 'js_composer' ) => 'dropdown',
+				__( 'Dropdown', 'js_composer' ) => 'dropdown',
 				__( 'Show post counts', 'js_composer' ) => 'count',
 				__( 'Show hierarchy', 'js_composer' ) => 'hierarchical'
-			)
+			),
+			'description' => __( 'Select display options for categories.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3294,22 +3487,24 @@ vc_map( array(
 			'type' => 'textfield',
 			'heading' => __( 'Widget title', 'js_composer' ),
 			'param_name' => 'title',
-			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' )
+			'description' => __( 'What text use as a widget title. Leave blank to use default widget title.', 'js_composer' ),
+			'value' => __( 'Archives' ),
 		),
 		array(
 			'type' => 'checkbox',
-			'heading' => __( 'Options', 'js_composer' ),
+			'heading' => __( 'Display options', 'js_composer' ),
 			'param_name' => 'options',
 			'value' => array(
-				__( 'Display as dropdown', 'js_composer' ) => 'dropdown',
+				__( 'Dropdown', 'js_composer' ) => 'dropdown',
 				__( 'Show post counts', 'js_composer' ) => 'count'
-			)
+			),
+			'description' => __( 'Select display options for archives.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3341,7 +3536,7 @@ vc_map( array(
 			'heading' => __( 'Items', 'js_composer' ),
 			'param_name' => 'items',
 			'value' => array(
-				__( '10 - Default', 'js_composer' ) => '',
+				__( '10 - Default', 'js_composer' ) => 10,
 				1,
 				2,
 				3,
@@ -3363,7 +3558,7 @@ vc_map( array(
 				19,
 				20
 			),
-			'description' => __( 'How many items would you like to display?', 'js_composer' ),
+			'description' => __( 'Select how many items to display.', 'js_composer' ),
 			'admin_label' => true
 		),
 		array(
@@ -3371,16 +3566,17 @@ vc_map( array(
 			'heading' => __( 'Options', 'js_composer' ),
 			'param_name' => 'options',
 			'value' => array(
-				__( 'Display item content?', 'js_composer' ) => 'show_summary',
+				__( 'Item content', 'js_composer' ) => 'show_summary',
 				__( 'Display item author if available?', 'js_composer' ) => 'show_author',
 				__( 'Display item date?', 'js_composer' ) => 'show_date'
-			)
+			),
+			'description' => __( 'Select display options for RSS feeds.', 'js_composer' )
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' )
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' )
 		)
 	)
 ) );
@@ -3401,13 +3597,13 @@ vc_map( array(
 			'param_name' => 'height',
 			'value' => '32px',
 			'admin_label' => true,
-			'description' => __( 'Enter empty space height.', 'js_composer' ),
+			'description' => __( 'Enter empty space height (Note: CSS measurement units allowed).', 'js_composer' ),
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
 		),
 	),
 ) );
@@ -3427,13 +3623,20 @@ vc_map( array(
 			'heading' => __( 'Text', 'js_composer' ),
 			'param_name' => 'text',
 			'admin_label' => true,
-			'value' => __( 'This is custom heading element with Google Fonts', 'js_composer' ),
-			'description' => __( 'If you are using non-latin characters be sure to activate them under Settings/Visual Composer/General Settings.', 'js_composer' ),
+			'value' => __( 'This is custom heading element', 'js_composer' ),
+			'description' => __( 'Note: If you are using non-latin characters be sure to activate them under Settings/Visual Composer/General Settings.', 'js_composer' ),
+		),
+		array(
+			'type' => 'vc_link',
+			'heading' => __( 'URL (Link)', 'js_composer' ),
+			'param_name' => 'link',
+			'description' => __( 'Add link to custom heading.', 'js_composer' ),
+			// compatible with btn2 and converted from href{btn1}
 		),
 		array(
 			'type' => 'font_container',
 			'param_name' => 'font_container',
-			'value' => '',
+			'value' => 'tag:h2|text_align:left',
 			'settings' => array(
 				'fields' => array(
 					'tag' => 'h2', // default value h2
@@ -3449,7 +3652,7 @@ vc_map( array(
 					'text_align_description' => __( 'Select text alignment.', 'js_composer' ),
 					'font_size_description' => __( 'Enter font size.', 'js_composer' ),
 					'line_height_description' => __( 'Enter line height.', 'js_composer' ),
-					'color_description' => __( 'Select color for your element.', 'js_composer' ),
+					'color_description' => __( 'Select heading color.', 'js_composer' ),
 					//'font_style_description' => __('Put your description here','js_composer'),
 					//'font_family_description' => __('Put your description here','js_composer'),
 				),
@@ -3457,9 +3660,17 @@ vc_map( array(
 			// 'description' => __( '', 'js_composer' ),
 		),
 		array(
+			'type' => 'checkbox',
+			'heading' => __( 'Use theme default font family?', 'js_composer' ),
+			'param_name' => 'use_theme_fonts',
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
+			'description' => __( 'Use font family from the theme.', 'js_composer' ),
+		),
+		array(
 			'type' => 'google_fonts',
 			'param_name' => 'google_fonts',
-			'value' => 'font_family:Abril%20Fatface%3A400|font_style:400%20regular%3A400%3Anormal', // default
+			'value' => 'font_family:Abril%20Fatface%3Aregular|font_style:400%20regular%3A400%3Anormal',
+			// default
 			//'font_family:'.rawurlencode('Abril Fatface:400').'|font_style:'.rawurlencode('400 regular:400:normal')
 			// this will override 'settings'. 'font_family:'.rawurlencode('Exo:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic').'|font_style:'.rawurlencode('900 bold italic:900:italic'),
 			'settings' => array(
@@ -3474,55 +3685,60 @@ vc_map( array(
 					'font_style_description' => __( 'Select font styling.', 'js_composer' )
 				)
 			),
+			'dependency' => array(
+				'element' => 'use_theme_fonts',
+				'value_not_equal_to' => 'yes',
+			),
 			// 'description' => __( '', 'js_composer' ),
 		),
 		array(
 			'type' => 'textfield',
 			'heading' => __( 'Extra class name', 'js_composer' ),
 			'param_name' => 'el_class',
-			'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
+			'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
 		),
 		array(
 			'type' => 'css_editor',
-			'heading' => __( 'Css', 'js_composer' ),
+			'heading' => __( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
-			// 'description' => __( 'If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.', 'js_composer' ),
-			'group' => __( 'Design options', 'js_composer' )
+			// 'description' => __( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
+			'group' => __( 'Design Options', 'js_composer' )
 		)
 	),
 ) );
 
+// Note this shortcodes integrates custom heading!
+include_once "shortcode-vc-btn.php";
+
+include_once "shortcode-vc-cta3.php";
+
 $post_types = get_post_types( array() );
 $post_types_list = array();
-foreach ( $post_types as $post_type ) {
-	if ( $post_type !== 'revision' && $post_type !== 'nav_menu_item'/* && $post_type !== 'attachment'*/ ) {
-		$label = ucfirst( $post_type );
-		$post_types_list[] = array( $post_type, __( $label, 'js_composer' ) );
+if ( is_array( $post_types ) && ! empty( $post_types ) ) {
+	foreach ( $post_types as $post_type ) {
+		if ( $post_type !== 'revision' && $post_type !== 'nav_menu_item'/* && $post_type !== 'attachment'*/ ) {
+			$label = ucfirst( $post_type );
+			$post_types_list[] = array( $post_type, __( $label, 'js_composer' ) );
+		}
 	}
 }
 $post_types_list[] = array( 'custom', __( 'Custom query', 'js_composer' ) );
 $post_types_list[] = array( 'ids', __( 'List of IDs', 'js_composer' ) );
 
-$vc_taxonomies_types = get_taxonomies( array( 'public' => true ), 'objects' );
-$vc_taxonomies = get_terms( array_keys( $vc_taxonomies_types ), array( 'hide_empty' => false ) );
-$taxonomies_list = array();
-foreach ( $vc_taxonomies as $t ) {
-	$taxonomies_list[] = array(
-		'label' => $t->name,
-		'value' => $t->term_id,
-		'group_id' => $t->taxonomy,
-		'group' =>
-			isset( $vc_taxonomies_types[ $t->taxonomy ]->labels )
-				? $vc_taxonomies_types[ $t->taxonomy ]->labels->name
-				: __( 'Taxonomies', 'js_composer' )
-	);
-}
+// $taxonomies_list = array();
 $taxonomies_for_filter = array();
-foreach ( $vc_taxonomies_types as $t => $data ) {
-	if ( $t !== 'post_format' ) {
-		$taxonomies_for_filter[ $data->labels->name ] = $t;
+
+if ( 'vc_edit_form' === vc_post_param( 'action' ) ) {
+	$vc_taxonomies_types = vc_taxonomies_types();
+	if ( is_array( $vc_taxonomies_types ) && ! empty( $vc_taxonomies_types ) ) {
+		foreach ( $vc_taxonomies_types as $t => $data ) {
+			if ( $t !== 'post_format' && is_object( $data ) ) {
+				$taxonomies_for_filter[ $data->labels->name ] = $t;
+			}
+		}
 	}
 }
+
 /*
 $grid_cols_list = array();
 for( $i=2; $i<=12; $i++ ) {
@@ -3593,7 +3809,7 @@ $grid_params = array(
 			// delay for search. default 500
 			'auto_focus' => true,
 			// auto focus input, default true
-			'values' => $taxonomies_list,
+			// 'values' => $taxonomies_list,
 		),
 		'param_holder_class' => 'vc_not-for-custom',
 		'description' => __( 'Enter categories, tags or custom taxonomies.', 'js_composer' ),
@@ -3624,6 +3840,10 @@ $grid_params = array(
 			__( 'Lazy loading', 'js_composer' ) => 'lazy',
 			__( 'Pagination', 'js_composer' ) => 'pagination',
 		),
+		'dependency' => array(
+			'element' => 'post_type',
+			'value_not_equal_to' => array( 'custom' ),
+		),
 		'edit_field_class' => 'vc_col-sm-6 vc_column',
 		'description' => __( 'Select display style for grid.', 'js_composer' ),
 	),
@@ -3643,7 +3863,7 @@ $grid_params = array(
 		'type' => 'checkbox',
 		'heading' => __( 'Show filter', 'js_composer' ),
 		'param_name' => 'show_filter',
-		'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' ),
+		'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
 		'description' => __( 'Append filter to grid.', 'js_composer' ),
 	),
 	array(
@@ -3697,7 +3917,7 @@ $grid_params = array(
 			__( 'Random order', 'js_composer' ) => 'rand',
 		),
 		'description' => __( 'Select order type. If "Meta value" or "Meta value Number" is chosen then meta key is required.', 'js_composer' ),
-		'group' => __( 'Data settings', 'js_composer' ),
+		'group' => __( 'Data Settings', 'js_composer' ),
 		'param_holder_class' => 'vc_grid-data-type-not-ids',
 		'dependency' => array(
 			'element' => 'post_type',
@@ -3708,7 +3928,7 @@ $grid_params = array(
 		'type' => 'dropdown',
 		'heading' => __( 'Sorting', 'js_composer' ),
 		'param_name' => 'order',
-		'group' => __( 'Data settings', 'js_composer' ),
+		'group' => __( 'Data Settings', 'js_composer' ),
 		'value' => array(
 			__( 'Descending', 'js_composer' ) => 'DESC',
 			__( 'Ascending', 'js_composer' ) => 'ASC',
@@ -3725,7 +3945,7 @@ $grid_params = array(
 		'heading' => __( 'Meta key', 'js_composer' ),
 		'param_name' => 'meta_key',
 		'description' => __( 'Input meta key for grid ordering.', 'js_composer' ),
-		'group' => __( 'Data settings', 'js_composer' ),
+		'group' => __( 'Data Settings', 'js_composer' ),
 		'param_holder_class' => 'vc_grid-data-type-not-ids',
 		'dependency' => array(
 			'element' => 'orderby',
@@ -3737,7 +3957,7 @@ $grid_params = array(
 		'heading' => __( 'Offset', 'js_composer' ),
 		'param_name' => 'offset',
 		'description' => __( 'Number of grid elements to displace or pass over.', 'js_composer' ),
-		'group' => __( 'Data settings', 'js_composer' ),
+		'group' => __( 'Data Settings', 'js_composer' ),
 		'param_holder_class' => 'vc_grid-data-type-not-ids',
 		'dependency' => array(
 			'element' => 'post_type',
@@ -3749,7 +3969,7 @@ $grid_params = array(
 		'heading' => __( 'Exclude', 'js_composer' ),
 		'param_name' => 'exclude',
 		'description' => __( 'Exclude posts, pages, etc. by title.', 'js_composer' ),
-		'group' => __( 'Data settings', 'js_composer' ),
+		'group' => __( 'Data Settings', 'js_composer' ),
 		'settings' => array(
 			'multiple' => true,
 		),
@@ -3794,7 +4014,7 @@ $grid_params = array(
 			// delay for search. default 500
 			'auto_focus' => true,
 			// auto focus input, default true
-			'values' => $taxonomies_list,
+			// 'values' => $taxonomies_list,
 		),
 		'description' => __( 'Enter categories, tags won\'t be shown in the filters list', 'js_composer' ),
 		'dependency' => array(
@@ -3875,7 +4095,7 @@ $grid_params = array(
 		'param_name' => 'button_style',
 		'value' => getVcShared( 'button styles' ),
 		'param_holder_class' => 'vc_colored-dropdown',
-		'group' => __( 'Load more button', 'js_composer' ),
+		'group' => __( 'Load More Button', 'js_composer' ),
 		'dependency' => array(
 			'element' => 'style',
 			'value' => array( 'load-more' ),
@@ -3888,7 +4108,7 @@ $grid_params = array(
 		'param_name' => 'button_color',
 		'value' => getVcShared( 'colors' ),
 		'param_holder_class' => 'vc_colored-dropdown',
-		'group' => __( 'Load more button', 'js_composer' ),
+		'group' => __( 'Load More Button', 'js_composer' ),
 		'dependency' => array(
 			'element' => 'style',
 			'value' => array( 'load-more' ),
@@ -3902,7 +4122,7 @@ $grid_params = array(
 		'value' => getVcShared( 'sizes' ),
 		'std' => 'md',
 		'description' => __( 'Select button size.', 'js_composer' ),
-		'group' => __( 'Load more button', 'js_composer' ),
+		'group' => __( 'Load More Button', 'js_composer' ),
 		'dependency' => array(
 			'element' => 'style',
 			'value' => array( 'load-more' ),
@@ -4017,7 +4237,7 @@ $grid_params = array(
 		'heading' => __( 'Loop pages?', 'js_composer' ),
 		'param_name' => 'loop',
 		'description' => __( 'Allow items to be repeated in infinite loop (carousel).', 'js_composer' ),
-		'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' ),
+		'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
 		'group' => __( 'Pagination', 'js_composer' ),
 		'dependency' => array(
 			'element' => 'style',
@@ -4082,7 +4302,7 @@ $grid_params = array(
 			__( 'Horizontal', 'js_composer' ) => 'horizontal'
 
 		),
-		'group' => __( 'Item design', 'js_composer' ),
+		'group' => __( 'Item Design', 'js_composer' ),
 	),
 	*/
 	array(
@@ -4090,10 +4310,14 @@ $grid_params = array(
 		'heading' => __( 'Grid element template', 'js_composer' ),
 		'param_name' => 'item',
 		'description' => sprintf( __( '%sCreate new%s template or %smodify selected%s. Predefined templates will be cloned.', 'js_composer' ), '<a href="'
-			. esc_url(admin_url( 'post-new.php?post_type=vc_grid_item' )) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
-		'group' => __( 'Item design', 'js_composer' ),
+		                                                                                                                                       . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
+		'group' => __( 'Item Design', 'js_composer' ),
 		'value' => 'none',
 	),
+	array(
+		'type' => 'vc_grid_id',
+		'param_name' => 'grid_id',
+	)
 );
 vc_map( array(
 	'name' => __( 'Post Grid', 'js_composer' ),
@@ -4114,7 +4338,7 @@ $media_grid_params = array(
 	$grid_params[6],
 	$grid_params[8],
 	$grid_params[9],
-	$grid_params[20],
+	// $grid_params[20], filter size
 	$grid_params[21],
 	$grid_params[22],
 	$grid_params[23],
@@ -4131,10 +4355,14 @@ $media_grid_params = array(
 		'heading' => __( 'Grid element template', 'js_composer' ),
 		'param_name' => 'item',
 		'description' => sprintf( __( '%sCreate new%s template or %smodify selected%s. Predefined templates will be cloned.', 'js_composer' ), '<a href="'
-			. esc_url(admin_url( 'post-new.php?post_type=vc_grid_item' )) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
-		'group' => __( 'Item design', 'js_composer' ),
+		                                                                                                                                       . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
+		'group' => __( 'Item Design', 'js_composer' ),
 		'value' => 'mediaGrid_Default',
 	),
+	array(
+		'type' => 'vc_grid_id',
+		'param_name' => 'grid_id',
+	)
 );
 $media_grid_params[4]['std'] = '5';
 vc_map( array(
@@ -4142,7 +4370,7 @@ vc_map( array(
 	'base' => 'vc_media_grid',
 	'icon' => 'vc_icon-vc-media-grid',
 	'category' => __( 'Content', 'js_composer' ),
-	'description' => __( 'Grid with media from library', 'js_composer' ),
+	'description' => __( 'Media grid from Media Library', 'js_composer' ),
 	'params' => $media_grid_params,
 ) );
 $masonry_grid_params = $grid_params;
@@ -4157,14 +4385,14 @@ vc_map( array(
 	'params' => $masonry_grid_params
 ) );
 $masonry_media_grid_params = $media_grid_params;
-$masonry_media_grid_params[17]['value'] = 'masonryMedia_Default';
+$masonry_media_grid_params[16]['value'] = 'masonryMedia_Default';
 unset( $masonry_media_grid_params[1]['value'][ __( 'Pagination', 'js_composer' ) ] );
 vc_map( array(
 	'name' => __( 'Masonry Media Grid', 'js_composer' ),
 	'base' => 'vc_masonry_media_grid',
 	'icon' => 'vc_icon-vc-masonry-media-grid',
 	'category' => __( 'Content', 'js_composer' ),
-	'description' => __( 'Masonry grid with media from library', 'js_composer' ),
+	'description' => __( 'Masonry media grid from Media Library', 'js_composer' ),
 	'params' => $masonry_media_grid_params
 ) );
 /*
@@ -4414,7 +4642,7 @@ vc_map( array(
 			'heading' => __( 'Loop', 'js_composer' ),
 			'param_name' => 'loop',
 			'description' => __( '', 'js_composer' ),
-			'value' => array( __( 'Yes, please', 'js_composer' ) => 'yes' ),
+			'value' => array( __( 'Yes', 'js_composer' ) => 'yes' ),
 			'group' => __( 'Design', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'style',
@@ -4539,7 +4767,7 @@ vc_map( array(
 		),
 		array(
 			'type' => 'dropdown',
-			'heading' => __( 'Sort by', 'js_composer' ),
+			'heading' => __( 'Order by', 'js_composer' ),
 			'param_name' => 'order',
 			'group' => __( 'Source', 'js_composer' ),
 			'value' => array(
@@ -4648,11 +4876,12 @@ vc_map( array(
 			'heading' => __( 'Builder', 'js_composer' ),
 			'param_name' => 'content',
 			'description' => __( '', 'js_composer' ),
-			'group' => __( 'Item design', 'js_composer' ),
+			'group' => __( 'Item Design', 'js_composer' ),
 		),
 	),
 ) );
 */
+
 add_filter( 'vc_autocomplete_vc_basic_grid_include_callback',
 	'vc_include_field_search', 10, 1 ); // Get suggestion(find). Must return an array
 add_filter( 'vc_autocomplete_vc_basic_grid_include_render',
@@ -4661,6 +4890,77 @@ add_filter( 'vc_autocomplete_vc_masonry_grid_include_callback',
 	'vc_include_field_search', 10, 1 ); // Get suggestion(find). Must return an array
 add_filter( 'vc_autocomplete_vc_masonry_grid_include_render',
 	'vc_include_field_render', 10, 1 ); // Render exact product. Must return an array (label,value)
+
+
+// Narrow data taxonomies
+add_filter( 'vc_autocomplete_vc_basic_grid_taxonomies_callback',
+	'vc_autocomplete_taxonomies_field_search', 10, 1 );
+add_filter( 'vc_autocomplete_vc_basic_grid_taxonomies_render',
+	'vc_autocomplete_taxonomies_field_render', 10, 1 );
+
+add_filter( 'vc_autocomplete_vc_masonry_grid_taxonomies_callback',
+	'vc_autocomplete_taxonomies_field_search', 10, 1 );
+add_filter( 'vc_autocomplete_vc_masonry_grid_taxonomies_render',
+	'vc_autocomplete_taxonomies_field_render', 10, 1 );
+
+// Narrow data taxonomies for exclude_filter
+add_filter( 'vc_autocomplete_vc_basic_grid_exclude_filter_callback',
+	'vc_autocomplete_taxonomies_field_search', 10, 1 );
+add_filter( 'vc_autocomplete_vc_basic_grid_exclude_filter_render',
+	'vc_autocomplete_taxonomies_field_render', 10, 1 );
+
+add_filter( 'vc_autocomplete_vc_masonry_grid_exclude_filter_callback',
+	'vc_autocomplete_taxonomies_field_search', 10, 1 );
+add_filter( 'vc_autocomplete_vc_masonry_grid_exclude_filter_render',
+	'vc_autocomplete_taxonomies_field_render', 10, 1 );
+/**
+ * @since 4.5.2
+ *
+ * @param $term
+ *
+ * @return array|bool
+ */
+function vc_autocomplete_taxonomies_field_render( $term ) {
+	$vc_taxonomies_types = vc_taxonomies_types();
+	$terms = get_terms( array_keys( $vc_taxonomies_types ), array(
+		'include' => array( $term['value'] ),
+		'hide_empty' => false,
+	) );
+	$data = false;
+	if ( is_array( $terms ) && 1 === count( $terms ) ) {
+		$term = $terms[0];
+		$data = vc_get_term_object( $term );
+	}
+
+	return $data;
+}
+
+/**
+ * @since 4.5.2
+ *
+ * @param $search_string
+ *
+ * @return array|bool
+ */
+function vc_autocomplete_taxonomies_field_search( $search_string ) {
+	$data = array();
+	$vc_filter_by = vc_post_param( 'vc_filter_by', '' );
+	$vc_taxonomies_types = strlen( $vc_filter_by ) > 0 ? array( $vc_filter_by ) : array_keys( vc_taxonomies_types() );
+	$vc_taxonomies = get_terms( $vc_taxonomies_types, array(
+		'hide_empty' => false,
+		'search' => $search_string
+	) );
+	if ( is_array( $vc_taxonomies ) && ! empty( $vc_taxonomies ) ) {
+		foreach ( $vc_taxonomies as $t ) {
+			if ( is_object( $t ) ) {
+				$data[] = vc_get_term_object( $t );
+			}
+		}
+	}
+
+	return $data;
+}
+
 /**
  * @param $search
  * @param $wp_query
@@ -4714,12 +5014,14 @@ function vc_include_field_search( $search_string ) {
 	}
 	add_filter( 'posts_search', 'vc_search_by_title_only', 500, 2 );
 	$posts = get_posts( $args );
-	foreach ( $posts as $post ) {
-		$data[] = array(
-			'value' => $post->ID,
-			'label' => $post->post_title,
-			'group' => $post->post_type,
-		);
+	if ( is_array( $posts ) && ! empty( $posts ) ) {
+		foreach ( $posts as $post ) {
+			$data[] = array(
+				'value' => $post->ID,
+				'label' => $post->post_title,
+				'group' => $post->post_type,
+			);
+		}
 	}
 
 	return $data;
@@ -4768,12 +5070,14 @@ function vc_exclude_field_search( $data_arr ) {
 	}
 	add_filter( 'posts_search', 'vc_search_by_title_only', 500, 2 );
 	$posts = get_posts( $args );
-	foreach ( $posts as $post ) {
-		$data[] = array(
-			'value' => $post->ID,
-			'label' => $post->post_title,
-			'group' => $post->post_type,
-		);
+	if ( is_array( $posts ) && ! empty( $posts ) ) {
+		foreach ( $posts as $post ) {
+			$data[] = array(
+				'value' => $post->ID,
+				'label' => $post->post_title,
+				'group' => $post->post_type,
+			);
+		}
 	}
 
 	return $data;
@@ -4862,8 +5166,8 @@ class VcSharedLibrary {
 		'3D' => '3d',
 	);
 
-    /**
-     * Toggle styles
+	/**
+	 * Toggle styles
 	 * @var array
 	 */
 	public static $toggle_styles = array(
@@ -4876,7 +5180,22 @@ class VcSharedLibrary {
 		'Square' => 'square',
 		'Square Outline' => 'square_outline',
 		'Arrow' => 'arrow',
-		'Text Only' => 'text_only'
+		'Text Only' => 'text_only',
+	);
+
+	/**
+	 * Animation styles
+	 * @var array
+	 */
+	public static $animation_styles = array(
+		'Bounce' => 'easeOutBounce',
+		'Elastic' => 'easeOutElastic',
+		'Back' => 'easeOutBack',
+		'Cubic' => 'easeinOutCubic',
+		'Quint' => 'easeinOutQuint',
+		'Quart' => 'easeOutQuart',
+		'Quad' => 'easeinQuad',
+		'Sine' => 'easeOutSine'
 	);
 
 	/**
@@ -4949,11 +5268,16 @@ class VcSharedLibrary {
 		'Shadow' => 'vc_box_shadow',
 		'Bordered shadow' => 'vc_box_shadow_border',
 		'3D Shadow' => 'vc_box_shadow_3d',
-		'Circle' => 'vc_box_circle', //new
-		'Circle Border' => 'vc_box_border_circle', //new
-		'Circle Outline' => 'vc_box_outline_circle', //new
-		'Circle Shadow' => 'vc_box_shadow_circle', //new
-		'Circle Border Shadow' => 'vc_box_shadow_border_circle' //new
+		'Round' => 'vc_box_circle', //new
+		'Round Border' => 'vc_box_border_circle', //new
+		'Round Outline' => 'vc_box_outline_circle', //new
+		'Round Shadow' => 'vc_box_shadow_circle', //new
+		'Round Border Shadow' => 'vc_box_shadow_border_circle', //new
+		'Circle' => 'vc_box_circle_2', //new
+		'Circle Border' => 'vc_box_border_circle_2', //new
+		'Circle Outline' => 'vc_box_outline_circle_2', //new
+		'Circle Shadow' => 'vc_box_shadow_circle_2', //new
+		'Circle Border Shadow' => 'vc_box_shadow_border_circle_2' //new
 	);
 
 	/**
@@ -5001,6 +5325,13 @@ class VcSharedLibrary {
 	/**
 	 * @return array
 	 */
+	public static function getAnimationStyles() {
+		return self::$animation_styles;
+	}
+
+	/**
+	 * @return array
+	 */
 	public static function getCtaStyles() {
 		return self::$cta_styles;
 	}
@@ -5039,6 +5370,30 @@ class VcSharedLibrary {
 	public static function getBoxStyles() {
 		return self::$box_styles;
 	}
+
+	public static function getColorsDashed() {
+		$colors = array(
+			__( 'Blue', 'js_composer' ) => 'blue',
+			__( 'Turquoise', 'js_composer' ) => 'turquoise',
+			__( 'Pink', 'js_composer' ) => 'pink',
+			__( 'Violet', 'js_composer' ) => 'violet',
+			__( 'Peacoc', 'js_composer' ) => 'peacoc',
+			__( 'Chino', 'js_composer' ) => 'chino',
+			__( 'Mulled Wine', 'js_composer' ) => 'mulled-wine',
+			__( 'Vista Blue', 'js_composer' ) => 'vista-blue',
+			__( 'Black', 'js_composer' ) => 'black',
+			__( 'Grey', 'js_composer' ) => 'grey',
+			__( 'Orange', 'js_composer' ) => 'orange',
+			__( 'Sky', 'js_composer' ) => 'sky',
+			__( 'Green', 'js_composer' ) => 'green',
+			__( 'Juicy pink', 'js_composer' ) => 'juicy-pink',
+			__( 'Sandy brown', 'js_composer' ) => 'sandy-brown',
+			__( 'Purple', 'js_composer' ) => 'purple',
+			__( 'White', 'js_composer' ) => 'white'
+		);
+
+		return $colors;
+	}
 }
 
 //VcSharedLibrary::getColors();
@@ -5051,6 +5406,10 @@ function getVcShared( $asset = '' ) {
 	switch ( $asset ) {
 		case 'colors':
 			return VcSharedLibrary::getColors();
+			break;
+
+		case 'colors-dashed':
+			return VcSharedLibrary::getColorsDashed();
 			break;
 
 		case 'icons':
@@ -5093,9 +5452,13 @@ function getVcShared( $asset = '' ) {
 			return VcSharedLibrary::getBoxStyles();
 			break;
 
-        case 'toggle styles':
-            return VcSharedLibrary::getToggleStyles();
-            break;
+		case 'toggle styles':
+			return VcSharedLibrary::getToggleStyles();
+			break;
+
+		case 'animation styles':
+			return VcSharedLibrary::getAnimationStyles();
+			break;
 
 		default:
 			# code...
@@ -5104,6 +5467,3 @@ function getVcShared( $asset = '' ) {
 
 	return '';
 }
-
-//Include icon 'shortcode'
-include_once "shortcode-vc-icon-element.php";

@@ -73,7 +73,8 @@ class Vc_Templates_Editor_Grid_Item extends Vc_Templates_Panel_Editor {
 		ob_start();
 		?>
 		<div class="vc_template-wrapper" data-template_id="<?php echo esc_attr( $template_data['unique_id'] ); ?>">
-			<a data-template-handler="true" class="vc_template-display-title vc_form-control" href="javascript:;"><?php echo esc_html( $template_name ); ?></a></div>
+			<a data-template-handler="true" class="vc_template-display-title vc_form-control"
+			   href="javascript:;"><?php echo esc_html( $template_name ); ?></a></div>
 		<?php
 		return ob_get_clean();
 	}
@@ -100,7 +101,7 @@ class Vc_Templates_Editor_Grid_Item extends Vc_Templates_Panel_Editor {
 		if ( ! empty( $grid_templates ) ) {
 			$arr_category = array(
 				'category' => 'grid_templates',
-				'category_name' => __('Grid Templates','js_composer'),
+				'category_name' => __( 'Grid Templates', 'js_composer' ),
 				'category_weight' => 10,
 			);
 			$category_templates = array();

@@ -84,7 +84,7 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	/**
 	 * @var string
 	 */
-	protected static $brand_url = 'http://vc.wpbakery.com/?utm_campaign=VCplugin_header&utm_source=vc_user&utm_medium=frontend_editor';
+	protected static $brand_url = 'http://vc.wpbakery.com/?utm_campaign=VCplugin&utm_source=vc_user&utm_medium=frontend_editor';
 
 	/**
 	 *
@@ -217,10 +217,10 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 			vc_include_template( 'editors/partials/post_shortcodes.tpl.php', array( 'editor' => $this ) );
 			$post_shortcodes = ob_get_clean();
 			$GLOBALS['vc_post_content'] = '<script type="template/html" id="vc_template-post-content" style="display:none">'
-			                      . urlencode( apply_filters( 'the_content', $post_content ) )
-			                      . '</script>'
-			                      . $post_shortcodes;
-			                     // . '<span id="vc_inline-anchor" style="display:none !important;"></span>';
+			                              . rawurlencode( apply_filters( 'the_content', $post_content ) )
+			                              . '</script>'
+			                              . $post_shortcodes;
+			// . '<span id="vc_inline-anchor" style="display:none !important;"></span>';
 			// We already used the_content filter, we need to remove it to avoid double-using
 			remove_all_filters( 'the_content' );
 			// Used for just returning $post->post_content
@@ -243,7 +243,8 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	 */
 	public function editableContent( $content ) {
 		// same addContentAnchor
-		do_shortcode($content);
+		do_shortcode( $content ); // this will not be outputted, but this is needed to enqueue needed js/styles.
+		
 		return '<span id="vc_inline-anchor" style="display:none !important;"></span>';
 	}
 
@@ -251,14 +252,16 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	 * @param string $url
 	 * @param string $id
 	 *
-	 * vc_filter: vc_get_inline_url - filter to edit frontend editor url (can be used for example in vendors like qtranslate do)
+	 * vc_filter: vc_get_inline_url - filter to edit frontend editor url (can be used for example in vendors like
+	 *     qtranslate do)
+	 *
 	 * @return mixed|void
 	 */
 	public static function getInlineUrl( $url = '', $id = '' ) {
 		$the_ID = ( strlen( $id ) > 0 ? $id : get_the_ID() );
 
 		return apply_filters( 'vc_get_inline_url', admin_url() .
-		                                           'edit.php?vc_action=vc_inline&post_id=' .
+		                                           'post.php?vc_action=vc_inline&post_id=' .
 		                                           $the_ID . '&post_type=' . get_post_type( $the_ID ) .
 		                                           ( strlen( $url ) > 0 ? '&url=' . rawurlencode( $url ) : '' ) );
 	}
@@ -365,9 +368,10 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	 *
 	 * @return bool
 	 */
-	public function allowInsertEmptyPost($allow_empty) {
+	public function allowInsertEmptyPost( $allow_empty ) {
 		return false;
 	}
+
 	/**
 	 * vc_filter: vc_frontend_editor_iframe_url - hook to edit iframe url, can be used in vendors like qtranslate do.
 	 */
@@ -388,7 +392,7 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 				'post_status' => 'draft',
 				'post_title' => ''
 			); // , 'post_title' => __('No title', 'js_composer')
-			add_filter('wp_insert_post_empty_content', array($this, 'allowInsertEmptyPost'));
+			add_filter( 'wp_insert_post_empty_content', array( $this, 'allowInsertEmptyPost' ) );
 			wp_update_post( $post_data, true );
 			$this->post->post_status = 'draft';
 			$this->post->post_title = '';
@@ -584,7 +588,7 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'waypoints' );
-		wp_enqueue_script( 'wpb_scrollTo_js', vc_asset_url( 'lib/scrollTo/jquery.scrollTo.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_enqueue_script( 'wpb_scrollTo_js', vc_asset_url( 'lib/bower/scrollTo/jquery.scrollTo.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
 		wp_enqueue_style( 'js_composer_custom_css' );
 
 		wp_enqueue_script( 'wpb_php_js', vc_asset_url( 'lib/php.default/php.default.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
@@ -678,14 +682,18 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 		$output = '';
 		foreach ( $shortcodes as $shortcode ) {
 			if ( isset( $shortcode['id'] ) && isset( $shortcode['string'] ) ) {
-				$shortcode_obj = visual_composer()->getShortCode( $shortcode['tag'] );
-				$output .= '<div data-type="element" data-model-id="' . $shortcode['id'] . '">';
-				$is_container = $shortcode_obj->settings( 'is_container' ) || ( $shortcode_obj->settings( 'as_parent' ) != null && $shortcode_obj->settings( 'as_parent' ) !== false );
-				if ( $is_container ) {
-					$shortcode['string'] = preg_replace( '/\]/', '][vc_container_anchor]', $shortcode['string'], 1 );
+				if ( isset( $shortcode['tag'] ) ) {
+					$shortcode_obj = visual_composer()->getShortCode( $shortcode['tag'] );
+					if ( is_object( $shortcode_obj ) ) {
+						$output .= '<div data-type="element" data-model-id="' . $shortcode['id'] . '">';
+						$is_container = $shortcode_obj->settings( 'is_container' ) || ( $shortcode_obj->settings( 'as_parent' ) != null && $shortcode_obj->settings( 'as_parent' ) !== false );
+						if ( $is_container ) {
+							$shortcode['string'] = preg_replace( '/\]/', '][vc_container_anchor]', $shortcode['string'], 1 );
+						}
+						$output .= '<div class="vc_element"' . self::cleanStyle() . ' data-shortcode-controls="' . esc_attr( json_encode( $shortcode_obj->shortcodeClass()->getControlsList() ) ) . '" data-container="' . $is_container . '" data-model-id="' . $shortcode['id'] . '">' . $this->wrapperStart() . do_shortcode( stripslashes( $shortcode['string'] ) ) . $this->wrapperEnd() . '</div>';
+						$output .= '</div>';
+					}
 				}
-				$output .= '<div class="vc_element"' . self::cleanStyle() . ' data-shortcode-controls="' . esc_attr( json_encode( $shortcode_obj->shortcodeClass()->getControlsList() ) ) . '" data-container="' . $is_container . '" data-model-id="' . $shortcode['id'] . '">' . $this->wrapperStart() . do_shortcode( stripslashes( $shortcode['string'] ) ) . $this->wrapperEnd() . '</div>';
-				$output .= '</div>';
 			}
 		}
 		echo apply_filters( 'vc_front_render_shortcodes', $output );
@@ -732,7 +740,7 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'jquery-ui-accordion' );
 		wp_enqueue_script( 'jquery-ui-autocomplete' );
-		wp_enqueue_script( 'vc_bootstrap_js', vc_asset_url( 'lib/bootstrap3/dist/js/bootstrap.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_enqueue_script( 'vc_bootstrap_js', vc_asset_url( 'lib/bower/bootstrap3/dist/js/bootstrap.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
 		wp_enqueue_script( 'farbtastic' );
 		// wp_enqueue_script('isotope');
 		wp_enqueue_script( 'wpb_scrollTo_js' );
@@ -774,14 +782,34 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	 */
 	function enqueueMappedShortcode() {
 		foreach ( WPBMap::getUserShortCodes() as $shortcode ) {
-			if ( ! empty( $shortcode['front_enqueue_js'] ) ) {
-				wp_enqueue_script( 'front_enqueue_js_' . $shortcode['base'], $shortcode['front_enqueue_js'], array( 'vc_inline_custom_view_js' ), WPB_VC_VERSION, true );
+			$param = isset( $shortcode['front_enqueue_js'] ) ? $shortcode['front_enqueue_js'] : null;
+			if ( is_array( $param ) && ! empty( $param ) ) {
+				foreach ( $param as $value ) {
+					$this->enqueueMappedShortcodeJs( $value );
+				}
+			} elseif ( is_string( $param ) && ! empty( $param ) ) {
+				$this->enqueueMappedShortcodeJs( $param );
 			}
-			if ( ! empty( $shortcode['front_enqueue_css'] ) ) {
-				wp_enqueue_style( 'front_enqueue_css_' . $shortcode['base'], $shortcode['front_enqueue_css'], array( 'vc_inline_css' ), WPB_VC_VERSION, 'all' );
+
+			$param = isset( $shortcode['front_enqueue_css'] ) ? $shortcode['front_enqueue_css'] : null;
+			if ( is_array( $param ) && ! empty( $param ) ) {
+				foreach ( $param as $value ) {
+					$this->enqueueMappedShortcodeCss( $value );
+				}
+			} elseif ( is_string( $param ) && ! empty( $param ) ) {
+				$this->enqueueMappedShortcodeCss( $param );
 			}
 		}
 	}
+
+	public function enqueueMappedShortcodeJs( $value ) {
+		wp_enqueue_script( 'front_enqueue_js_' . md5( $value ), $value, array( 'vc_inline_custom_view_js' ), WPB_VC_VERSION, true );
+	}
+
+	public function enqueueMappedShortcodeCss( $value ) {
+		wp_enqueue_style( 'front_enqueue_css_' . md5( $value ), $value, array( 'vc_inline_css' ), WPB_VC_VERSION );
+	}
+
 
 	/**
 	 * @param $content
@@ -800,24 +828,6 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 			}
 		}
 
-		echo $this->parseShortcodesString( $content );
-	}
-
-	/**
-	 * @since 4.2
-	 */
-	function getTemplateShortcodes() {
-		$template_id = vc_post_param( 'template_id' );
-
-		if ( ! isset( $template_id ) || $template_id == "" ) {
-			echo 'Error: TPL-02';
-			die();
-		}
-
-		$option_name = 'wpb_js_templates';
-		$saved_templates = get_option( $option_name );
-
-		$content = isset( $saved_templates[ $template_id ] ) ? $saved_templates[ $template_id ]['template'] : '';
 		echo $this->parseShortcodesString( $content );
 	}
 
@@ -848,7 +858,7 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 			if ( WPBMap::getParam( $s, 'content' ) !== false ) {
 				$shortcode['attrs']['content'] = $content;
 			}
-			$this->post_shortcodes[] = urlencode( json_encode( $shortcode ) );
+			$this->post_shortcodes[] = rawurlencode( json_encode( $shortcode ) );
 			$string .= $this->toString( $shortcode, $content );
 		}
 
@@ -865,9 +875,11 @@ Class Vc_Frontend_Editor implements Vc_Editor_Interface {
 	function toString( $shortcode, $content ) {
 		$shortcode_obj = visual_composer()->getShortCode( $shortcode['tag'] );
 		$is_container = $shortcode_obj->settings( 'is_container' ) || ( $shortcode_obj->settings( 'as_parent' ) != null && $shortcode_obj->settings( 'as_parent' ) !== false );
+		$shortcode = apply_filters( 'vc_frontend_editor_to_string', $shortcode, $shortcode_obj );
 
 		$output = ( '<div class="vc_element" data-tag="' . $shortcode['tag'] . '" data-shortcode-controls="' . esc_attr( json_encode( $shortcode_obj->shortcodeClass()->getControlsList() ) ) . '" data-model-id="' . $shortcode['id'] . '"' . self::cleanStyle() . '>' . $this->wrapperStart()
-		            . '[' . $shortcode['tag'] . ' ' . $shortcode['attrs_query'] . ']' . ( $is_container ? '[vc_container_anchor]' . $this->parseShortcodesString( $content, $is_container, $shortcode['id'] ) : do_shortcode( $content ) ) . '[/' . $shortcode['tag'] . ']' . $this->wrapperEnd() . '</div>' );
+		            . '[' . $shortcode['tag'] . ' ' . $shortcode['attrs_query'] . ']' . ( $is_container ? '[vc_container_anchor]' . $this->parseShortcodesString( $content, $is_container, $shortcode['id'] ) : do_shortcode( $content ) ) . '[/' . $shortcode['tag'] . ']'
+		            . $this->wrapperEnd() . '</div>' );
 
 		return $output;
 	}

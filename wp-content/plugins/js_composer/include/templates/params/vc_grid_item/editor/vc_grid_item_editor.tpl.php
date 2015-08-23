@@ -7,7 +7,8 @@ $nav_bar->render();
 <div class="metabox-composer-content">
 	<div id="visual_composer_content" class="wpb_main_sortable main_wrapper"
 	     data-type="<?php echo esc_attr( get_post_type() ) ?>"></div>
-	<div id="vc_gitem-preview" class="main_wrapper vc_gitem-preview" data-vc-grid-item="preview"></div>
+	<div id="vc_gitem-preview" class="main_wrapper vc_gitem-preview" data-vc-grid-item="preview">
+	</div>
 </div>
 <input type="hidden" name="vc_js_composer_group_access_show_rule" class="vc_js_composer_group_access_show_rule"
        value="<?php echo $editor->showRulesValue() ?>"/>

@@ -680,32 +680,20 @@ var $variations = $(".product-single .variations select");
 
 
 		// Add to wishlist
+		var $yatw = $( '.yith-add-to-wishlist' );
+		
+		$( 'body' ).on( 'added_to_wishlist', function( ev ) {
+			$yatw.removeClass('is-loading');
+			$yatw.parent().addClass('wishlisted');
+		} );
+		
 		$(".yith-add-to-wishlist").each(function(i, el)
 		{
-			var $this = $(el),
-				url = $this.data('listid'),
-				id = url.match(/add_to_wishlist=([0-9]+)/);
-
-			if(id.length)
-				id = id[1];
-
-			$this.on('click', function(ev)
+			$( el ).on('click', function(ev)
 			{
 				ev.preventDefault();
 
-				$this.addClass('is-loading');
-
-				$.post(url, {}, function(resp, textStatus, xhr)
-				{
-					$this.removeClass('is-loading');
-
-					if(resp.match(/true\#\#/) || resp.match(/exists\#\#/) || resp.match(/DOCTYPE html/))
-					{
-						$this.parent().addClass('wishlisted');
-
-						$("#product-"+id+" .yith-wcwl-wishlistexistsbrowse").removeClass('hide').hide().slideDown();
-					}
-				});
+				$( el ).addClass('is-loading');
 			});
 		});
 
@@ -753,7 +741,12 @@ var $variations = $(".product-single .variations select");
 			$menu_top_search.on('click', 'a', function(ev)
 			{
 				ev.preventDefault();
-
+				
+				if( $mts_input_real.val().length > 0 ) {
+					$menu_top_search.submit();
+					return;
+				}
+				
 				if($mts_input_real.val().length && ! $mts_input.is(':visible'))
 				{
 					$menu_top_search.submit();
@@ -1113,6 +1106,15 @@ var $variations = $(".product-single .variations select");
 			$quantity.val(newVal);
 		});
 		
+		
+		
+		$( "#yith-wcwl-form .show-title-form" ).on( 'click', function( ev ) {
+			ev.preventDefault();
+			
+			$( this ).next().slideToggle( 'fast', function() {
+				$( this ).parent().find( '.form-control ').focus();
+			} );
+		} );
 	});
 
 

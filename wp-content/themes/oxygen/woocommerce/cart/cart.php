@@ -199,7 +199,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 		<div class="col-md-4">
 
-			<?php do_action( 'woocommerce_cart_contents' ); ?>
+			<?php #do_action( 'woocommerce_cart_contents' ); ?>
 
 			<span class="up cart-totals-title"><?php _e('Cart Totals', 'oxygen'); ?></span>
 
@@ -277,7 +277,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 						<img src="<?php echo THEMEASSETS; ?>images/cutar_sep.png" />
 					</div>
 
-					<label for="coupon_code up"><?php _e( 'Have a Coupon?', 'woocommerce' ); ?>:</label>
+					<label for="coupon_code up"><?php _e( 'Have a Coupon?', 'oxygen' ); ?>:</label>
 
 					<form method="post" id="coupon-code-form">
 
@@ -285,7 +285,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							<input type="text" name="coupon_code" class="input-text form-control" value="" placeholder="<?php _e( 'Coupon code', 'oxygen' ); ?>">
 
 							<span class="input-group-btn">
-								<button type="submit" name="apply_coupon" class="btn btn-black"><?php _e('Apply', 'woocommerce'); ?></button>
+								<button type="submit" name="apply_coupon" class="btn btn-black"><?php _e('Apply', 'oxygen'); ?></button>
 							</span>
 						</div>
 

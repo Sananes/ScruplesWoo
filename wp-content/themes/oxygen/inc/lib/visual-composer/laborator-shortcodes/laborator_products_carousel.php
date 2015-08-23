@@ -12,7 +12,11 @@ class WPBakeryShortCode_laborator_products_carousel extends  WPBakeryShortCode
 	public function content($atts, $content = null)
 	{
 		global $parsed_from_vc, $quickview_enabled, $row_clear, $is_products_carousel, $quickview_wp_query;
-
+		
+		if( function_exists( 'vc_map_get_attributes' ) ) {
+			$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
+		}
+		
 		extract(shortcode_atts(array(
 			'products_query' => '',
 			'product_types_to_show' => '',

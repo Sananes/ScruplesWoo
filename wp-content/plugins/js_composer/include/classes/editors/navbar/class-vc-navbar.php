@@ -18,7 +18,7 @@ Class Vc_Navbar implements Vc_Render {
 	/**
 	 * @var string
 	 */
-	protected $brand_url = 'http://vc.wpbakery.com/?utm_campaign=VCplugin_header&utm_source=vc_user&utm_medium=backend_editor';
+	protected $brand_url = 'http://vc.wpbakery.com/?utm_campaign=VCplugin&utm_source=vc_user&utm_medium=backend_editor';
 	/**
 	 * @var string
 	 */

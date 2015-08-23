@@ -53,16 +53,16 @@
     &.bring-to-front {
         z-index: 100000;
     }
-    &.vc_active, &.vc_hold-active  {
+    &.vc_active:not(.vc_tta-panel), &.vc_hold-active  {
         > .vc_controls {
             visibility: visible;
-            opacity: 0.7;
+            .opacity(0.7);
         }
     }
     &:hover, &.vc_hover, &.vc_hold-hover {
         > .vc_controls {
             visibility: visible;
-            opacity: 1;
+            .opacity(1);
         }
         .wpb_row() {
             > .wpb_row {

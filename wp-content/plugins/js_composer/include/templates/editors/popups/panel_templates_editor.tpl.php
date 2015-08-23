@@ -40,10 +40,10 @@
 								       id="vc_template-name"
 								       placeholder="<?php _e( 'Template name', 'js_composer' ) ?>">
 								<button id="vc_template-save"
-								        class="vc_btn vc_btn-primary vc_btn-sm"><?php _e( 'Save template', 'js_composer' ) ?></button>
+								        class="vc_btn vc_btn-primary vc_btn-sm"><?php _e( 'Save Template', 'js_composer' ) ?></button>
 							</div>
 								<span
-									class="vc_description"><?php _e( 'Save your layout and reuse it on different sections of your website', 'js_composer' ) ?></span>
+									class="vc_description"><?php _e( 'Save layout and reuse it on different sections of this site.', 'js_composer' ) ?></span>
 						</div>
 						<div class="vc_col-sm-12 vc_column">
 							<div class="wpb_element_label"><?php _e( 'Load Template', 'js_composer' ) ?></div>

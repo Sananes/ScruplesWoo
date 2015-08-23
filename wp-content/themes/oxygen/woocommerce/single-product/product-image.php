@@ -114,7 +114,8 @@ $attachment_ids = $product->get_gallery_attachment_ids();
 					if ( ! $image_link )
 						continue;
 
-					$image = laborator_show_img($image_link, apply_filters('oxygen_shop_single_thumb', 'shop-thumb-4'));
+					#$image = laborator_show_img($image_link, apply_filters('oxygen_shop_single_thumb', 'shop-thumb-4'));
+					$image = remove_wh(wp_get_attachment_image($attachment_id, apply_filters('oxygen_shop_single_thumb', 'shop-thumb-4')));
 					$image = preg_replace('/alt="'.apply_filters('oxygen_shop_single_thumb', 'shop-thumb-4').'"/i', 'alt="'.esc_attr($image_title).'"', $image);
 
 					echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image zoom hidden" data-lightbox-gallery="main-images">%s %s</a>', $image_link, $image, $zoom ), $post->ID );

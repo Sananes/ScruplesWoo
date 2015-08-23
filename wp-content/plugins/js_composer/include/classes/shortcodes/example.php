@@ -19,7 +19,8 @@
 /**
  * Shortcode class example "Hello World"
  *
- * Lets pretend that we want to create shortcode with this structure: [my_hello_world foo="bar"]Shortcode content here[/my_hello_world]
+ * Lets pretend that we want to create shortcode with this structure: [my_hello_world foo="bar"]Shortcode content
+ * here[/my_hello_world]
  */
 class WPBakeryShortCode_my_hello_world extends WPBakeryShortCode {
 
