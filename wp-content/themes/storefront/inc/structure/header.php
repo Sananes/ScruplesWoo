@@ -29,16 +29,19 @@ if ( ! function_exists( 'storefront_site_branding' ) ) {
 	 * @since  1.0.0
 	 * @return void
 	 */
-	function storefront_site_branding() { ?>
-
-			<div class="site-branding"><?php // jetpack_the_site_logo(); ?><a class="site-logo-link" href="<?php bloginfo('url'); ?>"><img src="<?php bloginfo('template_directory');?>/images/logo.png"></a></div>
-		
-<!-- 			<div class="site-branding">
+	function storefront_site_branding() {
+		if ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) {
+			jetpack_the_site_logo();
+		} else { ?>
+			<div class="site-branding">
 				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<p class="site-description"><?php bloginfo( 'description' ); ?></p>
-			</div> -->
+				<?php if ( '' != get_bloginfo( 'description' ) ) { ?>
+					<p class="site-description"><?php echo bloginfo( 'description' ); ?></p>
+				<?php } ?>
+			</div>
 		<?php }
 	}
+}
 
 if ( ! function_exists( 'storefront_primary_navigation' ) ) {
 	/**

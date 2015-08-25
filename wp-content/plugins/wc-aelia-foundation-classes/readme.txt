@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, utility
 Requires at least: 3.6
 Tested up to: 4.2
-Stable tag: 1.5.19.150625
+Stable tag: 1.6.5.150822
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,38 @@ Should you have any question about this product, please feel free to [contact us
 For more information about installation and management of plugins, please refer to [WordPress documentation](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 1.6.5.150822 =
+* Fixed reference to logger class in IP2Location::update_database().
+
+= 1.6.4.150820 =
+* Improved performance of requirement checking class.
+
+= 1.6.3.150815 =
+* Added new Aelia_Plugin::is_frontend() method. This method will allow plugins to implement their custom logic to determine if they are working on a frontend page.
+
+= 1.6.2.150731 =
+* Improved geolocation features:
+	* Added message explaining how the new geolocation system works.
+	* Fixed bug in the installation of the Geolocation database.
+* Improved requirement checking class.
+* Added language files.
+
+= 1.6.1.150728 =
+* Improved geolocation:
+	* Removed geolocation DB from plugin package.
+	* Added automatic installation of geolocation database on activation.
+	* Improved error checking, to ensure that issues encountered during automatic update of geolocation DB won't cause crashes.
+	* Added caching of geolocation results.
+	* Improved logging mechanism.
+	* Added new method to retrieve visitor's State/county and city.
+* Added new "Admin Messages" feature. This feature will allow plugins to display admin messages in a simple and straightforward way.
+
+= 1.6.0.150724 =
+* Improved geolocation:
+	* Replaced MaxMind database with "City" one.
+	* Added automatic update of GeoIP database.
+	* Added functions to geolocate the city information.
 
 = 1.5.19.150625 =
 * Added new `Aelia_Plugin::editing_order()` method.

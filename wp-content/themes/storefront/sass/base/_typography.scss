@@ -24,13 +24,17 @@ body {
 body,
 button,
 input,
-select,
 textarea {
 	color: $color_body;
 	font-family: $base-font;
 	line-height: 1.618;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+select {
+	color: initial;
+	font-family: $base-font;
 }
 
 h1,
@@ -216,7 +220,7 @@ a {
 	font-weight: 700;
 
 	&:focus {
-		// outline: 2px solid $color_links;
+		outline: 1px solid $color_links;
 	}
 }
 

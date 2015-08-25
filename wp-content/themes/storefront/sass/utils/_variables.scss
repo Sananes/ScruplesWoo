@@ -15,11 +15,15 @@ $error: 			#e2401c;
 $success: 			#0f834d;
 $info: 				#3D9CD2;
 $vspacing: 			1.618em;
-$color_brand:		#e23373;
+
 $susy: (
 	columns: 12,
 	gutters: 1,
 	math: fluid,
 	output: float,
-	gutter-position: after
+	gutter-position: after,
+
+	use-custom: (
+		box-sizing: false
+	)
 );

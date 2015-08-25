@@ -1,8 +1,65 @@
 # Storefront Changelog
 
-### *2015.01.01* - 1.4.3
+### *2015.08.11* - 1.5.0
+* **New** - rtl support.
+* **New** - Integration with WooCommerce Deposits.
+* **New** - Pages now display featured images above the page title.
+* **New** - Revamped 404 page helpfulness to include product search, popular products and product ctegories.
+* **New** - Integration with WooCommerce Bundles extension.
+* **New** - Scrolling header cart.
+* **Fix** - Welcome screen now only visible to admins.
+* **Fix** - Horizontal scroll bar in Safari at small sizes.
+* **Fix** - Pay for order screen layout when using full width page template on my account.
+* **Fix** - Fixed display of disabled `option`s in Firefox.
+* **Dev** - Added `storefront_sanitize_checkbox()` sanitization function.
+* **Dev** - Added `Storefront_Custom_Radio_Image_Control` class for creating radio image controls in the Customizer.
+* **Dev** - Added `storefront_post_thumbnail()`.
+* **Dev** - Renamed `do_shortcode_func()` to `storefront_do_shortcode()`.
+* **Dev** - Updated Composite Products integration for compatibility with 3.2.
+* **Dev** - Updated normalize.css to 3.0.3.
+* **Tweak** - Menu button spacing on handheld.
+* **Tweak** - Button display in cart widgets.
+* **Tweak** - The 'Configure Menus' button in the welcome screen now points to the Customizer.
+
+### *2015.06.10* - 1.4.6
+* **Fix** - `font-family` delcaration on `select`s.
+* **Tweak** - Escaping function used on homepage section titles.
+* **Tweak** - Remove all instances of `do_shortcode()` to improve performance.
+* **Tweak** - Reduced link focus outline from 2px to 1px.
+* **Dev** - `$storefront_version` global when using a child theme.
+
+### *2015.05.14* - 1.4.5
+* **Fix** - Use the correct escaping function in `storefront_product_categories()`.
+* **Fix** - Pagination when only showing product categories / subcategories on archives.
+* **Tweak** - Logo prompt in Header section in Customizer.
+* **Tweak** - Only output description paragraph in header if one is set.
+* **Tweak** - Updated header image dimension recommendation.
+* **Tweak** - Dismissible notices.
+* **Tweak** - Debug notices in WooCommerce message. Props @WPprodigy.
+* **Dev** - Bump npm susy to 2.2.3.
+* **Dev** - Made `Layout_Picker_Storefront_Control` class pluggable. Props @niravmehta
+* **Dev** - Added order and orderby parameters to homepage featured products template tag.
+* **Dev** - Added before/after hooks inside homepage product sections.
+
+### *2015.04.23* - 1.4.4
+* **Fix** - Post author styles applied to incorrect child comments. Props @ibndawood.
+* **Fix** - Third level dropdowns (and beyond) are now revealed in the correct situation.
+* **Fix** - Header margin on homepage template when WooCommerce isn't activated.
+* **Fix** - Dropdowns on touch devices.
+* **Fix** - Pagination hidden correctly when only displaying categories / subcategories.
+* **Tweak** - Output WooCommerce messages on all appropriate pages.
+* **Tweak** - Revamped 'Enhance' section of welcome screen.
+* **Localisation** - Translation files are now included.
+
+### *2015.04.08* - 1.4.3
+* **Fix** - Star rating display in Safari.
 * **Tweak** - Cart dropdown appears on focus.
 * **Tweak** - Payment form layout/styling when paying from My Account.
+* **Tweak** - Improvements to the product archive sorting / pagination layout and styling.
+* **Tweak** - Layered nav list item styling.
+* **Tweak** - Product meta styling.
+* **Tweak** - Heading and Star Rating size on product loops.
+* **Dev** - Updated node-sass and grunt-sass dependency versions.
 
 ### *2015.03.24* - 1.4.2
 * **Fix** - Navigation not displaying if no menu is assigned to primary location.
