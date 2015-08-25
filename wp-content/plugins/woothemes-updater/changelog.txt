@@ -1,5 +1,24 @@
 *** WooThemes Helper Changelog ***
 
+2015.07.07 - version 1.5.9
+ * Fix - Deactivate/Activate nonce check fail on network installs
+
+2015.06.26 - version 1.5.8
+ * Fix - Deactivate plugins nonce issue
+
+2015.05.21 - version 1.5.7
+ * Fix - WooThemes Helper update message not going away
+
+2015.05.15 - version 1.5.6
+ * Fix - JS error on non helper pages
+
+2015.05.05 - version 1.5.5
+ * Fix - Can't activate licenses on a Multisite
+ * Tweak - Copy & links on the Help tab
+
+2015.04.27 - version 1.5.4
+ * Fix - Empty license table when using WP 4.2+
+
 2015.03.26 - version 1.5.3
  * Fix - Ensure there are no wp.org update clashes from products with same slugs.
  * Fix - Warnings when checking for updates in some instances.

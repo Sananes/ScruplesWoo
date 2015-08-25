@@ -10,11 +10,16 @@ body {
 	background-color: $body-background;
 }
 
+.clearfix {
+	@include clearfix;
+}
+
 /**
  * Header
  */
 .site-header {
 	background-color: #2c2d33;
+	padding-top: 2.618em;
 	color: #9aa0a7;
 	background-position: center center;
 	position: relative;
@@ -50,6 +55,12 @@ body {
 .no-wc-breadcrumb {
 	.site-header {
 		margin-bottom: 4.236em;
+	}
+
+	&.page-template-template-homepage {
+		.site-header {
+			margin-bottom: 0;
+		}
 	}
 }
 

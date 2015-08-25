@@ -47,7 +47,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				 * woocommerce_before_single_variation Hook
 				 */
 				do_action( 'woocommerce_before_single_variation' );
-					
+
 				/**
 				 * woocommerce_single_variation hook. Used to output the cart button and placeholder for variation data.
 				 * @since 2.4.0
@@ -55,7 +55,6 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				 * @hooked woocommerce_single_variation_add_to_cart_button - 20 Qty and cart button.
 				 */
 				do_action( 'woocommerce_single_variation' );
-
 
 				/**
 				 * woocommerce_after_single_variation Hook

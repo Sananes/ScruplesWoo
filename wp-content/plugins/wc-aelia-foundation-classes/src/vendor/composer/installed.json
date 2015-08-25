@@ -6,18 +6,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/YahnisElsts/plugin-update-checker.git",
-            "reference": "81bbb6775b164d0f47cf4337f9234fbaec2d9809"
+            "reference": "155eff79642bb9996eeb6ef33ac06db8d5629847"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/81bbb6775b164d0f47cf4337f9234fbaec2d9809",
-            "reference": "81bbb6775b164d0f47cf4337f9234fbaec2d9809",
+            "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/155eff79642bb9996eeb6ef33ac06db8d5629847",
+            "reference": "155eff79642bb9996eeb6ef33ac06db8d5629847",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.0"
         },
-        "time": "2015-06-27 22:30:03",
+        "time": "2015-07-28 10:43:46",
         "type": "library",
         "installation-source": "source",
         "notification-url": "https://packagist.org/downloads/",
@@ -42,17 +42,17 @@
     },
     {
         "name": "maxmind/web-service-common",
-        "version": "v0.0.3",
-        "version_normalized": "0.0.3.0",
+        "version": "v0.0.4",
+        "version_normalized": "0.0.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/maxmind/web-service-common-php.git",
-            "reference": "cc395e9ecd585b3a3b6197cec219f432da21f1c6"
+            "reference": "f26fce5281290973beeeca3e33847887177dd138"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/cc395e9ecd585b3a3b6197cec219f432da21f1c6",
-            "reference": "cc395e9ecd585b3a3b6197cec219f432da21f1c6",
+            "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/f26fce5281290973beeeca3e33847887177dd138",
+            "reference": "f26fce5281290973beeeca3e33847887177dd138",
             "shasum": ""
         },
         "require": {
@@ -63,7 +63,7 @@
         "require-dev": {
             "phpunit/phpunit": "4.6.*"
         },
-        "time": "2015-06-30 18:56:25",
+        "time": "2015-07-21 20:07:31",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

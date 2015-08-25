@@ -74,7 +74,7 @@ abstract class ExchangeRatesModel implements IExchangeRatesModel {
 	 * @throws An Exception. This method must be implemented by descendant classes.
 	 */
 	protected function get_rate($base_currency, $currency) {
-		throw new Exception(__('Not implemented. Descandant classes must implement this method.'),
+		throw new Exception(__('Not implemented. Descendant classes must implement this method.'),
 												Definitions::TEXT_DOMAIN);
 	}
 

@@ -23,22 +23,10 @@
 	do_action( 'storefront_before_header' ); ?>
 
 	<header id="masthead" class="site-header" role="banner" <?php if ( get_header_image() != '' ) { echo 'style="background-image: url(' . esc_url( get_header_image() ) . ');"'; } ?>>
-	<div class="main-menu">
-		<?php storefront_secondary_navigation() ?>
-	</div>
-
 		<div class="col-full">
-	
 
-	<div class="header-center">
-		<?php storefront_product_search() ?>
-		<?php storefront_site_branding() ?>
-		<?php storefront_header_cart() ?>
-
-	</div>
-	<?php storefront_primary_navigation() ?>
 			<?php
-			/*
+			/**
 			 * @hooked storefront_skip_links - 0
 			 * @hooked storefront_social_icons - 10
 			 * @hooked storefront_site_branding - 20
@@ -46,12 +34,9 @@
 			 * @hooked storefront_product_search - 40
 			 * @hooked storefront_primary_navigation - 50
 			 * @hooked storefront_header_cart - 60
-			 
-			do_action( 'storefront_header' ); 
+			 */
+			do_action( 'storefront_header' ); ?>
 
-			*/
-			?>
-			
 		</div>
 	</header><!-- #masthead -->
 
@@ -59,7 +44,7 @@
 	/**
 	 * @hooked storefront_header_widget_region - 10
 	 */
-	// do_action( 'storefront_before_content' ); ?>
+	do_action( 'storefront_before_content' ); ?>
 
 	<div id="content" class="site-content" tabindex="-1">
 		<div class="col-full">

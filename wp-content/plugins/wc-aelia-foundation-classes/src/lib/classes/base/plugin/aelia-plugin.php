@@ -43,6 +43,9 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		// @var Aelia_SessionManager The session manager
 		protected $_session;
 
+		// @var bool Indicates if the setup process of the plugin is running
+		protected $running_setup = false;
+
 		protected $paths = array(
 			// This array will contain the paths used by the plugin
 		);
@@ -54,6 +57,23 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		// @var Aelia\WC\Logger The logger used by the class.
 		protected $logger;
 
+		// @var string The class name to use as a prefix for log messages.
+		protected $class_for_log = '';
+
+		/**
+		 * Returns the class name to use as a prefix for log messages.
+		 *
+		 * @return string
+		 * @since 1.6.1.150728
+		 */
+		protected function get_class_for_log() {
+			if(empty($this->class_for_log)) {
+				$reflection = new \ReflectionClass($this);
+				$this->class_for_log = $reflection->getShortName();
+			}
+			return $this->class_for_log;
+		}
+
 		/**
 		 * Logs a message.
 		 *
@@ -62,10 +82,24 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		 * are not saved if the "debug mode" flag is turned off.
 		 */
 		public function log($message, $debug = true) {
-			if(empty($this->logger)) {
-				$this->logger = new Logger(get_class());
-			}
+			// Prefix message with the class name, for easier identification
+			$message = sprintf('[%s] %s',
+												 $this->get_class_for_log(),
+												 $message);
 			$this->logger->log($message, $debug);
+		}
+
+		/**
+		 * Returns the instance of the logger used by the plugin.
+		 *
+		 * @return \Aelia\WC\Logger.
+		 * @since 1.6.1.150728
+		 */
+		public function get_logger() {
+			if(empty($this->logger)) {
+				$this->logger = new Logger(static::$plugin_slug);
+			}
+			return $this->logger;
 		}
 
 		/**
@@ -372,6 +406,9 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 			if(is_ssl()) {
 				// ...
 			}
+
+			// Set schedules, if needed
+			$this->set_cron_schedules();
 		}
 
 		/**
@@ -612,6 +649,24 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 		}
 
 		/**
+		 * Indicates if we are rendering a frontend page. In case of Ajax calls, this
+		 * method checks if the call was made in the backend by looking at its
+		 * arguments.
+		 *
+		 * @return bool
+		 * @since 1.6.3.15815
+		 */
+		public static function is_frontend() {
+			return !is_admin() || (
+				self::doing_ajax() &&
+				!in_array(strtolower(get_value('action', $_REQUEST)), array(
+					// The following actions are called in the backend. If they are used, then
+					// we are in the backend, regardless of the fact that we are using Ajax
+					'woocommerce_load_variations',
+				)));
+		}
+
+		/**
 		 * Indicates if we are preparing a report. The logic to determine which
 		 * report is being rendered was copied from WC_Admin_Reports class.
 		 *
@@ -660,6 +715,15 @@ if(!class_exists('Aelia\WC\Aelia_Plugin')) {
 				}
 			}
 			return false;
+		}
+
+		/**
+		 * Sets the Cron schedules required by the plugin.
+		 *
+		 * @since 1.6.0.150724
+		 */
+		protected function set_cron_schedules() {
+			// To be implemented by descendant class
 		}
 	}
 }
