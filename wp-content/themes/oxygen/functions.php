@@ -65,7 +65,7 @@ require 'inc/lib/laborator/laborator_gallerybox.php';
 require 'inc/lib/laborator/laborator_custom_css.php'; # New in v2.6
 require 'inc/lib/laborator/laborator-demo-content-importer/laborator_demo_content_importer.php'; # New in v2.6
 
-if(in_array('js_composer/js_composer.php', apply_filters('active_plugins', get_option('active_plugins'))) && function_exists('vc_add_params'))
+if(in_array('js_composer/js_composer.php', apply_filters('active_plugins', get_option('active_plugins'))))
 {
 	require 'inc/lib/visual-composer/config.php';
 	#require 'inc/lib/visual-composer/vc-modify.php';
@@ -127,3 +127,99 @@ $nav_menu_locations = get_theme_mod('nav_menu_locations');
 if( ! isset($nav_menu_locations['main-menu']) || $nav_menu_locations['main-menu'] == 0)
 	add_action('admin_notices', 'laborator_setup_menus_notice');
 
+// Custom Category
+
+class My_Category_Walker extends Walker_Category {
+
+  var $lev = -1;
+  var $skip = 0;
+  static $current_parent;
+
+  function start_lvl( &$output, $depth = 0, $args = array() ) {
+    $this->lev = 0;
+    $output .= "<ul class='sub-menu'>" . PHP_EOL;
+  }
+
+  function end_lvl( &$output, $depth = 0, $args = array() ) {
+    $output .= "</ul>" . PHP_EOL;
+    $this->lev = -1;
+  }
+
+  function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
+    extract($args);
+    $cat_name = esc_attr( $category->name );
+    $class_current = $current_class ? $current_class . ' ' : 'current ';
+    if ( ! empty($current_category) ) {
+      $_current_category = get_term( $current_category, $category->taxonomy );
+      if ( $category->term_id == $current_category ) $class = $class_current;
+      elseif ( $category->term_id == $_current_category->parent ) $class = rtrim($class_current) . '-parent ';
+    } else {
+      $class = '';
+    }
+    if ( ! $category->parent ) {
+      if ( ! get_term_children( $category->term_id, $category->taxonomy ) ) {
+          $this->skip = 1;
+      } else {
+        if ($class == $class_current) self::$current_parent = $category->term_id;
+        $output .= "<li id='main-menu' class='main-menu menu-item " . $class . $level_class . "'>" . PHP_EOL;
+        $output .= "<a href='" . esc_url( get_term_link($category) ) . "'>"  .$cat_name . "</a>" . PHP_EOL;
+      }
+    } else { 
+      if ( $this->lev == 0 && $category->parent) {
+        $link = get_term_link(intval($category->parent) , $category->taxonomy);
+        $stored_parent = intval(self::$current_parent);
+        $now_parent = intval($category->parent);
+        $all_class = ($stored_parent > 0 && ( $stored_parent === $now_parent) ) ? $class_current . ' all' : 'all';
+        $output .= "<li class='" . $all_class . "'><a href='" . $link . "'>" . __('All') . "</a></li>\n";
+        self::$current_parent = null;
+      }
+      $link = '<a href="' . esc_url( get_term_link($category) ) . '" >' . $cat_name . '</a>';
+      $output .= "<li";
+      $class .= $category->taxonomy . '-item ' . $category->taxonomy . '-item-' . $category->term_id;
+      $output .=  ' class="' . $class . '"';
+      $output .= ">" . $link;
+    }
+  }
+
+  function end_el( &$output, $page, $depth = 0, $args = array() ) {
+    $this->lev++;
+    if ( $this->skip == 1 ) {
+      $this->skip = 0;
+      return;
+    }
+    $output .= "</li>" . PHP_EOL;
+  }
+
+}
+
+function custom_list_categories( $args = '' ) {
+  $defaults = array(
+    'taxonomy' => 'category',
+    'show_option_none' => '',
+    'echo' => 1,
+    'depth' => 3,
+    'wrap_class' => '',
+    'level_class' => '',
+    'parent_title_format' => '%s',
+    'current_class' => 'current'
+  );
+  $r = wp_parse_args( $args, $defaults );
+  if ( ! isset( $r['wrap_class'] ) ) $r['wrap_class'] = ( 'category' == $r['taxonomy'] ) ? 'categories' : $r['taxonomy'];
+  extract( $r );
+  if ( ! taxonomy_exists($taxonomy) ) return false;
+  $categories = get_categories( $r );
+  $output = "<ul class='" . esc_attr( $wrap_class ) . " nav'>" . PHP_EOL;
+  if ( empty( $categories ) ) {
+    if ( ! empty( $show_option_none ) ) $output .= "<li>" . $show_option_none . "</li>" . PHP_EOL;
+  } else {
+    if ( is_category() || is_tax() || is_tag() ) {
+      $current_term_object = get_queried_object();
+      if ( $r['taxonomy'] == $current_term_object->taxonomy ) $r['current_category'] = get_queried_object_id();
+    }
+    $depth = $r['depth'];
+    $walker = new My_Category_Walker;
+    $output .= $walker->walk($categories, $depth, $r);
+  }
+  $output .= "</ul>" . PHP_EOL;
+  if ( $echo ) echo $output; else return $output;
+}

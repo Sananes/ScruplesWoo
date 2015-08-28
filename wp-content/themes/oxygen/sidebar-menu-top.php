@@ -105,7 +105,18 @@ if($top_menu_social)
 					</a>
 					<?php endif; ?>
 
-					<?php echo $main_menu; ?>
+												<?php
+								$args = array(
+								  'taxonomy' => 'product_cat',
+								  'show_option_none' => __('No Menu Items.'),
+								  'echo' => 1,
+								  'depth' => 2,
+								  'wrap_class' => 'product-categories',
+								  'level_class' => 'has-sub',
+								  'current_class' => 'current-menu-item'
+								);
+								custom_list_categories( $args );
+								?>
 
 					<?php if($has_megamenu == false && get_data('header_menu_search')): ?>
 					<form action="<?php echo home_url(); ?>" method="get" class="search-form" enctype="application/x-www-form-urlencoded">
@@ -153,8 +164,18 @@ if($top_menu_social)
 
 						<nav class="main-menu-env">
 
-							<?php echo $main_menu; ?>
-
+								<?php
+								$args = array(
+								  'taxonomy' => 'product_cat',
+								  'show_option_none' => __('No Menu Items.'),
+								  'echo' => 1,
+								  'depth' => 2,
+								  'wrap_class' => 'product-categories',
+								  'level_class' => 'has-sub',
+								  'current_class' => 'current-menu-item'
+								);
+								custom_list_categories( $args );
+								?>
 							<?php if(get_data('header_menu_search')): ?>
 							<form action="<?php echo home_url(); ?>" method="get" class="search-form" enctype="application/x-www-form-urlencoded">
 

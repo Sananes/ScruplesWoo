@@ -103,14 +103,26 @@ if($use_uploaded_logo)
 	</form>
 	<?php endif; ?>
 
-	<?php
-	wp_nav_menu(array(
-		'theme_location'  => 'main-menu',
-		'container'       => '',
-		'menu_class'      => 'nav'
-	));
+<?php
+	// wp_nav_menu(array(
+	// 	'theme_location'  => 'main-menu',
+	// 	'container'       => '',
+	// 	'menu_class'      => 'nav'
+	// ));
 	?>
 
+								<?php
+								$args = array(
+								  'taxonomy' => 'product_cat',
+								  'show_option_none' => __('No Menu Items.'),
+								  'echo' => 1,
+								  'depth' => 5,
+								  'wrap_class' => 'product-categories',
+								  'level_class' => 'menu-item-has-children',
+								  'current_class' => 'current-menu-item'
+								);
+								custom_list_categories( $args );
+								?>
 	<?php
 	if(get_data('cart_ribbon_show') && function_exists('WC')):
 
@@ -131,3 +143,4 @@ if($use_uploaded_logo)
 	<?php endif; ?>
 </div>
 <!-- / mobile menu -->
+

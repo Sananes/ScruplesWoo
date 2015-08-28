@@ -1,0 +1,1 @@
+[28-Aug-2015 08:04:27 UTC] PHP Warning:  htmlspecialchars_decode() expects parameter 1 to be string, array given in /home/scruples/public_html/build/wp-content/plugins/js_composer/include/classes/editors/popups/class-vc-shortcode-edit-form.php on line 44
