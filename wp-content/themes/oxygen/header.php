@@ -61,12 +61,16 @@
 		
 		<div class="main<?php echo HEADER_TYPE == 1 && HAS_SLIDER ? ' hide-breadcrumb' : ''; ?>">
 			<?php if(is_active_sidebar('header_widgets')): ?>
-				<div id="header-info" class=" row">
+				<div id="header-info" class="hidden-xs hidden-sm row">
 						<?php dynamic_sidebar('header_widgets'); ?>
 				</div>
 				<style type="text/css">
 					#header-info {
 						border-bottom: 1px solid #ddd;
+						margin-top:-30px;
+					}
+					#header-info .textwidget {
+						margin: 10px 0 !important;
 					}
 					#header-info .sidebar {
 						text-align:left;
