@@ -71,6 +71,7 @@
 					}
 					#header-info .textwidget {
 						margin: 10px 0 !important;
+						font-size:12px;
 					}
 					#header-info .sidebar {
 						text-align:left;
