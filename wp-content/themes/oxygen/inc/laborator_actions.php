@@ -176,6 +176,20 @@ function laborator_widgets_init()
 	register_sidebar($shop_sidebar);
 
 
+	# Header Widgets
+	$header_sidebar = array(
+		'id' => 'header_widgets',
+		'name' => 'Header Widgets',
+
+		'before_widget' => '<div class="col-md-4 sidebar %2$s %1$s">',
+		'after_widget' => '</div>',
+
+		'before_title' => '<h3>',
+		'after_title' => '</h3>'
+	);
+
+	register_sidebar($header_sidebar);
+
 	# Shop Footer Sidebar
 	$shop_footer_sidebar_colums = 'col-sm-3';
 
@@ -202,6 +216,8 @@ function laborator_widgets_init()
 	);
 
 	register_sidebar($shop_footer_sidebar);
+
+
 }
 
 

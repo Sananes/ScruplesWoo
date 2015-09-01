@@ -24,6 +24,7 @@
 	<![endif]-->
 
 </head>
+
 <body <?php body_class(); ?>>
 
 	<?php if(function_exists('WC')): ?>
@@ -57,9 +58,27 @@
 			}
 		}
 		?>
-
+		
 		<div class="main<?php echo HEADER_TYPE == 1 && HAS_SLIDER ? ' hide-breadcrumb' : ''; ?>">
-
+			<?php if(is_active_sidebar('header_widgets')): ?>
+				<div id="header-info" class=" row">
+						<?php dynamic_sidebar('header_widgets'); ?>
+				</div>
+				<style type="text/css">
+					#header-info {
+						border-bottom: 1px solid #ddd;
+					}
+					#header-info .sidebar {
+						text-align:left;
+					}
+					#header-info .sidebar:nth-child(2) {
+						text-align:center;
+					}
+					#header-info .sidebar:nth-child(3) {
+						text-align:right;
+					}
+				</style>
+			<?php  endif; ?>
 			<?php get_template_part('tpls/breadcrumb'); ?>
 
 			<?php
