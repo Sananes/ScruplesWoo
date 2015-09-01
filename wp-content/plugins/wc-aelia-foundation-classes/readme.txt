@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, utility
 Requires at least: 3.6
 Tested up to: 4.2
-Stable tag: 1.6.5.150822
+Stable tag: 1.6.6.150825
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,9 @@ Should you have any question about this product, please feel free to [contact us
 For more information about installation and management of plugins, please refer to [WordPress documentation](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 1.6.6.150825 =
+* Fixed text domain references in `IP2Location` class.
 
 = 1.6.5.150822 =
 * Fixed reference to logger class in IP2Location::update_database().

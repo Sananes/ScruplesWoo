@@ -119,7 +119,7 @@ class IP2Location extends Base_Class {
 		if(!is_callable('gzopen')) {
 			$afc->log(__('Server does not support gzopen. The GeoIP ' .
 										'database could not be updated.',
-										$this->text_domain));
+										WC_AeliaFoundationClasses::$text_domain));
 			return false;
 		}
 
@@ -145,17 +145,17 @@ class IP2Location extends Base_Class {
 			}
 			else {
 				$afc->log(__('Unable to open downloaded GeoIP database file. ' .
-										 'The GeoIP database could not be updated.', $this->text_domain),
-									false);
+											'The GeoIP database could not be updated.', WC_AeliaFoundationClasses::$text_domain),
+									 false);
 				$result = false;
 			}
 			@unlink($tmp_database);
 		}
 		else {
 			$afc->log(sprintf(__('Unable to download GeoIP Database. Error: "%s".',
-													 $this->text_domain),
-												$tmp_database->get_error_message()),
-								false);
+														WC_AeliaFoundationClasses::$text_domain),
+												 $tmp_database->get_error_message()),
+								 false);
 			$result = false;
 		}
 		return $result;

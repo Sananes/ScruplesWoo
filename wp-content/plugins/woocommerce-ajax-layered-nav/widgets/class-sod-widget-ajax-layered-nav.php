@@ -24,7 +24,7 @@ function sod_ajax_layered_nav_init( ) {
 				else:
 					$taxonomy = $woocommerce->attribute_taxonomy_name( $attribute );
 				endif;
-				
+
 
 				// create an array of product attribute taxonomies
 				//$_attributes_array[] = $taxonomy;
@@ -60,7 +60,7 @@ function sod_ajax_layered_nav_init( ) {
  */
 function woocommerce_ajax_layered_nav_query( $filtered_posts ) {
 	global $_chosen_attributes, $woocommerce, $wp_query;
-	
+
 	if ( sizeof( $_chosen_attributes ) > 0 ) {
 
 		$matched_products = array();
@@ -90,6 +90,7 @@ function woocommerce_ajax_layered_nav_query( $filtered_posts ) {
 							)
 						)
 					);
+					$posts= apply_filters('wc_ajax_layered_nav_query_editor', $posts, $attribute, $value);
 
 					// AND or OR
 					if ( $data['query_type'] == 'or' ) {
@@ -177,7 +178,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 		if ( ! is_post_type_archive( 'product' ) && ! is_tax( get_object_taxonomies( 'product' ) ) ) return;
 
 		$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
-		
+
 		//$taxonomy 	= wc_attribute_taxonomy_name($instance['attribute']);
 		if(function_exists('wc_attribute_taxonomy_name')):
 			$taxonomy = wc_attribute_taxonomy_name( $instance['attribute'] );
@@ -186,7 +187,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 		endif;
 		$current_term   	= is_tax() ? get_queried_object()->term_id : '';
 		$current_tax   		= is_tax() ? get_queried_object()->taxonomy : '';
-		
+
 		$taxonomy_filter 	= str_replace( 'pa_', '', $taxonomy );
 		$current_filter 	= ! empty( $_GET[ 'filter_' . $taxonomy_filter ] ) ? $_GET[ 'filter_' . $taxonomy_filter ] : '';
 		$query_type 		= (isset($instance['query_type'])) ? $instance['query_type'] : 'and';
@@ -230,7 +231,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							// If this is an AND query, only show options with count > 0
 							if ($query_type=='and') {
 								$count = sizeof(array_intersect($_products_in_term, $woocommerce->query->filtered_product_ids));
-								
+
 								if ($count>0) $found = true;
 								if ($count==0 && !$option_is_set) continue;
 							// If this is an OR query, show all options so search can be expanded
@@ -240,7 +241,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							}
 							$class = '';
 							$arg = 'filter_'.strtolower(sanitize_title($instance['attribute']));
-							
+
 							if (isset($_GET[ $arg ])) $current_filter = explode(',', $_GET[ $arg ]); else $current_filter = array();
 							if (!is_array($current_filter)) $current_filter = array();
 							if (!in_array($term->term_id, $current_filter)) $current_filter[] = $term->term_id;
@@ -254,16 +255,16 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							endif;
 
 							// All current filters
-							
+
 							if ($_chosen_attributes) foreach ($_chosen_attributes as $name => $data) :
-								
+
 								if ($name!==$taxonomy) :
 									$filter_name = str_replace('pa_', '', $name);
 									$link = add_query_arg( strtolower(sanitize_title($filter_name)), implode(',', $data['terms']), $link );
-								
+
 									if ( ! empty( $data['terms'] ) )
 										$link = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $link );
-						
+
 									if ( $data['query_type'] == 'or' )
 										$link = add_query_arg( 'query_type_' . $filter_name, 'or', $link );
 								endif;
@@ -280,7 +281,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							// Current Filter = this widget
 							if (isset( $_chosen_attributes[$taxonomy] ) && is_array($_chosen_attributes[$taxonomy]['terms']) && in_array($term->term_id, $_chosen_attributes[$taxonomy]['terms'])) :
 								$class = 'chosen filter-selected';
-							
+
 								// Remove this term is $current_filter has more than 1 term filtered
 								if (sizeof($current_filter)>1) :
 									$current_filter_without_this = array_diff($current_filter, array($term->term_id));
@@ -300,18 +301,18 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							if (isset($_GET['post_type'])) :
 								$link = add_query_arg( 'post_type', $_GET['post_type'], $link );
 							endif;
-							
+
 							// Query type Arg
 							if ($query_type=='or' && !( sizeof($current_filter) == 1 && isset( $_chosen_attributes[$taxonomy]['terms'] ) && is_array($_chosen_attributes[$taxonomy]['terms']) && in_array($term->term_id, $_chosen_attributes[$taxonomy]['terms']) )) :
 								$link = add_query_arg( 'query_type_'.strtolower(sanitize_title($instance['attribute'])), 'or', $link );
 							endif;
 							$checked = $show_count ? $class=="chosen filter-selected show-count" ? 'checked="checked"':"" : $class=="chosen filter-selected" ? 'checked="checked"':"";
-							if ($count > 0 || $option_is_set): 
+							if ($count > 0 || $option_is_set):
 								echo '<li class="'.$class.'">';
 								echo '<input type="checkbox" data-filter="'.$link.'" '.$checked.'  data-link="'.$link.'" data-count="'.$count.'" id="'.$term->name.'" name="'.$term->name.'" value="'.$term->name.'" />';
 								echo '<label for="'.$term->name.'">'.$term->name.'</label>';
 								if($show_count){
-									echo ' <small class="count">'.$count.'</small>';	
+									echo ' <small class="count">'.$count.'</small>';
 								}
 								echo '</li>';
 							endif;
@@ -361,10 +362,10 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								if ($name!==$taxonomy) :
 									$filter_name = str_replace('pa_', '', $name);
 									$link = add_query_arg( strtolower(sanitize_title($filter_name)), implode(',', $data['terms']), $link );
-								
+
 									if ( ! empty( $data['terms'] ) )
 										$link = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $link );
-						
+
 									if ( $data['query_type'] == 'or' )
 										$link = add_query_arg( 'query_type_' . $filter_name, 'or', $link );
 								endif;
@@ -406,26 +407,26 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								$link = add_query_arg( 'query_type_'.strtolower(sanitize_title($instance['attribute'])), 'or', $link );
 							endif;
 
-							
+
 							//$link = "";<a href="'.$link.'" data-filter"'.$link.'">'; else echo '<span>
-							if ($count > 0 || $option_is_set): 
+							if ($count > 0 || $option_is_set):
 								echo '<li class="'.$class.'">';
-								echo '<a href="#" data-filter="'.$link.'" data-count="'.$count.'" data-link="'.$link.'" >'; 
+								echo '<a href="#" data-filter="'.$link.'" data-count="'.$count.'" data-link="'.$link.'" >';
 								echo $term->name;
 								echo '</a>';
 								if($show_count){
-									echo ' <small class="count">'.$count.'</small>';	
+									echo ' <small class="count">'.$count.'</small>';
 								}
 								echo '</li>';
 							endif;
-								
+
 						}
 						echo "</ul></div></nav>";
 				break;
 					/* Size Labels */
 					case "sizeselector":
 						if($show_count){
-							$ul_class="show-count";	
+							$ul_class="show-count";
 						}else{
 							$ul_class="show-count";
 						}
@@ -470,10 +471,10 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								if ($name!==$taxonomy) :
 									$filter_name = str_replace('pa_', '', $name);
 									$link = add_query_arg( strtolower(sanitize_title($filter_name)), implode(',', $data['terms']), $link );
-									
+
 									if ( ! empty( $data['terms'] ) )
 										$link = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $link );
-						
+
 									if ( $data['query_type'] == 'or' )
 										$link = add_query_arg( 'query_type_' . $filter_name, 'or', $link );
 								endif;
@@ -515,13 +516,14 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								$link = add_query_arg( 'query_type_'.strtolower(sanitize_title($instance['attribute'])), 'or', $link );
 							endif;
 							if ($count>0 || $option_is_set):
+								$temp_term_id = apply_filters('wc_ajax_layered_nav_sizeselector_term_id', $term->term_id);
 								echo '<li class="'.$class.'">';
 								//$link = '<a href="'.$link.'" data-filter"'.$link.'">';
 								echo '<a href="#" data-count="'.$count.'" data-filter="'.$link.'" data-link="'.$link.'" >';
-								echo '<div class="size-filter">'.$labels[$term->term_id].'</div>';
+								echo '<div class="size-filter">'.$labels[$temp_term_id].'</div>';
 								echo '</a>';
 								if($show_count){
-									echo ' <small class="count">'.$count.'</small>';	
+									echo ' <small class="count">'.$count.'</small>';
 								}
 								echo '</li>';
 							endif;
@@ -531,7 +533,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 					/* Color Boxes*/
 					case "colorpicker":
 						if($show_count){
-							$ul_class="show-count";	
+							$ul_class="show-count";
 						}else{
 							$ul_class="show-count";
 						}
@@ -576,10 +578,10 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								if ($name!==$taxonomy) :
 									$filter_name = str_replace('pa_', '', $name);
 									$link = add_query_arg( strtolower(sanitize_title($filter_name)), implode(',', $data['terms']), $link );
-									
+
 									if ( ! empty( $data['terms'] ) )
 										$link = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $link );
-						
+
 									if ( $data['query_type'] == 'or' )
 										$link = add_query_arg( 'query_type_' . $filter_name, 'or', $link );
 								endif;
@@ -621,13 +623,14 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								$link = add_query_arg( 'query_type_'.strtolower(sanitize_title($instance['attribute'])), 'or', $link );
 							endif;
 							if ($count>0 || $option_is_set):
+								$temp_term_id = apply_filters('wc_ajax_layered_nav_sizeselector_term_id', $term->term_id);
 								echo '<li class="'.$class.'">';
 								//$link = "";<a href="'.$link.'" data-filter"'.$link.'">'; else echo '<span>
 							 	echo '<a href="#" data-filter="'.$link.'" data-count="'.$count.'" data-link="'.$link.'" >';
-								echo '<div class="box" style="background:'.$colors[$term->term_id].';"></div>';
+								echo '<div class="box" style="background:'.$colors[$temp_term_id].';"></div>';
 								echo '</a>';
 								if($show_count){
-									echo ' <small class="count">'.$count.'</small>';	
+									echo ' <small class="count">'.$count.'</small>';
 								}
 								echo '</li>';
 							endif;

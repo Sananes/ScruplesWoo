@@ -14,7 +14,7 @@ if(SHOPSIDEBAR && ! is_product() && ! $parsed_from_vc):
 
 <div class="row<?php echo SHOPSIDEBARALIGN == 'left' ? ' shop-left-sidebar' : ''; ?>">
 
-	<div class="col-md-9 shop-product-env">
+	<div class="xs-clear col-md-9 shop-product-env">
 
 		<div class="shop-grid with-sidebar">
 

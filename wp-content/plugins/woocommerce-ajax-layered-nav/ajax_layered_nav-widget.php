@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WooCommerce Advanced Ajax Layered Navigation
-Version: 1.3.7
+Version: 1.3.11
 Plugin URI: http://woothemes.com/woocommerce
 Description: Ajaxifies the standard WooCommerce Layered Nav and adds additional output types like color swatches, sizes, checkboxes, etc
 Author URI: http://sixtyonedesigns.com

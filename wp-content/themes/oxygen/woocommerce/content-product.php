@@ -35,26 +35,26 @@ $woocommerce_loop['loop']++;
 $classes = array('col-sm-3');
 
 if(SHOPCOLUMNS == 3 && ! is_product())
-	$classes = array('col-sm-4');
+	$classes = array('col-sm-4 col-xs-6');
 
 if(SHOPSINGLESIDEBAR && is_product())
-	$classes = array('col-sm-4');
+	$classes = array('col-sm-4 col-xs-6');
 
 if($row_clear)
 {
 	$classes = array();
 
 	if($row_clear == 6)
-		$classes = array('col-sm-2');
+		$classes = array('col-xs-6 col-xs-6 col-sm-2');
 	else
 	if($row_clear == 4)
-		$classes = array('col-sm-3');
+		$classes = array('col-xs-6 col-sm-3');
 	else
 	if($row_clear == 3)
-		$classes = array('col-sm-4');
+		$classes = array('col-xs-6 col-sm-6');
 	else
 	if($row_clear == 2)
-		$classes = array('col-sm-6');
+		$classes = array('col-xs-6 col-sm-6');
 }
 
 if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 == $woocommerce_loop['columns'] )

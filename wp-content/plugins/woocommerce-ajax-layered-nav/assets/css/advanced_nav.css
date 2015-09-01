@@ -138,3 +138,9 @@
 		margin-top:1px !important;
 		color:inherit !important;
 	}
+	
+/*Transitions*/
+	ul.products li.product a img {
+	    -webkit-transition: all ease-in-out .2s;
+	    transition: all ease-in-out .2s;
+	}

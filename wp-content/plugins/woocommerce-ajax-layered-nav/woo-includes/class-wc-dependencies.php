@@ -21,7 +21,7 @@ class WC_Dependencies {
 
 		if ( ! self::$active_plugins ) self::init();
 
-		return in_array( 'woocommerce/woocommerce.php', self::$active_plugins ) || array_key_exists( 'woocommerce-2.1.0-beta-1/woocommerce.php', self::$active_plugins );
+		return in_array( 'woocommerce/woocommerce.php', self::$active_plugins ) || array_key_exists( 'woocommerce/woocommerce.php', self::$active_plugins );
 	}
 
 }

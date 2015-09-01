@@ -12,7 +12,7 @@ require_once('lib/classes/definitions/definitions.php');
  * Aelia Foundation Classes for WooCommerce.
  **/
 class WC_AeliaFoundationClasses extends Aelia_Plugin {
-	public static $version = '1.6.5.150822';
+	public static $version = '1.6.6.150825';
 
 	public static $plugin_slug = Definitions::PLUGIN_SLUG;
 	public static $text_domain = Definitions::TEXT_DOMAIN;

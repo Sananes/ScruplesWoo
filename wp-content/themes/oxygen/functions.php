@@ -170,7 +170,6 @@ class My_Category_Walker extends Walker_Category {
         $stored_parent = intval(self::$current_parent);
         $now_parent = intval($category->parent);
         $all_class = ($stored_parent > 0 && ( $stored_parent === $now_parent) ) ? $class_current . ' all' : 'all';
-        $output .= "<li class='" . $all_class . "'><a href='" . $link . "'>" . __('All') . "</a></li>\n";
         self::$current_parent = null;
       }
       $link = '<a href="' . esc_url( get_term_link($category) ) . '" >' . $cat_name . '</a>';

@@ -1,4 +1,16 @@
 *** Ajax Layered Nav Changelog ***
+2015.07.08 - version 1.3.11
+* Add WPML Filters
+
+2015.06.09 - version 1.3.10
+* Enhancement - Add css transition on img
+
+2015.04.21 - version 1.3.9
+* Fix - Potential XSS with add_query_arg
+
+2015.04.01 - version 1.3.8
+ * update wc_dependency to check for woocommerce/woocommerce.php array_key
+ 
 2014.07.03 - version 1.3.7
  * jQuery trigger for aln_reloaded event
  * add show count option to widget instance
