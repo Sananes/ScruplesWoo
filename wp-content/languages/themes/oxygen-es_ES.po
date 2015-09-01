@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2015-08-23 19:13+0100\n"
-"PO-Revision-Date: 2015-08-23 19:23+0100\n"
+"PO-Revision-Date: 2015-09-01 09:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -1758,12 +1758,12 @@ msgstr ""
 
 #: tpls/header-cart.php:123 woocommerce/cart/mini-cart.php:64
 msgid "View Cart"
-msgstr ""
+msgstr "Ver Carrito"
 
 #: tpls/header-cart.php:128 woocommerce/cart/cart.php:242
 #: woocommerce/cart/mini-cart.php:65
 msgid "Checkout"
-msgstr ""
+msgstr "Finalizar Pedido"
 
 #: tpls/header-cart.php:132
 msgid "Cart subtotal"
@@ -2029,16 +2029,17 @@ msgstr ""
 
 #: woocommerce/checkout/form-shipping.php:30
 msgid "Ship to a different address?"
-msgstr ""
+msgstr "Envío a una dirección diferente?"
 
 #: woocommerce/checkout/form-shipping.php:75
 #: woocommerce/single-product/tabs/additional-information.php:17
 msgid "Additional Information"
-msgstr ""
+msgstr "Información Adicional"
 
 #: woocommerce/checkout/payment.php:30
 msgid "Please fill in your details above to see available payment methods."
 msgstr ""
+"Por favor, rellene sus datos arriba para ver los métodos de pago disponibles."
 
 #: woocommerce/checkout/payment.php:32
 msgid ""
@@ -2046,6 +2047,9 @@ msgid ""
 "Please contact us if you require assistance or wish to make alternate "
 "arrangements."
 msgstr ""
+"Lo sentimos, parece que no existen métodos de pago disponibles para su "
+"estado. Póngase en contacto con nosotros si necesita ayuda o desea hacer "
+"arreglos alternativos."
 
 #: woocommerce/checkout/payment.php:43
 msgid ""
@@ -2057,7 +2061,7 @@ msgstr ""
 
 #: woocommerce/checkout/payment.php:43
 msgid "Update totals"
-msgstr ""
+msgstr "Actualizar totales"
 
 #: woocommerce/checkout/payment.php:65
 #, php-format
@@ -2068,11 +2072,11 @@ msgstr ""
 
 #: woocommerce/checkout/review-order.php:52
 msgid "Cart Subtotal"
-msgstr ""
+msgstr "Subtotal del carrito"
 
 #: woocommerce/checkout/review-order.php:99
 msgid "Order Total"
-msgstr ""
+msgstr "Total del pedido"
 
 #: woocommerce/checkout/thankyou.php:25
 msgid ""
@@ -2090,25 +2094,25 @@ msgstr ""
 
 #: woocommerce/checkout/thankyou.php:35 woocommerce/myaccount/my-orders.php:70
 msgid "Pay"
-msgstr ""
+msgstr "Pagar"
 
 #: woocommerce/checkout/thankyou.php:37 woocommerce/myaccount/form-login.php:32
 #: woocommerce/myaccount/form-lost-password.php:23
 #: woocommerce/myaccount/my-account.php:21
 msgid "My Account"
-msgstr ""
+msgstr "Mi Cuenta"
 
 #: woocommerce/checkout/thankyou.php:44 woocommerce/checkout/thankyou.php:80
 msgid "Thank you. Your order has been received."
-msgstr ""
+msgstr "Gracias. Tu orden ha sido recibida."
 
 #: woocommerce/checkout/thankyou.php:49
 msgid "Order:"
-msgstr ""
+msgstr "Pedido:"
 
 #: woocommerce/checkout/thankyou.php:53
 msgid "Date:"
-msgstr ""
+msgstr "Fecha:"
 
 #: woocommerce/checkout/thankyou.php:57
 msgid "Total:"
@@ -2116,23 +2120,23 @@ msgstr ""
 
 #: woocommerce/checkout/thankyou.php:62
 msgid "Payment method:"
-msgstr ""
+msgstr "Método de Pago:"
 
 #: woocommerce/content-product.php:218
 msgid "Quick View"
-msgstr ""
+msgstr "Ver rápido"
 
 #: woocommerce/content-product.php:280
 msgid "Adding to cart"
-msgstr ""
+msgstr "Agregando a la cesta"
 
 #: woocommerce/create-a-list.php:51 woocommerce/edit-my-list.php:366
 msgid "Name your list"
-msgstr ""
+msgstr "Nombre de su lista"
 
 #: woocommerce/create-a-list.php:55 woocommerce/edit-my-list.php:370
 msgid "Describe your list"
-msgstr ""
+msgstr "Describa su lista"
 
 #: woocommerce/create-a-list.php:62 woocommerce/edit-my-list.php:377
 #: woocommerce/my-lists.php:57 woocommerce/myaccount/my-wishlists.php:22
@@ -2142,7 +2146,7 @@ msgstr ""
 #: woocommerce/create-a-list.php:66 woocommerce/edit-my-list.php:381
 #: woocommerce/my-lists.php:92 woocommerce/wishlist-view.php:238
 msgid "Public"
-msgstr ""
+msgstr "Publico"
 
 #: woocommerce/create-a-list.php:66 woocommerce/edit-my-list.php:381
 msgid ""
@@ -2319,37 +2323,37 @@ msgstr ""
 #: woocommerce/global/form-login.php:22
 #: woocommerce/myaccount/form-lost-password.php:54
 msgid "Username or email"
-msgstr ""
+msgstr "Usuario o correo elecronico"
 
 #: woocommerce/global/form-login.php:26 woocommerce/myaccount/form-login.php:76
 #: woocommerce/myaccount/form-login.php:150
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: woocommerce/global/form-login.php:35 woocommerce/myaccount/form-login.php:58
 #: woocommerce/myaccount/form-login.php:87
 msgid "Login"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: woocommerce/global/form-login.php:38 woocommerce/myaccount/form-login.php:90
 msgid "Remember me"
-msgstr ""
+msgstr "Recuerda me"
 
 #: woocommerce/global/form-login.php:42 woocommerce/myaccount/form-login.php:95
 msgid "Lost your password?"
-msgstr ""
+msgstr "¿Perdiste tu contraseña?"
 
 #: woocommerce/loop/no-products-found.php:14
 msgid "No products were found matching your selection."
-msgstr ""
+msgstr "No se encontraron productos que coincidan con su selección."
 
 #: woocommerce/loop/orderby.php:37 woocommerce/loop/orderby.php:50
 msgid "Default sorting"
-msgstr ""
+msgstr "Clasificación por defecto"
 
 #: woocommerce/loop/orderby.php:38
 msgid "Sort by popularity"
-msgstr ""
+msgstr "Ordenar por popularidad"
 
 #: woocommerce/loop/orderby.php:39
 msgid "Sort by average rating"
@@ -2371,12 +2375,12 @@ msgstr ""
 #: woocommerce/single-product/sale-flash.php:30
 #: woocommerce/wishlist-view.php:187
 msgid "Out of Stock"
-msgstr ""
+msgstr "Agotado"
 
 #: woocommerce/loop/quick-view.php:86 woocommerce/loop/sale-flash.php:47
 #: woocommerce/single-product/sale-flash.php:40
 msgid "Sale"
-msgstr ""
+msgstr "Venta"
 
 #: woocommerce/loop/quick-view.php:92 woocommerce/loop/sale-flash.php:22
 #: woocommerce/single-product/sale-flash.php:20
@@ -2385,7 +2389,7 @@ msgstr ""
 
 #: woocommerce/loop/quick-view.php:145
 msgid "View Product"
-msgstr ""
+msgstr "Ver Producto"
 
 #: woocommerce/loop/result-count.php:28
 msgid "Showing the single result"
@@ -2435,36 +2439,36 @@ msgstr ""
 
 #: woocommerce/myaccount/form-add-payment-method.php:48
 msgid "Add Payment Method"
-msgstr ""
+msgstr "Añadir Método de Pago"
 
 #: woocommerce/myaccount/form-change-password.php:20
 #: woocommerce/myaccount/form-lost-password.php:63
 msgid "New password"
-msgstr ""
+msgstr "Nuevo contraseña"
 
 #: woocommerce/myaccount/form-change-password.php:24
 #: woocommerce/myaccount/form-lost-password.php:67
 msgid "Re-enter new password"
-msgstr ""
+msgstr "Rellena contraseña nuevo"
 
 #: woocommerce/myaccount/form-change-password.php:29
 #: woocommerce/myaccount/form-lost-password.php:80
 #: woocommerce/wishlist-view.php:41
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: woocommerce/myaccount/form-edit-account.php:64
 msgid "First name"
-msgstr ""
+msgstr "Primer Nombre"
 
 #: woocommerce/myaccount/form-edit-account.php:68
 msgid "Last name"
-msgstr ""
+msgstr "Apellido"
 
 #: woocommerce/myaccount/form-edit-account.php:72
 #: woocommerce/myaccount/form-login.php:139
 msgid "Email address"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: woocommerce/myaccount/form-edit-account.php:76
 msgid "Current Password (leave blank to leave unchanged)"
@@ -2480,7 +2484,7 @@ msgstr ""
 
 #: woocommerce/myaccount/form-edit-account.php:89
 msgid "Save changes"
-msgstr ""
+msgstr "Guardar cambios"
 
 #: woocommerce/myaccount/form-edit-address.php:25
 #: woocommerce/myaccount/my-address.php:19
