@@ -136,7 +136,10 @@ class SG_CachePress_Options {
 			'enable_cache'               => get_option( 'SGCP_Use_SG_Cache', 0 ),
 			'autoflush_cache'            => get_option( 'SGCP_Autoflush', 1 ),
 			'enable_memcached'           => get_option( 'SGCP_Memcached', 1 ),
-		    'show_notice'                => get_option( 'SGCP_ShowNotice', 0 )
+		    'show_notice'                => get_option( 'SGCP_ShowNotice', 0 ),
+		    'is_nginx'                   => get_option( 'SGCP_IsNginx', 0),
+		    'checked_nginx'              => get_option( 'SGCP_CheckedNginx', 0),
+		    'first_run'                  => get_option( 'SGCP_FristRun', 0)
 		);
 	}
 
@@ -150,6 +153,9 @@ class SG_CachePress_Options {
 		delete_option( 'SGCP_Autoflush' );
 		delete_option( 'SGCP_Memcached' );
 		delete_option( 'SGCP_ShowNotice' );
+		delete_option( 'SGCP_IsNginx' );
+		delete_option( 'SGCP_CheckedNginx' );
+		delete_option( 'SGCP_FirstRun' );
 	}
 
 	/**

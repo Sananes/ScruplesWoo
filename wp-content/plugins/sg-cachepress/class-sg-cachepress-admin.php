@@ -91,7 +91,7 @@ class SG_CachePress_Admin {
 	    {
     	    $html = '<div id="ajax-notification" class="updated sg-cachepress-notification">';
     	    $html .= '<p>';
-    	    $html .= __( '<strong>SG CachePress:</strong> Your site '.get_home_url().' is <strong>not cached</strong>! Make sure the Dynamic Cache is enabled in the SuperCacher tool in cPanel. <a href="javascript:;" id="dismiss-sg-cahepress-notification">Click here to hide this notice</a>.', 'ajax-notification' );
+    	    $html .= __( '<strong>SG CachePress:</strong> Your site '.get_site_url().' is <strong>not cached</strong>! Make sure the Dynamic Cache is enabled in the SuperCacher tool in cPanel. <a href="javascript:;" id="dismiss-sg-cahepress-notification">Click here to hide this notice</a>.', 'ajax-notification' );
     	    $html .= '</p>';
     	    $html .= '<span id="ajax-notification-nonce" class="hidden">' . wp_create_nonce( 'ajax-notification-nonce' ) . '</span>';
     	    $html .= '</div>';
@@ -116,14 +116,16 @@ class SG_CachePress_Admin {
 	 */
 	function cache_test_callback()
 	{
-	    $urlToCheck = get_home_url()."/".$_POST['url'];
+	    $urlToCheck = get_site_url()."/".$_POST['url'];
+	    $result = SG_CachePress_Supercacher::return_cache_result($urlToCheck);
 	    
-	    if( SG_CachePress_Supercacher::return_cache_result($urlToCheck) )
-	        $result = 1;
-	    else
-	        $result = 0;
-	   
-        echo $result;
+	    if($result == 1 && empty($_POST['url']))
+	    {
+	        $options = new SG_CachePress_Options();
+	        $options->disable_option('show_notice');
+	    }
+	    
+	    echo $result;
         wp_die();
 	}
 	
@@ -139,6 +141,33 @@ class SG_CachePress_Admin {
 	    
 	    echo 1;
 	    wp_die();
+	}
+	
+	/**
+	 * Preloads and caches the server type so it wont have to make query each time when is needed
+	 */
+	public static function return_and_cache_server_type()
+	{
+	    $sgcachepress_options = new SG_CachePress_Options();
+	    if( !$sgcachepress_options->is_enabled('checked_nginx') ) 
+	    {
+	        $sgcachepress_options->enable_option('checked_nginx');
+	        if( SG_CachePress_Supercacher::return_check_is_nginx() )
+	        {
+	            $sgcachepress_options->enable_option('is_nginx');
+	            return true;
+	        }
+	        else
+	        {
+	            $sgcachepress_options->disable_option('is_nginx');
+	            return false;
+	        }
+	    }
+	    
+	    if( $sgcachepress_options->is_enabled('is_nginx') )
+	        return true;
+	        
+	    return false;
 	}
 
 	/**

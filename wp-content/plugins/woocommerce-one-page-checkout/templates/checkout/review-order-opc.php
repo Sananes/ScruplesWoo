@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<thead>
 			<tr>
 				<th class="product-name">
-					<?php _e( 'Product', 'woocommerce' ); ?>
-					<div class="product-quantity"><?php _e( 'Quantity', 'woocommerce' ); ?></div>
+					<?php _e( 'Product', 'wcopc' ); ?>
+					<div class="product-quantity"><?php _e( 'Quantity', 'wcopc' ); ?></div>
 				</th>
-				<th class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
+				<th class="product-total"><?php _e( 'Total', 'wcopc' ); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item opc_cart_item', $cart_item, $cart_item_key ) ); ?>" data-add_to_cart="<?php echo $_product->variation_id ? $_product->variation_id : $_product->id; ?>" data-update_key="<?php echo $cart_item_key; ?>">
 							<td class="product-name">
 								<div class="product-remove" >
-									<?php echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf( '<a href="%s" class="remove" title="%s">&times;</a>', esc_url( WC()->cart->get_remove_url( $cart_item_key ) ), __( 'Remove this item', 'woocommerce' ) ), $cart_item_key ); ?>
+									<?php echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf( '<a href="%s" class="remove" title="%s">&times;</a>', esc_url( WC()->cart->get_remove_url( $cart_item_key ) ), __( 'Remove this item', 'wcopc' ) ), $cart_item_key ); ?>
 								</div>
 								<div class="product-details" >
 									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key ); ?>
@@ -71,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tfoot>
 
 			<tr class="cart-subtotal">
-				<th><?php _e( 'Cart Subtotal', 'woocommerce' ); ?></th>
+				<th><?php _e( 'Cart Subtotal', 'wcopc' ); ?></th>
 				<td><?php wc_cart_totals_subtotal_html(); ?></td>
 			</tr>
 
@@ -118,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
 			<tr class="order-total">
-				<th><?php _e( 'Order Total', 'woocommerce' ); ?></th>
+				<th><?php _e( 'Order Total', 'wcopc' ); ?></th>
 				<td><?php wc_cart_totals_order_total_html(); ?></td>
 			</tr>
 

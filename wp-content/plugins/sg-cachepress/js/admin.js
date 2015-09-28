@@ -136,31 +136,24 @@ function sg_cachepress_test_result(result)
 	cachepress_test_counter = cachepress_test_counter + 1;
 	
 	if(result == 1)
-		sg_cachepress_test_result_success();
+		sg_cachepress_test_result_display_output( 'CACHED', 'cached' );
 
 	if(result == 0 && cachepress_test_counter == 1)
 		setTimeout("sg_cachepress_test_submit();",2000);
 	else if(result == 0)
-		sg_cachepress_test_result_fail();
+		sg_cachepress_test_result_display_output( 'NOT CACHED', 'notcached' );
+	else if(result == 2)
+		sg_cachepress_test_result_display_output( 'CANT GET HEADERS', 'notcached' );
 
 	if(result == 1 || cachepress_test_counter == 2)
 		cachepress_test_counter = 0;
 }
 
-function sg_cachepress_test_result_success()
+function sg_cachepress_test_result_display_output( text, classText )
 {
 	jQuery('#sg-cachepress-test').prop('disabled',false).attr('value','Test URL');
 	jQuery('#testurl').prop('disabled',false);
 	
-	jQuery('#status_test_value').html('<span class="cached">CACHED</span>');
-	jQuery('.status_test').slideDown();
-}
-
-function sg_cachepress_test_result_fail()
-{
-	jQuery('#sg-cachepress-test').prop('disabled',false).attr('value','Test URL');
-	jQuery('#testurl').prop('disabled',false);
-	
-	jQuery('#status_test_value').html('<span class="notcached">NOT CACHED</span>');
+	jQuery('#status_test_value').html('<span class="'+classText+'">'+text+'</span>');
 	jQuery('.status_test').slideDown();
 }

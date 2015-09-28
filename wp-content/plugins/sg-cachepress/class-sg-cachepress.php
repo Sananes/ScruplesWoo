@@ -106,6 +106,7 @@ class SG_CachePress {
 		} else {
 			self::single_activate();
 		}
+		self::disable_first_run_option();
 	}
 
 	/**
@@ -150,6 +151,40 @@ class SG_CachePress {
 		self::single_activate();
 		restore_current_blog();
 	}
+	
+	/**
+	 * Fired when admin is initialised, currently used to make one time check if the plugin runs correctly.
+	 */
+	public static function admin_init_cachepress()
+	{
+	    if( current_user_can('activate_plugins') )
+	    {
+    	    $sg_cachepress_options  = new SG_CachePress_Options;
+    	    if(!$sg_cachepress_options->is_enabled('first_run'))
+    	    {
+    	       self::enable_first_run_option();
+    	       self::check_if_plugin_caches();
+    	    }
+	    }
+	}
+	
+    /**
+     * Resets the first run counter, so it can be called once on the first run
+     */
+    private static function disable_first_run_option()
+	{
+	    $sg_cachepress_options  = new SG_CachePress_Options;
+	    $sg_cachepress_options->disable_option('first_run');
+	}
+	
+	/**
+	 * Sets the first run counter to enabled, to prevent running commands more than once when admin panel is initialised
+	 */
+	private static function enable_first_run_option()
+	{
+	    $sg_cachepress_options  = new SG_CachePress_Options;
+	    $sg_cachepress_options->enable_option('first_run');
+	}
 
 	/**
 	 * Get all blog ids of blogs in the current network that are:
@@ -189,14 +224,22 @@ class SG_CachePress {
 	public static function check_if_plugin_caches()
 	{
 	    $sg_cachepress_options = new SG_CachePress_Options();
-	    $urlToCheck = get_home_url();
+	    $urlToCheck = get_site_url();
         
-	    if( !SG_CachePress_Supercacher::return_cache_result($urlToCheck) && $sg_cachepress_options->is_enabled('enable_cache') )
+	    if( $sg_cachepress_options->is_enabled('enable_cache') )
 	    {
-	        if( !SG_CachePress_Supercacher::return_cache_result($urlToCheck) )
+	        if( SG_CachePress_Supercacher::return_cache_result($urlToCheck) == 0 )
 	        {
-	            $sg_cachepress_options->enable_option('show_notice');
-	            return false;
+	            if( SG_CachePress_Supercacher::return_cache_result($urlToCheck) == 0 )
+	            {
+	                $sg_cachepress_options->enable_option('show_notice');
+	                return false;
+	            }
+	            else
+	            {
+	                $sg_cachepress_options->disable_option('show_notice');
+	                return true;
+	            }
 	        }
 	        else
 	        {

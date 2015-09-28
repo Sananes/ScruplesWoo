@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the WooCommerce One Page Checkout package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce One Page Checkout 1.1.3\n"
+"Project-Id-Version: WooCommerce One Page Checkout 1.2.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/woocommerce-one-page-"
 "checkout\n"
-"POT-Creation-Date: 2015-03-03 22:07:06+00:00\n"
+"POT-Creation-Date: 2015-09-16 22:49:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,24 +13,24 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: classes/class-wcopc-admin-editor.php:149
+#: classes/class-wcopc-admin-editor.php:173
 msgid "Products:"
 msgstr ""
 
-#: classes/class-wcopc-admin-editor.php:151
-#: classes/class-wcopc-admin-editor.php:153
+#: classes/class-wcopc-admin-editor.php:175
+#: classes/class-wcopc-admin-editor.php:177
 msgid "Search for a product&hellip;"
 msgstr ""
 
-#: classes/class-wcopc-admin-editor.php:157
+#: classes/class-wcopc-admin-editor.php:181
 msgid "Template:"
 msgstr ""
 
-#: classes/class-wcopc-admin-editor.php:171
+#: classes/class-wcopc-admin-editor.php:195
 msgid "Create Shortcode"
 msgstr ""
 
-#: classes/class-wcopc-admin-editor.php:172
+#: classes/class-wcopc-admin-editor.php:196
 msgid "Cancel"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "No pricing tables available."
 msgstr ""
 
-#: js/admin/editor_plugin_lang.php:5
+#: js/admin/editor_plugin_lang.php:5 woocommerce-one-page-checkout.php:1606
 msgid "One Page Checkout"
 msgstr ""
 
@@ -61,42 +61,42 @@ msgid "Remove"
 msgstr ""
 
 #: templates/checkout/add-to-cart/button.php:16
-#: woocommerce-one-page-checkout.php:504
+#: woocommerce-one-page-checkout.php:521
 msgid "Add to order"
 msgstr ""
 
 #: templates/checkout/add-to-cart/button.php:18
-#: woocommerce-one-page-checkout.php:1158
+#: woocommerce-one-page-checkout.php:1191
 msgid "Modify &amp; complete order below"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:20
-#: templates/checkout/review-order.php:19
+#: templates/checkout/review-order-opc.php:19
 msgid "Product"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:21
-#: templates/checkout/review-order.php:20
+#: templates/checkout/review-order-opc.php:20
 msgid "Quantity"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:23
-#: templates/checkout/review-order.php:22
+#: templates/checkout/review-order-opc.php:22
 msgid "Total"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:38
-#: templates/checkout/review-order.php:37
+#: templates/checkout/review-order-opc.php:37
 msgid "Remove this item"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:75
-#: templates/checkout/review-order.php:74
+#: templates/checkout/review-order-opc.php:74
 msgid "Cart Subtotal"
 msgstr ""
 
 #: templates/checkout/deprecated/review-order.php:129
-#: templates/checkout/review-order.php:121
+#: templates/checkout/review-order-opc.php:121
 msgid "Order Total"
 msgstr ""
 
@@ -141,96 +141,100 @@ msgstr ""
 msgid "Dimensions"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:176
+#: woocommerce-one-page-checkout.php:183
 msgid "Product Table"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:177
+#: woocommerce-one-page-checkout.php:184
 msgid ""
 "Display a row for each product containing its thumbnail, title and price. "
 "Best for a few simple products where the thumbnails are helpful, e.g. a set "
 "of halloween masks."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:181
+#: woocommerce-one-page-checkout.php:188
 msgid "Product List"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:182
+#: woocommerce-one-page-checkout.php:189
 msgid ""
 "Display a list of products with a radio button for selection. Useful when "
 "the customer does not need a description or photograph to choose, e.g. "
 "versions of an eBook."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:186
+#: woocommerce-one-page-checkout.php:193
 msgid "Single Product"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:187
+#: woocommerce-one-page-checkout.php:194
 msgid ""
 "Display the single product template for each product. Useful when the "
 "description, images, gallery and other meta data will help the customer "
 "choose, e.g. evening gowns."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:191
+#: woocommerce-one-page-checkout.php:198
 msgid "Pricing Table"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:192
+#: woocommerce-one-page-checkout.php:199
 msgid ""
 "Display a simple pricing table with each product's attributes, weight and "
 "dimensions. Useful to allow customers to compare different, but related "
 "products, e.g. membership subscriptions."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:452
+#: woocommerce-one-page-checkout.php:469
 msgid "&quot; and &quot;"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:475
+#: woocommerce-one-page-checkout.php:492
 msgid "View Cart"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:495
+#: woocommerce-one-page-checkout.php:512
 msgid "%s&quot; added to your order. Complete your order below."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:839
+#: woocommerce-one-page-checkout.php:848
 msgid "&quot;%s&quot; was successfully removed from your order."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:846
+#: woocommerce-one-page-checkout.php:855
 msgid "&quot;%s&quot; could not be removed from your order."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:953 woocommerce-one-page-checkout.php:966
-#: woocommerce-one-page-checkout.php:1024
+#: woocommerce-one-page-checkout.php:961 woocommerce-one-page-checkout.php:975
+#: woocommerce-one-page-checkout.php:1057
 msgid "Please choose product options&hellip;"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:1413
+#: woocommerce-one-page-checkout.php:1449
 msgid ""
 "Sorry, your session has expired. <a href=\"%s\">Return to homepage &rarr;</a>"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:1414
+#: woocommerce-one-page-checkout.php:1450
 msgid "You must select a product."
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:1460
+#: woocommerce-one-page-checkout.php:1496
 msgid ""
 "%sWooCommerce One Page Checkout is inactive.%s The %sWooCommerce plugin%s "
 "must be active for WooCommerce One Page Checkout to work. Please %sinstall & "
 "activate WooCommerce%s"
 msgstr ""
 
-#: woocommerce-one-page-checkout.php:1464
+#: woocommerce-one-page-checkout.php:1500
 msgid ""
 "%sWooCommerce One Page Checkout is inactive.%s This plugin requires "
 "WooCommerce 2.1 or newer. Please %supdate WooCommerce to version 2.1 or newer"
 "%s"
+msgstr ""
+
+#: woocommerce-one-page-checkout.php:1607
+msgid "Add checkout to product page."
 msgstr ""
 
 #. Plugin Name of the plugin/theme

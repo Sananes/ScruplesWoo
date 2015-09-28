@@ -6,10 +6,7 @@
  *	www.laborator.co 
  */
 
-define("NO_HEADER_MENU", true);
-define("NO_FOOTER_MENU", true);
 
-add_filter('body_class', create_function('$classes', '$classes[] = "not-found"; return $classes;'));
 
 get_header();
 

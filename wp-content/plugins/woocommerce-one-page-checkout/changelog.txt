@@ -1,3 +1,18 @@
+2015.09.17 - version 1.2.4
+ * Fix: adding variable products using custom attributes to the order with the Single Product template with WooCommerce 2.4
+ * Fix: don't override checkout page URL on order methods to fix compatibility with payment gateways that require payment on the Checkout > Pay page
+
+2015.09.02 - version 1.2.3
+ * Tweak: add readme.txt to plugin with WordPress.org plugin headers
+ * Fix: adding variations with catch-all custom attributes attributes (e.g. "Any Colour" or "Any Size") to the cart from an OPC page using the Single Product template
+
+2015.08.28 - version 1.2.2
+ * Tweak: always use own text domain instead of using WooCommerce's text domain for identical strings
+ * Fix: compatibility with WooCommerce 2.4.2 and newer, which uses WC's custom Ajax endpoints on checkout. Fixes redirection back to OPC page instead of thank you page, addition of an extra product to the cart on checkout for some products and breaking of checkout with some custom product types, like Subscriptions and Bookings.
+ * Fix: compatibility with Relevanssi and other plugins which evaluate shortcodes on the administration side of the site (i.e. call do_shortcode())
+ * Fix: adding to cart with custom product attributes that are uppercase in WC 2.4
+ * Fix: load shipping fields on OPC product pages
+
 2015.06.10 - version 1.2.1
  * Tweak: only load prettyPhoto JS and CSS when lightbox is enabled under WooCommerce > Products > Display
  * Fix: make sure a session is set for non-authenticated users when loading an OPC page to fix compatibility with WC 2.3.9 which began using the customer_id in the session for the nonce user ID

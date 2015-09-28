@@ -52,7 +52,7 @@ class SG_CachePress_Supercacher {
 		$this->environment     = $environment;
 	}
 
-	/**purge_cache
+	/**
 	 * Initialize the class by hooking and running methods.
 	 *
 	 * @since 1.1.0
@@ -86,14 +86,15 @@ class SG_CachePress_Supercacher {
 			return;
 
 		$purge_request = $sg_cachepress_supercacher->environment->get_application_path() . '(.*)';
-
+        
 		// Check if caching server is varnish or nginx.
 		$sgcache_ip = '/etc/sgcache_ip';
 		$hostname = $_SERVER['SERVER_ADDR'];
 		$purge_method = "PURGE";
-		if (file_exists($sgcache_ip)) {
-			$hostname = trim( file_get_contents( $sgcache_ip, true ) );
-			$purge_method = "BAN";
+
+		if (file_exists($sgcache_ip) && !self::is_nginx_server()) {
+	        $hostname = trim( file_get_contents( $sgcache_ip, true ) );
+	        $purge_method = "BAN";
 		}
 
 		$cache_server_socket = fsockopen( $hostname, 80, $errno, $errstr, 2 );
@@ -128,6 +129,15 @@ class SG_CachePress_Supercacher {
 				wp_die( 0 );
 			}
 		}
+	}
+	
+	/**
+	 * Returns if the server is using Nginx
+	 * @return boolean
+	 */
+	private static function is_nginx_server()
+	{
+	    return SG_CachePress_Admin::return_and_cache_server_type();
 	}
 
 	/**
@@ -431,6 +441,22 @@ class SG_CachePress_Supercacher {
 	    self::purge_cache();
 	}
 	
+	/**
+	 * Checks the header returned by calling the home url and determine if the server is nginx
+	 */
+	public static function return_check_is_nginx()
+	{
+	    $url = get_site_url();
+	    $headers = self::request_data( $url );
+	    
+	    if( isset($headers['server']) && !empty($headers['server']) )
+	    {
+	        if( preg_match('#(nginx)#', $headers['server'] ) )
+	            return true;
+	    }
+	    
+	    return false;
+	}
 	
 	/**
 	 * Returns if the cache header is on
@@ -439,12 +465,110 @@ class SG_CachePress_Supercacher {
 	 */
 	public static function return_cache_result( $url )
 	{
-	    $response = wp_remote_get($url);
-	    $xProxyCache = wp_remote_retrieve_header( $response, 'x-proxy-cache' );
-
-	    if($xProxyCache == 'HIT')
-	        return true;
+	    $headers = self::request_data( $url );
+	    //Status 0: Cache is not working, 1: Cache is working, 2: Unable to connect
+	    if( !$headers || !is_array($headers) )
+	        $status = 2;
 	    else
-	        return false;
+	    {
+	        if( isset($headers['x-proxy-cache']) && mb_strtoupper( $headers['x-proxy-cache'] ) == 'HIT' )
+	            $status = 1;
+	        else if( isset($headers['x-cache']) && mb_strtoupper( $headers['x-cache'] ) == 'SGCACHE-HIT' )
+	            $status = 1;
+	        else
+	            $status = 0;
+	    }
+        
+	    return $status;
 	}
+	
+	/**
+	 * Defines the function used to initial the cURL library.
+	 *
+	 * @param  string  $url        To URL to which the request is being made
+	 * @return string  $response   The response, if available; otherwise, null
+	 */
+	private static function curl( $url )
+	{
+	    $curl = curl_init( $url );
+	
+	    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+	    curl_setopt( $curl, CURLOPT_HEADER, true );
+	    curl_setopt( $curl, CURLOPT_NOBODY, true);
+	    curl_setopt( $curl, CURLOPT_TIMEOUT, 10 );
+	
+	    $response = curl_exec( $curl );
+	    if( 0 !== curl_errno( $curl ) || 200 !== curl_getinfo( $curl, CURLINFO_HTTP_CODE ) ) {
+	        $response = null;
+	    } // end if
+	    curl_close( $curl );
+	
+	    return $response;
+	}
+	
+	/**
+	 * Retrieves the headers from the specified URL using one of PHPs requests methods
+	 * @param	$url | URL to retrieve headers from
+	 * @return	array $headers | Returns headers as array
+	 */
+	private static function request_data( $url )
+	{
+	    $response = null;
+	    $returnHeaders = array();
+	
+	    //First, we try wp_remote_get
+	    $response = wp_remote_get( $url );
+	    if( !is_wp_error( $response ) )
+        {
+            $returnHeaders = wp_remote_retrieve_headers( $response );
+            $returnHeaders['method'] = 'wp_remote_get';
+        }
+        else 
+        {
+	        //If that doesn't work, then we'll try file_get_contents
+	        $response = file_get_contents( $url );
+	        if( $response && isset($http_response_header) ) {
+                $returnHeaders = self::parse_headers($http_response_header);
+                $returnHeaders['method'] = 'file_get_contents';
+	        }
+	        else
+	        {
+	            //And if that doesn't work, then we'll try curl
+	            $response = self::curl( $url );
+	            if( $response )
+	            {
+	                $returnHeaders = self::parse_headers( $response );
+	                $returnHeaders['method_requested'] = 'curl';
+	            }
+	        }
+	    }
+	
+	    return $returnHeaders;
+	}
+	
+	/**
+	 * Parses the header to array from string on array input
+	 * @param array|string $headers
+	 * @return array $head 
+	 */
+	private static function parse_headers( $headers )
+	{
+	    $head = array();
+	    
+	    if( !is_array($headers) )
+	        $headers = explode("\n", $headers); 
+	    
+	    if( is_array($headers) && count($headers) > 0 )
+	    {
+    	    foreach( $headers as $v )
+    	    {
+    	        $t = explode( ':', $v, 2 );
+    	        if( isset( $t[1] ) )
+    	            $head[ mb_strtolower( trim($t[0]) ) ] = trim( $t[1] );
+    	    }
+	    }
+	    
+	    return $head;
+	}
+	
 }

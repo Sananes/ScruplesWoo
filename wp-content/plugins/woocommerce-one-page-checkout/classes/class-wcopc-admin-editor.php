@@ -126,7 +126,7 @@ class WCOPC_Admin_Editor {
 		wp_enqueue_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
 		wp_enqueue_script( 'wcopc_iframeresizer_contentwindow', PP_One_Page_Checkout::$plugin_url . '/js/admin/iframeResizer.contentWindow.min.js', array(), '2.8.5' );
 
-		if ( PP_One_Page_Checkout::is_woocommerce_pre_2_3() ) {
+		if ( PP_One_Page_Checkout::is_woocommerce_pre( '2.3' ) ) {
 			// Chosen is @deprecated (2.3) in favour of select2
 			wp_enqueue_script( 'chosen', WC()->plugin_url() . '/assets/js/chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), WC_VERSION );
 			wp_enqueue_script( 'ajax-chosen', WC()->plugin_url() . '/assets/js/chosen/ajax-chosen.jquery' . $suffix . '.js', array( 'jquery', 'chosen' ), WC_VERSION );
@@ -171,7 +171,7 @@ class WCOPC_Admin_Editor {
 	<?php do_action( 'wcopc_shortcode_iframe_before' ); ?>
 	<fieldset id="wcopc_product_ids_fields" style="margin: 1em 0;">
 		<label for="wcopc_product_ids" style="width: 70px; display: inline-block;"><strong><?php _e( 'Products:', 'wcopc' ); ?></strong></label>
-		<?php if ( PP_One_Page_Checkout::is_woocommerce_pre_2_3() ) { ?>
+		<?php if ( PP_One_Page_Checkout::is_woocommerce_pre( '2.3' ) ) { ?>
 		<select id="wcopc_product_ids" name="wcopc_product_ids[]" class="ajax_chosen_select_products" multiple="multiple" data-placeholder="<?php _e( 'Search for a product&hellip;', 'wcopc' ); ?>" style="width: 75%;"></select>
 		<?php } else { ?>
 		<input type="hidden" id="wcopc_product_ids" name="wcopc_product_ids[]" data-multiple="true" class="wc-product-search" data-placeholder="<?php _e( 'Search for a product&hellip;', 'wcopc' ); ?>" style="width: 75%;"/>
